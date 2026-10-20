@@ -1,0 +1,1253 @@
+/* ============================================================================
+   GlobalExpress - dark.css
+   Complete dark theme. Loaded LAST so its overrides win.
+
+   Activation: add data-theme="dark" to <html> or <body>.
+   Toggle at runtime: document.documentElement.dataset.theme = 'dark' | 'light'
+
+   Depends on: variables.css (tokens), reset.css, base.css, all component CSS.
+   Overrides every hardcoded #fff and light-mode assumption in the codebase.
+   ============================================================================ */
+
+/* ============================================================================
+   TOKENS
+   Redefine every design token. Everything that uses var() picks these up.
+   ============================================================================ */
+
+[data-theme="dark"]{
+  /* Surfaces - deep navy, not pure black (less eye strain, more premium) */
+  --bg:        #0b1220;
+  --surface:   #111a2e;
+  --surface-2: #0f172a;
+
+  /* Borders - subtle, low-contrast, barely visible */
+  --border:   #1e293b;
+  --border-2: #1a2332;
+
+  /* Text - slightly warm white, not pure #fff */
+  --text:   #e2e8f0;
+  --text-2: #94a3b8;
+  --text-3: #64748b;
+
+  /* Semantic colors - adjusted for dark backgrounds */
+  --green:  #10b981;
+  --amber:  #f59e0b;
+  --red:    #f87171;
+  --blue:   #60a5fa;
+  --purple: #a78bfa;
+  --cyan:   #22d3ee;
+
+  /* Brand - sidebar gets deeper, brand stays rich */
+  --brand:   #050b17;
+  --brand-2: #0f172a;
+  --brand-3: #1e293b;
+
+  /* Accent - tone down slightly; original #FF6B35 is very loud on dark */
+  --accent:   #ff8557;
+  --accent-2: #ff6b35;
+
+  /* Shadows - higher opacity so they're visible on dark surfaces */
+  --sh-xs: 0 1px 2px rgba(0,0,0,.3);
+  --sh-sm: 0 1px 3px rgba(0,0,0,.4), 0 1px 2px rgba(0,0,0,.3);
+  --sh:    0 4px 12px rgba(0,0,0,.45), 0 2px 4px rgba(0,0,0,.3);
+  --sh-lg: 0 12px 32px rgba(0,0,0,.55), 0 4px 8px rgba(0,0,0,.3);
+  --sh-xl: 0 24px 64px rgba(0,0,0,.65);
+
+  color-scheme: dark;
+}
+
+/* Force dark scrollbar on the whole page */
+[data-theme="dark"] ::-webkit-scrollbar-thumb{
+  background: rgba(148,163,184,.25);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover{
+  background: rgba(148,163,184,.45);
+}
+
+/* ============================================================================
+   HTML / BODY
+   ============================================================================ */
+
+[data-theme="dark"] body{
+  background: var(--bg);
+  color: var(--text);
+}
+
+[data-theme="dark"] html{
+  background: var(--bg);
+}
+
+/* Selection color - lighter on dark */
+[data-theme="dark"] ::selection{
+  background: rgba(255,133,87,.35);
+  color: #fff;
+}
+
+/* ============================================================================
+   TYPOGRAPHY
+   ============================================================================ */
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6{
+  color: var(--text);
+}
+
+[data-theme="dark"] p{
+  color: var(--text-2);
+}
+
+[data-theme="dark"] a{
+  color: var(--accent);
+}
+
+[data-theme="dark"] a:hover{
+  color: var(--accent-2);
+}
+
+[data-theme="dark"] strong,
+[data-theme="dark"] b{
+  color: var(--text);
+}
+
+[data-theme="dark"] code:not(pre code){
+  background: var(--surface-2);
+  color: var(--accent);
+}
+
+[data-theme="dark"] pre{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+[data-theme="dark"] hr{
+  border-top-color: var(--border);
+}
+
+/* ============================================================================
+   SIDEBAR - already dark; make it deeper to stand apart from content
+   ============================================================================ */
+
+[data-theme="dark"] .sidebar{
+  background: var(--brand);
+  border-right: 1px solid var(--border);
+}
+
+[data-theme="dark"] .sb-brand{
+  border-bottom-color: rgba(255,255,255,.06);
+}
+
+[data-theme="dark"] .sb-footer{
+  border-top-color: rgba(255,255,255,.06);
+}
+
+[data-theme="dark"] .sb-link:hover{
+  background: rgba(255,255,255,.06);
+}
+
+[data-theme="dark"] .sb-link.active{
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 6px 18px rgba(255,107,53,.35);
+}
+
+[data-theme="dark"] .sb-section{
+  color: rgba(255,255,255,.35);
+}
+
+[data-theme="dark"] .sb-role{
+  color: rgba(255,255,255,.5);
+}
+
+/* ============================================================================
+   TOPBAR - white in light mode, surface in dark
+   ============================================================================ */
+
+[data-theme="dark"] .topbar{
+  background: var(--surface);
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .topbar-title{
+  color: var(--text);
+}
+
+[data-theme="dark"] .topbar-sub{
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .menu-btn{
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+[data-theme="dark"] .menu-btn:hover{
+  background: var(--border);
+}
+
+[data-theme="dark"] .icon-btn{
+  color: var(--text-2);
+}
+[data-theme="dark"] .icon-btn:hover{
+  background: var(--surface-2);
+  color: var(--text);
+}
+[data-theme="dark"] .icon-btn .dot{
+  border-color: var(--surface);
+}
+
+/* Wallet chip - keep the green tint but shift to fit dark palette */
+[data-theme="dark"] .wallet-chip{
+  background: linear-gradient(135deg, rgba(16,185,129,.12), rgba(16,185,129,.06));
+  border-color: rgba(16,185,129,.3);
+}
+[data-theme="dark"] .wallet-chip:hover{
+  background: rgba(16,185,129,.18);
+  border-color: rgba(16,185,129,.45);
+}
+[data-theme="dark"] .wallet-chip i,
+[data-theme="dark"] .wallet-chip .lbl{
+  color: #34d399;
+}
+[data-theme="dark"] .wallet-chip .bal{
+  color: #a7f3d0;
+}
+
+/* User chip */
+[data-theme="dark"] .user-chip{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .user-chip:hover{
+  background: var(--border);
+  border-color: var(--border);
+}
+[data-theme="dark"] .user-name{
+  color: var(--text);
+}
+[data-theme="dark"] .user-role{
+  color: var(--text-3);
+}
+
+/* ============================================================================
+   CONTENT
+   ============================================================================ */
+
+[data-theme="dark"] .content{
+  background: var(--bg);
+}
+
+[data-theme="dark"] .main{
+  background: var(--bg);
+}
+
+/* ============================================================================
+   PANELS + CARDS - the big fix
+   Every .panel and .card hardcodes background:#fff in app.css / components.css
+   ============================================================================ */
+
+[data-theme="dark"] .panel{
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .panel-header{
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .panel-header h3{
+  color: var(--text);
+}
+
+[data-theme="dark"] .panel-header h3 i{
+  color: var(--accent);
+}
+
+[data-theme="dark"] .card{
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .card-head{
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .card-body{
+  color: var(--text);
+}
+
+[data-theme="dark"] .card-foot{
+  background: var(--surface-2);
+  border-top-color: var(--border);
+}
+
+/* ============================================================================
+   STATS
+   ============================================================================ */
+
+[data-theme="dark"] .stat{
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .stat-label{
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .stat-value{
+  color: var(--text);
+}
+
+/* Icon backgrounds - shift to tinted dark variants */
+[data-theme="dark"] .stat-icon.blue  { background: rgba(96,165,250,.14); color: #93c5fd; }
+[data-theme="dark"] .stat-icon.orange{ background: rgba(255,133,87,.14); color: #fdba74; }
+[data-theme="dark"] .stat-icon.green { background: rgba(16,185,129,.14); color: #6ee7b7; }
+[data-theme="dark"] .stat-icon.purple{ background: rgba(167,139,250,.14); color: #c4b5fd; }
+[data-theme="dark"] .stat-icon.amber { background: rgba(245,158,11,.14); color: #fcd34d; }
+[data-theme="dark"] .stat-icon.red   { background: rgba(248,113,113,.14); color: #fca5a5; }
+[data-theme="dark"] .stat-icon.cyan  { background: rgba(34,211,238,.14); color: #67e8f9; }
+
+/* ============================================================================
+   QUICK ACTIONS
+   ============================================================================ */
+
+[data-theme="dark"] .qa-btn{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+[data-theme="dark"] .qa-btn:hover{
+  border-color: var(--accent);
+  background: rgba(255,133,87,.08);
+}
+[data-theme="dark"] .qa-btn h4{
+  color: var(--text);
+}
+[data-theme="dark"] .qa-btn p{
+  color: var(--text-2);
+}
+
+/* ============================================================================
+   BUTTONS - outline and ghost variants hardcode white
+   ============================================================================ */
+
+[data-theme="dark"] .btn-outline{
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--border);
+}
+[data-theme="dark"] .btn-outline:hover:not(:disabled){
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(255,133,87,.08);
+}
+
+[data-theme="dark"] .btn-ghost{
+  color: var(--text-2);
+}
+[data-theme="dark"] .btn-ghost:hover:not(:disabled){
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+[data-theme="dark"] .btn-danger{
+  background: var(--surface-2);
+  color: var(--red);
+  border-color: rgba(248,113,113,.3);
+}
+[data-theme="dark"] .btn-danger:hover:not(:disabled){
+  background: rgba(248,113,113,.1);
+  border-color: var(--red);
+}
+
+/* Primary stays accent-colored but slightly muted glow */
+[data-theme="dark"] .btn-primary:hover:not(:disabled){
+  box-shadow: 0 4px 14px rgba(255,133,87,.25);
+}
+
+/* Button group */
+[data-theme="dark"] .btn-group{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .btn-group .btn{
+  background: var(--surface-2);
+  color: var(--text-2);
+  border-right-color: var(--border);
+}
+[data-theme="dark"] .btn-group .btn:hover:not(:disabled){
+  background: var(--border);
+  color: var(--text);
+}
+
+/* ============================================================================
+   FORMS - inputs hardcode white background in forms.css
+   ============================================================================ */
+
+[data-theme="dark"] .field input[type='text'],
+[data-theme="dark"] .field input[type='email'],
+[data-theme="dark"] .field input[type='password'],
+[data-theme="dark"] .field input[type='number'],
+[data-theme="dark"] .field input[type='tel'],
+[data-theme="dark"] .field input[type='url'],
+[data-theme="dark"] .field input[type='search'],
+[data-theme="dark"] .field input[type='date'],
+[data-theme="dark"] .field input[type='time'],
+[data-theme="dark"] .field input[type='datetime-local'],
+[data-theme="dark"] .field select,
+[data-theme="dark"] .field textarea{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+[data-theme="dark"] .field input::placeholder,
+[data-theme="dark"] .field textarea::placeholder{
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .field input:hover:not(:disabled):not(:focus),
+[data-theme="dark"] .field select:hover:not(:disabled):not(:focus),
+[data-theme="dark"] .field textarea:hover:not(:disabled):not(:focus){
+  border-color: #334155;
+}
+
+[data-theme="dark"] .field input:focus,
+[data-theme="dark"] .field select:focus,
+[data-theme="dark"] .field textarea:focus{
+  background: var(--surface-2);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3.5px rgba(255,133,87,.15);
+}
+
+[data-theme="dark"] .field input:disabled,
+[data-theme="dark"] .field select:disabled,
+[data-theme="dark"] .field textarea:disabled{
+  background: rgba(15,23,42,.6);
+  color: var(--text-3);
+  border-color: var(--border-2);
+}
+
+[data-theme="dark"] .field select{
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] .field label{
+  color: var(--text);
+}
+
+/* Autofill - Chrome's yellow autofill wrecks dark inputs */
+[data-theme="dark"] input:-webkit-autofill,
+[data-theme="dark"] input:-webkit-autofill:hover,
+[data-theme="dark"] input:-webkit-autofill:focus{
+  -webkit-text-fill-color: var(--text);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset;
+  transition: background-color 9999s ease-out;
+}
+
+/* Search box */
+[data-theme="dark"] .search-box input{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+[data-theme="dark"] .search-box input:focus{
+  border-color: var(--accent);
+}
+[data-theme="dark"] .search-box > i{
+  color: var(--text-3);
+}
+
+/* Input group */
+[data-theme="dark"] .input-group{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .input-group input{
+  color: var(--text);
+}
+[data-theme="dark"] .input-group .prefix,
+[data-theme="dark"] .input-group .suffix{
+  background: var(--surface);
+  color: var(--text-2);
+}
+
+/* Password toggle */
+[data-theme="dark"] .pw-toggle{
+  color: var(--text-3);
+}
+[data-theme="dark"] .pw-toggle:hover{
+  color: var(--text);
+  background: var(--surface);
+}
+
+/* File input */
+[data-theme="dark"] .file-input{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .file-input:hover{
+  background: rgba(255,133,87,.06);
+  border-color: var(--accent);
+}
+[data-theme="dark"] .file-input strong{
+  color: var(--text);
+}
+
+/* ============================================================================
+   TABS
+   ============================================================================ */
+
+[data-theme="dark"] .tabs{
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .tab{
+  color: var(--text-3);
+}
+[data-theme="dark"] .tab:hover{
+  color: var(--text-2);
+}
+[data-theme="dark"] .tab.active{
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Pill tabs */
+[data-theme="dark"] .tabs.tabs-pill{
+  background: var(--surface-2);
+}
+[data-theme="dark"] .tabs.tabs-pill .tab.active{
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+
+/* ============================================================================
+   STEPPER
+   ============================================================================ */
+
+[data-theme="dark"] .step-num{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text-3);
+}
+[data-theme="dark"] .step-item:not(:last-child)::after{
+  background: var(--border);
+}
+[data-theme="dark"] .step-item span{
+  color: var(--text-3);
+}
+[data-theme="dark"] .step-item.active span{
+  color: var(--text);
+}
+[data-theme="dark"] .step-item.done span{
+  color: var(--text-2);
+}
+
+/* ============================================================================
+   TABLES - tables.css hardcodes background:#fff
+   ============================================================================ */
+
+[data-theme="dark"] table{
+  background: var(--surface);
+  color: var(--text);
+}
+
+[data-theme="dark"] thead{
+  background: var(--surface-2);
+}
+
+[data-theme="dark"] thead th{
+  background: var(--surface-2);
+  color: var(--text-3);
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] tbody td{
+  color: var(--text);
+  border-bottom-color: var(--border-2);
+}
+
+[data-theme="dark"] tbody tr:hover{
+  background: var(--surface-2);
+}
+
+[data-theme="dark"] .tbl-zebra tbody tr:nth-child(even){
+  background: rgba(15,23,42,.5);
+}
+
+[data-theme="dark"] .tbl-sticky thead th{
+  background: var(--surface-2);
+  box-shadow: inset 0 -1px 0 var(--border);
+}
+
+[data-theme="dark"] .tbl-footer{
+  background: var(--surface-2);
+  border-top-color: var(--border);
+  color: var(--text-2);
+}
+
+[data-theme="dark"] .tbl-footer .pages button{
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text-2);
+}
+[data-theme="dark"] .tbl-footer .pages button:hover:not(:disabled){
+  border-color: var(--accent);
+  color: var(--accent);
+}
+[data-theme="dark"] .tbl-footer .pages button.active{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+[data-theme="dark"] .cell-user .name{
+  color: var(--text);
+}
+[data-theme="dark"] .cell-user .email{
+  color: var(--text-3);
+}
+
+/* Table cards on mobile */
+@media (max-width:640px){
+  [data-theme="dark"] .table-cards tbody tr{
+    background: var(--surface);
+    border-color: var(--border);
+  }
+  [data-theme="dark"] .table-cards tbody tr:hover{
+    background: var(--surface);
+  }
+  [data-theme="dark"] .table-cards tbody td{
+    border-bottom-color: var(--border-2);
+  }
+}
+
+/* ============================================================================
+   MODALS
+   ============================================================================ */
+
+[data-theme="dark"] .modal-bg{
+  background: rgba(2,6,23,.75);
+}
+
+[data-theme="dark"] .modal{
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .modal-head{
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .modal-head h3{
+  color: var(--text);
+}
+
+[data-theme="dark"] .modal-head .sub{
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .modal-close{
+  color: var(--text-3);
+}
+[data-theme="dark"] .modal-close:hover{
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+[data-theme="dark"] .modal-body{
+  color: var(--text);
+}
+
+[data-theme="dark"] .modal-foot{
+  background: var(--surface);
+  border-top-color: var(--border);
+}
+
+[data-theme="dark"] .modal-section{
+  border-bottom-color: var(--border-2);
+}
+
+[data-theme="dark"] .modal-section-title{
+  color: var(--text);
+}
+
+[data-theme="dark"] .modal-divider{
+  background: var(--border-2);
+}
+
+/* Confirm icon backgrounds */
+[data-theme="dark"] .modal-confirm .modal-icon.danger{
+  background: rgba(248,113,113,.15);
+  color: var(--red);
+}
+[data-theme="dark"] .modal-confirm .modal-icon.warning{
+  background: rgba(245,158,11,.15);
+  color: var(--amber);
+}
+[data-theme="dark"] .modal-confirm .modal-icon.success{
+  background: rgba(16,185,129,.15);
+  color: var(--green);
+}
+[data-theme="dark"] .modal-confirm .modal-icon.info{
+  background: rgba(96,165,250,.15);
+  color: var(--blue);
+}
+
+/* ============================================================================
+   TOASTS
+   ============================================================================ */
+
+[data-theme="dark"] .toast{
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.55),
+    0 4px 8px rgba(0,0,0,.3);
+}
+
+[data-theme="dark"] .toast-title{
+  color: var(--text);
+}
+
+[data-theme="dark"] .toast-msg{
+  color: var(--text-2);
+}
+
+/* Toast icon backgrounds */
+[data-theme="dark"] .toast.success .toast-icon{
+  background: rgba(16,185,129,.18);
+  color: #6ee7b7;
+}
+[data-theme="dark"] .toast.error .toast-icon{
+  background: rgba(248,113,113,.18);
+  color: #fca5a5;
+}
+[data-theme="dark"] .toast.info .toast-icon{
+  background: rgba(96,165,250,.18);
+  color: #93c5fd;
+}
+[data-theme="dark"] .toast.warning .toast-icon{
+  background: rgba(245,158,11,.18);
+  color: #fcd34d;
+}
+
+[data-theme="dark"] .toast-close{
+  color: var(--text-3);
+}
+[data-theme="dark"] .toast-close:hover{
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* ============================================================================
+   PROCESSING OVERLAY
+   ============================================================================ */
+
+[data-theme="dark"] .processing{
+  background: rgba(2,6,23,.8);
+}
+
+[data-theme="dark"] .processing-box{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+[data-theme="dark"] .spinner-ring{
+  border-color: var(--border-2);
+  border-top-color: var(--accent);
+}
+
+/* ============================================================================
+   PILLS - each variant hardcodes a background in components.css
+   ============================================================================ */
+
+[data-theme="dark"] .pill.Pending    { background: rgba(96,165,250,.15);  color: #93c5fd; }
+[data-theme="dark"] .pill.In-Transit { background: rgba(255,133,87,.15);  color: #fdba74; }
+[data-theme="dark"] .pill.On-Hold    { background: rgba(245,158,11,.15);  color: #fcd34d; }
+[data-theme="dark"] .pill.Delivered,
+[data-theme="dark"] .pill.Paid,
+[data-theme="dark"] .pill.Deposit,
+[data-theme="dark"] .pill.Open       { background: rgba(16,185,129,.15);  color: #6ee7b7; }
+[data-theme="dark"] .pill.Cancelled,
+[data-theme="dark"] .pill.Unpaid     { background: rgba(248,113,113,.15); color: #fca5a5; }
+[data-theme="dark"] .pill.Refunded,
+[data-theme="dark"] .pill.Refund     { background: rgba(167,139,250,.15); color: #c4b5fd; }
+[data-theme="dark"] .pill.Withdraw   { background: rgba(255,133,87,.15);  color: #fdba74; }
+[data-theme="dark"] .pill.Shipment   { background: rgba(96,165,250,.15);  color: #93c5fd; }
+[data-theme="dark"] .pill.Closed     { background: rgba(100,116,139,.15); color: #94a3b8; }
+
+/* ============================================================================
+   KVs
+   ============================================================================ */
+
+[data-theme="dark"] .kv .k{
+  color: var(--text-3);
+}
+[data-theme="dark"] .kv .v{
+  color: var(--text);
+}
+[data-theme="dark"] .kv .v.mono{
+  color: var(--accent);
+}
+
+/* ============================================================================
+   EMPTY STATES
+   ============================================================================ */
+
+[data-theme="dark"] .empty-illustration{
+  background: var(--surface-2);
+  color: var(--text-3);
+}
+[data-theme="dark"] .empty h4{
+  color: var(--text);
+}
+[data-theme="dark"] .empty p{
+  color: var(--text-2);
+}
+
+/* ============================================================================
+   ALERTS
+   ============================================================================ */
+
+[data-theme="dark"] .alert-banner{
+  background: rgba(255,133,87,.08);
+  border-left-color: var(--accent);
+}
+[data-theme="dark"] .alert-banner .alert-body h4{
+  color: var(--text);
+}
+[data-theme="dark"] .alert-banner .alert-body p{
+  color: var(--text-2);
+}
+
+[data-theme="dark"] .alert-banner.warn{
+  background: rgba(245,158,11,.1);
+  border-left-color: var(--amber);
+}
+[data-theme="dark"] .alert-banner.warn .alert-body h4,
+[data-theme="dark"] .alert-banner.warn .alert-body p{
+  color: #fcd34d;
+}
+
+[data-theme="dark"] .alert-banner.danger{
+  background: rgba(248,113,113,.1);
+  border-left-color: var(--red);
+}
+[data-theme="dark"] .alert-banner.danger .alert-body h4,
+[data-theme="dark"] .alert-banner.danger .alert-body p{
+  color: #fca5a5;
+}
+
+[data-theme="dark"] .alert-banner.info{
+  background: rgba(96,165,250,.1);
+  border-left-color: var(--blue);
+}
+[data-theme="dark"] .alert-banner.info .alert-body h4,
+[data-theme="dark"] .alert-banner.info .alert-body p{
+  color: #93c5fd;
+}
+
+[data-theme="dark"] .alert-banner.success{
+  background: rgba(16,185,129,.1);
+  border-left-color: var(--green);
+}
+[data-theme="dark"] .alert-banner.success .alert-body h4,
+[data-theme="dark"] .alert-banner.success .alert-body p{
+  color: #6ee7b7;
+}
+
+/* ============================================================================
+   WALLET / AMOUNT BANNERS
+   Already dark gradients; adjust shadows and icons so they pop
+   ============================================================================ */
+
+[data-theme="dark"] .wallet-hero{
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.5),
+    0 4px 8px rgba(0,0,0,.3);
+}
+
+[data-theme="dark"] .amount-banner{
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.45),
+    0 4px 8px rgba(0,0,0,.25);
+}
+
+/* ============================================================================
+   PAY TILES / QUICK AMOUNTS
+   ============================================================================ */
+
+[data-theme="dark"] .pay-tile{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .pay-tile:hover{
+  border-color: var(--text-3);
+}
+[data-theme="dark"] .pay-tile.selected{
+  background: rgba(255,133,87,.08);
+  border-color: var(--accent);
+}
+
+[data-theme="dark"] .pay-icon{
+  background: var(--surface);
+  color: var(--text-2);
+}
+[data-theme="dark"] .pay-icon.mtn   { background: rgba(217,119,6,.15);  color: #fcd34d; }
+[data-theme="dark"] .pay-icon.momo  { background: rgba(96,165,250,.15); color: #93c5fd; }
+[data-theme="dark"] .pay-icon.card  { background: rgba(167,139,250,.15);color: #c4b5fd; }
+[data-theme="dark"] .pay-icon.crypto{ background: rgba(255,133,87,.15); color: #fdba74; }
+[data-theme="dark"] .pay-icon.bank  { background: rgba(16,185,129,.15); color: #6ee7b7; }
+
+[data-theme="dark"] .pay-name{
+  color: var(--text);
+}
+[data-theme="dark"] .pay-desc{
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .quick-amount{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .quick-amount:hover{
+  background: rgba(255,133,87,.06);
+  border-color: var(--accent);
+}
+[data-theme="dark"] .quick-amount.selected{
+  background: rgba(255,133,87,.08);
+  border-color: var(--accent);
+}
+[data-theme="dark"] .quick-amount .amt{
+  color: var(--text);
+}
+[data-theme="dark"] .quick-amount.selected .amt{
+  color: var(--accent);
+}
+
+/* ============================================================================
+   TIMELINE
+   ============================================================================ */
+
+[data-theme="dark"] .timeline::before{
+  background: var(--border);
+}
+[data-theme="dark"] .tl-dot{
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .tl-item.latest .tl-dot{
+  background: var(--accent);
+  border-color: var(--accent);
+}
+[data-theme="dark"] .tl-item.done .tl-dot{
+  background: var(--green);
+  border-color: var(--green);
+}
+[data-theme="dark"] .tl-loc{
+  color: var(--text);
+}
+[data-theme="dark"] .tl-desc{
+  color: var(--text-2);
+}
+
+/* ============================================================================
+   SUMMARY / DEPOSIT RECEIPT
+   ============================================================================ */
+
+[data-theme="dark"] .summary{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .summary-row{
+  border-bottom-color: var(--border);
+}
+[data-theme="dark"] .summary-row:last-child{
+  border-top-color: var(--border);
+}
+[data-theme="dark"] .summary-row .lbl{
+  color: var(--text-2);
+}
+[data-theme="dark"] .summary-row .val{
+  color: var(--text);
+}
+
+[data-theme="dark"] .deposit-receipt{
+  background: var(--surface-2);
+  border-color: var(--accent);
+}
+[data-theme="dark"] .deposit-receipt .receipt-label{
+  color: var(--text-3);
+}
+[data-theme="dark"] .deposit-receipt .receipt-sub{
+  color: var(--text-2);
+}
+
+[data-theme="dark"] .receipt-icon{
+  background: rgba(16,185,129,.15);
+  color: var(--green);
+}
+
+/* ============================================================================
+   ADDRESS CARDS
+   ============================================================================ */
+
+[data-theme="dark"] .addr-card{
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .addr-card:hover{
+  border-color: var(--text-3);
+}
+[data-theme="dark"] .addr-card h4{
+  color: var(--text);
+}
+
+/* ============================================================================
+   SHARE GRID / QR BOX
+   ============================================================================ */
+
+[data-theme="dark"] .share-btn{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .share-btn:hover{
+  border-color: var(--text-3);
+}
+[data-theme="dark"] .share-btn .lbl{
+  color: var(--text);
+}
+
+[data-theme="dark"] .qr-box{
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+[data-theme="dark"] .qr-box img{
+  background: #fff; /* QR codes need white background to scan */
+}
+
+/* ============================================================================
+   TOOLBAR
+   ============================================================================ */
+
+[data-theme="dark"] .toolbar{
+  background: var(--surface-2);
+  border-bottom-color: var(--border);
+}
+[data-theme="dark"] .toolbar select{
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* ============================================================================
+   TRUST CHIPS
+   ============================================================================ */
+
+[data-theme="dark"] .trust-chip{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text-2);
+}
+
+/* ============================================================================
+   BADGES
+   ============================================================================ */
+
+[data-theme="dark"] .badge{
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+
+/* ============================================================================
+   FOCUS RING - shift to accent-2 for better visibility on dark
+   ============================================================================ */
+
+[data-theme="dark"] :focus-visible{
+  outline-color: var(--accent);
+}
+
+/* ============================================================================
+   LEAFLET MAP
+   Leaflet tiles are always light; just adjust the container
+   ============================================================================ */
+
+[data-theme="dark"] .leaflet-container{
+  background: #1a2332;
+}
+[data-theme="dark"] .leaflet-popup-content-wrapper,
+[data-theme="dark"] .leaflet-popup-tip{
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ============================================================================
+   AUTH SCREEN (portal + app.html signed-out)
+   auth.css hardcodes white backgrounds
+   ============================================================================ */
+
+[data-theme="dark"] .auth-wrap{
+  background: var(--bg);
+}
+
+[data-theme="dark"] .auth-left{
+  background: var(--bg);
+}
+
+[data-theme="dark"] .auth-h1{
+  color: var(--text);
+}
+[data-theme="dark"] .auth-p{
+  color: var(--text-2);
+}
+
+[data-theme="dark"] .auth-tabs{
+  border-bottom-color: var(--border);
+}
+[data-theme="dark"] .auth-tab{
+  color: var(--text-3);
+}
+[data-theme="dark"] .auth-tab.active{
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+[data-theme="dark"] .auth-brand-name{
+  color: var(--text);
+}
+[data-theme="dark"] .auth-brand-name small{
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .auth-form .field input{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+[data-theme="dark"] .social-btn{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text-2);
+}
+[data-theme="dark"] .social-btn:hover{
+  background: var(--surface);
+  border-color: var(--text-3);
+}
+
+[data-theme="dark"] .trust-note{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .divider-or{
+  color: var(--text-3);
+}
+[data-theme="dark"] .divider-or::before,
+[data-theme="dark"] .divider-or::after{
+  background: var(--border);
+}
+
+/* ============================================================================
+   PUBLIC TRACKING PAGE
+   ============================================================================ */
+
+[data-theme="dark"] .pub-header{
+  background: var(--surface);
+  border-bottom-color: var(--border);
+}
+[data-theme="dark"] .pub-brand-name{
+  color: var(--text);
+}
+[data-theme="dark"] .pub-nav a{
+  color: var(--text-2);
+}
+[data-theme="dark"] .pub-nav a:hover{
+  background: var(--surface-2);
+  color: var(--text);
+}
+[data-theme="dark"] .pub-nav a.ghost{
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .search-card{
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .search-input{
+  color: var(--text);
+  background: transparent;
+}
+[data-theme="dark"] .search-input::placeholder{
+  color: var(--text-3);
+}
+[data-theme="dark"] .search-clear{
+  background: var(--surface-2);
+  color: var(--text-3);
+}
+
+[data-theme="dark"] .loading-inner,
+[data-theme="dark"] .progress-card,
+[data-theme="dark"] .card{
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .feature{
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .feature h4{
+  color: var(--text);
+}
+
+[data-theme="dark"] .sample-inner{
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .sample-code{
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--accent);
+}
+
+[data-theme="dark"] .status-banner,
+[data-theme="dark"] .status-hero{
+  /* already gradient, keep as-is but bump shadow */
+  box-shadow: 0 12px 32px rgba(0,0,0,.45);
+}
+
+[data-theme="dark"] .info-block{
+  background: var(--surface-2);
+  border-color: var(--border-2);
+}
+[data-theme="dark"] .info-label{
+  color: var(--text-3);
+}
+[data-theme="dark"] .info-value{
+  color: var(--text);
+}
+
+[data-theme="dark"] .party-card{
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .party-name{
+  color: var(--text);
+}
+[data-theme="dark"] .party-detail{
+  color: var(--text-2);
+}
+
+/* ============================================================================
+   REDUCED MOTION - no additional rules needed, all overrides are static
+   ============================================================================ */

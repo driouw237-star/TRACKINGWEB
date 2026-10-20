@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign In — GlobalExpress</title>
+
+<!-- Primary meta -->
+<meta name="description" content="Sign in to your GlobalExpress account to manage shipments, track packages, and manage your wallet." />
+<meta name="theme-color" content="#0b2545" />
+<meta name="format-detection" content="telephone=no" />
+
+<!-- Don't index the portal — it's URL-only -->
+<meta name="robots" content="noindex, nofollow" />
+
+<!-- Favicon (inline SVG) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b2545'/><text x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' fill='%23FF6B35' text-anchor='middle'>GE</text></svg>" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<!-- Our CSS — order matters -->
+<link rel="stylesheet" href="css/variables.css" />
+<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/portal.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     AUTH WRAPPER — two-column split
+     ============================================================ -->
+<div class="auth-wrap" id="authWrap">
+
+  <!-- LEFT COLUMN: form -->
+  <div class="auth-left">
+
+    <!-- Brand -->
+    <div class="auth-brand">
+      <div class="auth-logo" aria-hidden="true">GE</div>
+      <div class="auth-brand-name">
+        GlobalExpress
+        <small>CUSTOMER PORTAL</small>
+      </div>
+    </div>
+
+    <!-- Heading (swapped by portal.js on tab change) -->
+    <h1 class="auth-h1" id="authH1">Welcome back</h1>
+    <p class="auth-p" id="authP">Sign in to manage your shipments and wallet.</p>
+
+    <!-- Tabs -->
+    <div class="auth-tabs" role="tablist">
+      <button class="auth-tab active" id="tabLogin" type="button" role="tab" aria-selected="true">
+        Sign In
+      </button>
+      <button class="auth-tab" id="tabSignup" type="button" role="tab" aria-selected="false">
+        Create Account
+      </button>
+    </div>
+
+    <!-- Error banner (hidden until portal.js reveals it) -->
+    <div class="auth-error" id="authError" role="alert">
+      <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+      <span id="authErrorText">Error</span>
+    </div>
+
+    <!-- ============================================================
+         LOGIN FORM
+         ============================================================ -->
+    <form class="auth-form" id="loginForm" autocomplete="off" novalidate>
+      <div class="field">
+        <label for="loginEmail">Email Address</label>
+        <input
+          type="email"
+          id="loginEmail"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required />
+      </div>
+
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <div class="pw-wrap">
+          <input
+            type="password"
+            id="loginPassword"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required />
+          <button
+            type="button"
+            class="pw-toggle"
+            aria-label="Toggle password visibility">
+            <i class="fas fa-eye" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="auth-row">
+        <label class="checkbox">
+          <input type="checkbox" id="rememberMe" name="remember" />
+          <span>Remember me</span>
+        </label>
+        <a href="#" class="auth-link">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg btn-block" id="loginSubmit">
+        <i class="fas fa-right-to-bracket" aria-hidden="true"></i>
+        Sign In
+      </button>
+    </form>
+
+    <!-- ============================================================
+         SIGNUP FORM
+         ============================================================ -->
+    <form class="auth-form hidden" id="signupForm" autocomplete="off" novalidate>
+      <div class="field">
+        <label for="signupName">Full Name <span class="req">*</span></label>
+        <input
+          type="text"
+          id="signupName"
+          name="name"
+          placeholder="John Smith"
+          autocomplete="name"
+          required />
+      </div>
+
+      <div class="field">
+        <label for="signupEmail">Email Address <span class="req">*</span></label>
+        <input
+          type="email"
+          id="signupEmail"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required />
+      </div>
+
+      <div class="field">
+        <label for="signupPassword">Password <span class="req">*</span></label>
+        <div class="pw-wrap">
+          <input
+            type="password"
+            id="signupPassword"
+            name="password"
+            placeholder="At least 6 characters"
+            autocomplete="new-password"
+            minlength="6"
+            required />
+          <button
+            type="button"
+            class="pw-toggle"
+            aria-label="Toggle password visibility">
+            <i class="fas fa-eye" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="pw-meter" aria-hidden="true">
+          <div class="pw-meter-fill" id="pwMeterFill"></div>
+        </div>
+        <div class="pw-meter-text" id="pwMeterText">Password strength</div>
+      </div>
+
+      <div class="field">
+        <label class="checkbox checkbox-inline">
+          <input type="checkbox" id="agreeTerms" name="terms" required />
+          <span>I agree to the <a href="#" class="auth-link">Terms</a> and <a href="#" class="auth-link">Privacy Policy</a></span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg btn-block" id="signupSubmit">
+        <i class="fas fa-user-plus" aria-hidden="true"></i>
+        Create My Account
+      </button>
+    </form>
+
+    <!-- Divider + social auth -->
+    <div class="divider-or">or continue with</div>
+    <div class="social-row">
+      <button type="button" class="social-btn" aria-label="Continue with Google">
+        <i class="fab fa-google" style="color:#ea4335" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="social-btn" aria-label="Continue with Apple">
+        <i class="fab fa-apple" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="social-btn" aria-label="Continue with Microsoft">
+        <i class="fab fa-microsoft" style="color:#00a4ef" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <!-- Trust note -->
+    <div class="trust-note">
+      <i class="fas fa-lock" aria-hidden="true"></i>
+      <span>Your data is protected with 256-bit SSL encryption</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       RIGHT COLUMN: marketing panel
+       ============================================================ -->
+  <div class="auth-right" aria-hidden="true">
+    <div class="auth-right-content">
+      <h2>Ship smarter with GlobalExpress</h2>
+      <p>Join millions tracking shipments in real time across 190+ countries.</p>
+
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-bolt"></i></div>
+        <div>
+          <h4>Instant Tracking Codes</h4>
+          <p>Every shipment generates a unique code the second you pay.</p>
+        </div>
+      </div>
+
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-wallet"></i></div>
+        <div>
+          <h4>Secure Wallet</h4>
+          <p>Top up with MTN MoMo, cards, or crypto. Pay in one tap.</p>
+        </div>
+      </div>
+
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-share-nodes"></i></div>
+        <div>
+          <h4>Share Tracking Instantly</h4>
+          <p>Send a public link to anyone — no account needed.</p>
+        </div>
+      </div>
+
+      <div class="auth-demo">
+        <strong><i class="fas fa-circle-info"></i> Demo account</strong><br>
+        Email: <code>demo@globalexpress.test</code><br>
+        Password: <code>demo123</code>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================
+     MODAL ROOT, TOASTS, PROCESSING OVERLAY
+     ============================================================ -->
+<div id="modalRoot"></div>
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+<div class="processing" id="processing" role="status" aria-live="polite">
+  <div class="processing-box">
+    <div class="spinner-ring" aria-hidden="true"></div>
+    <h3 id="procTitle">Processing</h3>
+    <p id="procMsg">Please wait…</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="js/portal.js"></script>
+
+</body>
+</html>

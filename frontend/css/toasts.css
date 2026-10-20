@@ -1,0 +1,438 @@
+/* ============================================================================
+   GlobalExpress - toasts.css
+   Shared toast notification styling: fixed bottom-right stack, four types
+   (success, error, info, warning), action buttons, progress bar, compact
+   variant, dark variant, mobile full-width, reduced motion.
+
+   Depends on: variables.css (tokens), reset.css, base.css
+   JS contract:
+     toast(title, msg, type)  -> appends a .toast.<type> to #toastWrap,
+                                 removes it after ~3.4s by adding .removing
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Wrapper
+   --------------------------------------------------------------------------- */
+
+.toast-wrap{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  z-index:3000;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  pointer-events:none; /* children re-enable */
+  max-width:420px;
+  width:calc(100% - 48px);
+}
+
+/* Alternate positions */
+.toast-wrap.top{
+  bottom:auto;
+  top:24px;
+}
+.toast-wrap.center{
+  left:50%;
+  right:auto;
+  transform:translateX(-50%);
+  align-items:center;
+}
+.toast-wrap.top-right{
+  top:24px;
+  bottom:auto;
+  right:24px;
+}
+
+/* ---------------------------------------------------------------------------
+   Base toast
+   --------------------------------------------------------------------------- */
+
+.toast{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding:13px 16px;
+  min-width:280px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:
+    0 12px 32px rgba(15,23,42,.10),
+    0 4px 8px rgba(15,23,42,.04);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:13.5px;
+  font-weight:500;
+  color:var(--text);
+  pointer-events:auto;
+  position:relative;
+  overflow:hidden;
+  animation:toastIn .3s var(--ease);
+  will-change:transform,opacity;
+}
+
+@keyframes toastIn{
+  from{ opacity:0; transform:translateX(20px); }
+  to  { opacity:1; transform:none; }
+}
+
+/* Exit */
+.toast.removing{
+  animation:toastOut .25s var(--ease) forwards;
+}
+@keyframes toastOut{
+  from{ opacity:1; transform:none; }
+  to  { opacity:0; transform:translateX(20px); }
+}
+
+/* Alternate entry from below (for top-anchored wrappers) */
+.toast-wrap.top .toast{
+  animation:toastInTop .3s var(--ease);
+}
+@keyframes toastInTop{
+  from{ opacity:0; transform:translateY(-20px); }
+  to  { opacity:1; transform:none; }
+}
+.toast-wrap.top .toast.removing{
+  animation:toastOutTop .25s var(--ease) forwards;
+}
+@keyframes toastOutTop{
+  from{ opacity:1; transform:none; }
+  to  { opacity:0; transform:translateY(-20px); }
+}
+
+/* ---------------------------------------------------------------------------
+   Icon
+   --------------------------------------------------------------------------- */
+
+.toast-icon{
+  width:32px;
+  height:32px;
+  flex-shrink:0;
+  border-radius:9px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  background:var(--surface-2);
+  color:var(--text-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Body
+   --------------------------------------------------------------------------- */
+
+.toast-body{
+  flex:1;
+  min-width:0;
+  padding-top:1px;
+}
+
+.toast-title{
+  font-weight:600;
+  font-size:13.5px;
+  color:var(--text);
+  line-height:1.35;
+  margin-bottom:2px;
+}
+
+.toast-msg{
+  font-size:12.5px;
+  color:var(--text-2);
+  line-height:1.5;
+  word-break:break-word;
+}
+
+/* When there is no title, the msg is the primary line */
+.toast-body .toast-msg:first-child{
+  color:var(--text);
+  font-weight:500;
+  font-size:13.5px;
+}
+
+/* ---------------------------------------------------------------------------
+   Type variants
+   --------------------------------------------------------------------------- */
+
+/* Success */
+.toast.success{
+  border-color:#a7f3d0;
+}
+.toast.success .toast-icon{
+  background:#ecfdf5;
+  color:var(--green);
+}
+
+/* Error */
+.toast.error{
+  border-color:#fecaca;
+}
+.toast.error .toast-icon{
+  background:#fef2f2;
+  color:var(--red);
+}
+
+/* Info */
+.toast.info{
+  border-color:#bfdbfe;
+}
+.toast.info .toast-icon{
+  background:#eff6ff;
+  color:var(--blue);
+}
+
+/* Warning */
+.toast.warning{
+  border-color:#fde68a;
+}
+.toast.warning .toast-icon{
+  background:#fffbeb;
+  color:var(--amber);
+}
+
+/* ---------------------------------------------------------------------------
+   Close button
+   --------------------------------------------------------------------------- */
+
+.toast-close{
+  width:24px;
+  height:24px;
+  flex-shrink:0;
+  border:none;
+  background:transparent;
+  color:var(--text-3);
+  font-size:12px;
+  border-radius:6px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:background-color .15s var(--ease), color .15s var(--ease);
+  margin-top:2px;
+}
+.toast-close:hover{
+  background:var(--surface-2);
+  color:var(--text);
+}
+.toast-close:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Optional action button (Undo, View, Retry)
+   --------------------------------------------------------------------------- */
+
+.toast-action{
+  align-self:center;
+  flex-shrink:0;
+  padding:6px 12px;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-family:inherit;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.2px;
+  cursor:pointer;
+  transition:background-color .15s var(--ease), transform .15s var(--ease);
+}
+.toast-action:hover{
+  background:var(--accent-2);
+}
+.toast-action:active{
+  transform:scale(.97);
+}
+.toast-action:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Progress bar - shrinks over the toast lifetime
+   Usage: <div class="toast success with-progress">…<span class="toast-progress"></span></div>
+   JS sets the animation duration via style="animation-duration:3400ms"
+   --------------------------------------------------------------------------- */
+
+.toast.with-progress{
+  padding-bottom:16px;
+}
+
+.toast-progress{
+  position:absolute;
+  left:0;
+  bottom:0;
+  height:3px;
+  width:100%;
+  background:var(--accent);
+  transform-origin:left center;
+  animation:toastProgress linear forwards;
+}
+.toast.success .toast-progress{ background:var(--green); }
+.toast.error   .toast-progress{ background:var(--red); }
+.toast.warning .toast-progress{ background:var(--amber); }
+.toast.info    .toast-progress{ background:var(--blue); }
+
+@keyframes toastProgress{
+  from{ transform:scaleX(1); }
+  to  { transform:scaleX(0); }
+}
+
+/* Pause the progress bar (and timeout, in JS) on hover */
+.toast:hover .toast-progress{
+  animation-play-state:paused;
+}
+
+/* ---------------------------------------------------------------------------
+   Compact variant - single-line toasts for rapid feedback
+   --------------------------------------------------------------------------- */
+
+.toast.compact{
+  padding:10px 14px;
+  align-items:center;
+  gap:10px;
+}
+.toast.compact .toast-icon{
+  width:26px;
+  height:26px;
+  font-size:12px;
+  border-radius:7px;
+}
+.toast.compact .toast-title{
+  font-size:13px;
+  margin-bottom:0;
+}
+.toast.compact .toast-msg{
+  display:none;
+}
+
+/* ---------------------------------------------------------------------------
+   Dark variant - for pages with dark backgrounds
+   --------------------------------------------------------------------------- */
+
+.toast.dark{
+  background:#0f172a;
+  border-color:rgba(255,255,255,.08);
+  color:#fff;
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.4),
+    0 4px 8px rgba(0,0,0,.25);
+}
+.toast.dark .toast-title{
+  color:#fff;
+}
+.toast.dark .toast-msg{
+  color:rgba(255,255,255,.72);
+}
+.toast.dark .toast-close{
+  color:rgba(255,255,255,.55);
+}
+.toast.dark .toast-close:hover{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+.toast.dark.success .toast-icon{ background:rgba(5,150,105,.18); color:#6ee7b7; }
+.toast.dark.error   .toast-icon{ background:rgba(220,38,38,.18);  color:#fca5a5; }
+.toast.dark.info    .toast-icon{ background:rgba(37,99,235,.18);  color:#93c5fd; }
+.toast.dark.warning .toast-icon{ background:rgba(217,119,6,.18);  color:#fcd34d; }
+
+/* ---------------------------------------------------------------------------
+   Borderless variant - minimal style, no border, just shadow
+   --------------------------------------------------------------------------- */
+
+.toast.borderless{
+  border-color:transparent;
+  box-shadow:
+    0 12px 32px rgba(15,23,42,.12),
+    0 2px 6px rgba(15,23,42,.06);
+}
+
+/* Left accent bar variant */
+.toast.accent{
+  padding-left:20px;
+}
+.toast.accent::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:var(--accent);
+}
+.toast.accent.success::before{ background:var(--green); }
+.toast.accent.error::before  { background:var(--red); }
+.toast.accent.info::before   { background:var(--blue); }
+.toast.accent.warning::before{ background:var(--amber); }
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------------- */
+
+@media (max-width:600px){
+  .toast-wrap{
+    left:16px;
+    right:16px;
+    bottom:16px;
+    width:auto;
+    max-width:none;
+    gap:8px;
+  }
+  .toast-wrap.top{
+    top:16px;
+    bottom:auto;
+  }
+  .toast{
+    min-width:0;
+    max-width:none;
+    width:100%;
+    padding:12px 14px;
+  }
+  .toast-icon{
+    width:28px;
+    height:28px;
+    font-size:13px;
+  }
+  .toast-title{ font-size:13.5px; }
+  .toast-msg{ font-size:12.5px; }
+}
+
+@media (max-width:380px){
+  .toast-wrap{
+    left:10px;
+    right:10px;
+    bottom:10px;
+  }
+  .toast{
+    padding:10px 12px;
+    gap:10px;
+  }
+  .toast-icon{
+    width:26px;
+    height:26px;
+    font-size:12px;
+  }
+  .toast-action{
+    padding:5px 10px;
+    font-size:11.5px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  .toast,
+  .toast.removing,
+  .toast-wrap.top .toast,
+  .toast-wrap.top .toast.removing{
+    animation:none !important;
+  }
+  .toast-progress{
+    animation:none;
+    transform:scaleX(1);
+    opacity:.5;
+  }
+}

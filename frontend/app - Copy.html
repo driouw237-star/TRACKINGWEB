@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0b2545" />
+<meta name="description" content="GlobalExpress — Customer Portal. Track shipments, manage your wallet, and ship anywhere in the world." />
+<title>GlobalExpress — Customer Portal</title>
+
+<!-- ============================================================
+     FONTS
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- ============================================================
+     ICONS + MAPS (CDN, version-pinned)
+     ============================================================ -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- ============================================================
+     FAVICON (inline SVG, no external file needed)
+     ============================================================ -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b2545'/><text x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' fill='%23FF6B35' text-anchor='middle'>GE</text></svg>" />
+
+<!-- ============================================================
+     GLOBALEXPRESS CSS — 15 files, load in order
+     ============================================================
+     §1  variables   — design tokens (colors, radii, shadows, motion)
+     §2  reset       — modern CSS reset
+     §3  base        — body typography, utility classes
+     §4  layout      — container / grid / section spacing
+     §5  components  — pills, badges, avatars, .kv, .empty, .alert-banner
+     §6  buttons     — .btn and variants
+     §7  forms       — inputs, selects, checkboxes, .field-error
+     §8  tables      — .tbl-wrap, .table-cards, pagination
+     §9  modals      — .modal-bg, .modal, .modal-head/body/foot
+     §10 toasts      — .toast-wrap, .toast, type variants
+     §11 auth        — login/signup split layout (used by portal.html too)
+     §12 dashboard   — .wallet-hero, .stats, .quick-actions
+     §13 wallet      — .amount-banner, .quick-amounts, .pay-tiles
+     §14 app         — .app, .sidebar, .topbar, .main, .content, .panel
+     §15 responsive  — sitewide media queries
+     ============================================================ -->
+<link rel="stylesheet" href="css/variables.css" />
+<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/buttons.css" />
+<link rel="stylesheet" href="css/forms.css" />
+<link rel="stylesheet" href="css/tables.css" />
+<link rel="stylesheet" href="css/modals.css" />
+<link rel="stylesheet" href="css/toasts.css" />
+<link rel="stylesheet" href="css/auth.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+<link rel="stylesheet" href="css/wallet.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     OVERLAY ROOTS — must exist before any JS runs
+     ============================================================
+     These three containers are the contract between ui.js and the
+     DOM. If any is missing, ui.js logs a warning and no-ops.
+     ============================================================ -->
+<div id="modalRoot"></div>
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="false"></div>
+<div class="processing" id="processing" role="alertdialog" aria-modal="true" aria-labelledby="procTitle">
+  <div class="processing-box">
+    <div class="spinner-ring" aria-hidden="true"></div>
+    <h3 id="procTitle">Processing</h3>
+    <p id="procMsg">Please wait…</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     AUTH SCREEN (signed-out state)
+     ============================================================
+     Normally portal.html handles login. This block exists as a
+     fallback: if a signed-out user lands on app.html directly, we
+     render a minimal prompt instead of a blank screen. app.js will
+     populate and show this if there's no valid session.
+     ============================================================ -->
+<div id="authWrap" class="auth-wrap hidden">
+  <div class="auth-left">
+    <div class="auth-brand">
+      <div class="auth-logo">GE</div>
+      <div class="auth-brand-name">
+        GlobalExpress
+        <small>CUSTOMER PORTAL</small>
+      </div>
+    </div>
+    <h1 class="auth-h1">You're signed out</h1>
+    <p class="auth-p">Please sign in to access your dashboard.</p>
+    <a class="btn btn-primary btn-lg btn-block" href="portal.html">
+      <i class="fas fa-right-to-bracket"></i> Go to Sign In
+    </a>
+  </div>
+  <div class="auth-right">
+    <div class="auth-right-content">
+      <h2>Ship smarter with GlobalExpress</h2>
+      <p>Join millions tracking shipments in real time across 190+ countries.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PUBLIC TRACKING CONTAINER
+     ============================================================
+     Shown only when the URL contains ?track=CODE. app.js detects
+     the param, hides #app, unhides this, and delegates rendering
+     to the public tracking view. Populated by app.js.
+     ============================================================ -->
+<div id="publicTrack" class="hidden"></div>
+
+<!-- ============================================================
+     MAIN APP SHELL
+     ============================================================
+     Hidden by default. app.js removes .hidden once a valid session
+     is detected and mounts the sidebar + topbar + route content.
+     ============================================================ -->
+<div class="app hidden" id="app">
+
+  <!-- ---------- SIDEBAR ---------- -->
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+    <div class="sb-brand">
+      <div class="sb-logo" aria-hidden="true">GE</div>
+      <div>
+        <div class="sb-name">GlobalExpress</div>
+        <div class="sb-role">Customer Portal</div>
+      </div>
+    </div>
+    <nav class="sb-nav" id="sbNav">
+      <!-- Rendered by app.js: <a class="sb-link" data-view="...">…</a> -->
+    </nav>
+    <div class="sb-footer">
+      <span class="sb-dot" aria-hidden="true"></span>
+      <span>All systems operational</span>
+    </div>
+  </aside>
+
+  <!-- ---------- MAIN COLUMN ---------- -->
+  <div class="main">
+
+    <!-- ---------- TOPBAR ---------- -->
+    <header class="topbar">
+      <button
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Toggle navigation"
+        type="button"
+      >
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+
+      <div class="topbar-title-block">
+        <h1 class="topbar-title" id="pageTitle">Dashboard</h1>
+        <div class="topbar-sub" id="pageSub">Welcome back</div>
+      </div>
+
+      <div class="topbar-actions">
+        <!-- Wallet chip — click navigates to wallet view -->
+        <button
+          class="wallet-chip"
+          id="walletChip"
+          type="button"
+          title="View wallet"
+        >
+          <i class="fas fa-wallet" style="color:#047857;font-size:15px" aria-hidden="true"></i>
+          <div>
+            <div class="lbl">Wallet</div>
+            <div class="bal" id="topWalletBal">Fr. 0</div>
+          </div>
+        </button>
+
+        <!-- Quick deposit button -->
+        <button
+          class="btn btn-primary btn-sm"
+          id="quickDepositBtn"
+          type="button"
+          title="Deposit money"
+        >
+          <i class="fas fa-plus" aria-hidden="true"></i> Deposit
+        </button>
+
+        <!-- Notifications -->
+        <button
+          class="icon-btn"
+          id="notifBtn"
+          type="button"
+          title="Notifications"
+          aria-label="Notifications"
+        >
+          <i class="fas fa-bell" aria-hidden="true"></i>
+          <span class="dot" id="notifDot" hidden aria-hidden="true"></span>
+        </button>
+
+        <!-- User chip — click opens account menu -->
+        <button
+          class="user-chip"
+          id="userChip"
+          type="button"
+          aria-label="Account menu"
+        >
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div class="user-meta">
+            <div class="user-name" id="userName">User</div>
+            <div class="user-role">Customer</div>
+          </div>
+          <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-3);margin-left:4px" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ---------- ROUTE CONTENT ---------- -->
+    <main class="content" id="content" role="main">
+      <!-- router.js swaps innerHTML here. app.js starts the router. -->
+    </main>
+  </div>
+</div>
+
+<!-- ============================================================
+     JS — 9 core modules + 3 tracking + 15 pages + 1 bootstrap
+     ============================================================
+     Load order matters. Do not reorder without understanding the
+     dependency graph:
+       utils    ← no deps
+       ui       ← uses Utils.esc (falls back to inline if absent)
+       validators ← uses Utils helpers
+       auth     ← uses Utils
+       store    ← uses Utils, Realtime.notifyLocalChange
+       realtime ← uses Utils
+       router   ← uses Utils, UI
+       tracking/* ← used by public tracking view (via app.js)
+       pages/*  ← each uses Utils/UI/Auth/Store/Realtime
+       app.js   ← orchestrates everything; calls App.start()
+     ============================================================ -->
+
+<!-- §C1 — Core -->
+<script src="js/utils.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/validators.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/store.js"></script>
+<script src="js/realtime.js"></script>
+<script src="js/router.js"></script>
+
+<!-- §C2 — Tracking modules (used by public ?track= view) -->
+<script src="js/tracking/map.js"></script>
+<script src="js/tracking/timeline.js"></script>
+<script src="js/tracking/progress.js"></script>
+
+<!-- §C3 — Page modules (registered via App.register()) -->
+<script src="js/pages/dashboard.js"></script>
+<script src="js/pages/create-shipment.js"></script>
+<script src="js/pages/my-shipments.js"></script>
+<script src="js/pages/shipment-detail.js"></script>
+<script src="js/pages/wallet.js"></script>
+<script src="js/pages/deposit.js"></script>
+<script src="js/pages/withdraw.js"></script>
+<script src="js/pages/payment-history.js"></script>
+<script src="js/pages/invoices.js"></script>
+<script src="js/pages/addresses.js"></script>
+<script src="js/pages/referrals.js"></script>
+<script src="js/pages/notifications.js"></script>
+<script src="js/pages/profile.js"></script>
+<script src="js/pages/security.js"></script>
+<script src="js/pages/support.js"></script>
+
+<!-- §C4 — Bootstrap (must load LAST) -->
+<script src="js/app.js"></script>
+
+</body>
+</html>

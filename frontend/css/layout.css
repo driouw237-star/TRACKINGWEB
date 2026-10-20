@@ -1,0 +1,397 @@
+/* ============================================================================
+   GlobalExpress - layout.css
+   Page-level layout primitives: page wrapper, container, grids, flex helpers,
+   spacing utilities, aspect ratios, sticky helpers, section wrappers.
+
+   Depends on: variables.css (tokens), reset.css, base.css
+   Used by: every page. Loaded before page-specific CSS.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   PAGE WRAPPER
+   Constrains content to --content-max (1400px) and centers it.
+   Every page's top-level content should be wrapped in <div class="page">.
+   --------------------------------------------------------------------------- */
+
+.page{
+  width:100%;
+  max-width:var(--content-max, 1400px);
+  margin:0 auto;
+}
+
+/* Narrow variant for detail views (700px) */
+.page-narrow{
+  max-width:720px;
+  margin:0 auto;
+}
+
+/* Wide variant for dashboards (nothing constrained) */
+.page-wide{
+  max-width:none;
+}
+
+/* ---------------------------------------------------------------------------
+   CONTAINER
+   Generic max-width wrapper for non-page contexts (modals, hero sections,
+   marketing panels). Slightly narrower than .page.
+   --------------------------------------------------------------------------- */
+
+.container{
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+.container-sm{
+  max-width:720px;
+}
+
+.container-lg{
+  max-width:1440px;
+}
+
+/* ---------------------------------------------------------------------------
+   SECTION
+   Vertical rhythm blocks. Use when you need consistent spacing between
+   major content sections without relying on panel margins.
+   --------------------------------------------------------------------------- */
+
+.section{
+  margin-bottom:32px;
+}
+
+.section:last-child{
+  margin-bottom:0;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+
+.section-head h2,
+.section-head h3{
+  margin:0;
+  font-family:var(--font-display);
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-.01em;
+}
+
+.section-head h2{ font-size:22px; }
+.section-head h3{ font-size:17px; }
+
+/* ---------------------------------------------------------------------------
+   GRIDS
+   Two-dimensional layouts. All use gap (not margins) so nested grids work
+   without negative-margin hacks.
+   --------------------------------------------------------------------------- */
+
+.grid{
+  display:grid;
+  gap:16px;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:14px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+}
+
+.grid-4{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:14px;
+}
+
+/* Auto-fit grid - columns collapse based on available space
+   Usage: <div class="grid-auto" style="--min:240px">…</div> */
+.grid-auto{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(var(--min, 240px), 1fr));
+  gap:16px;
+}
+
+/* Full-width cell inside a grid */
+.full{
+  grid-column:1 / -1;
+}
+
+/* ---------------------------------------------------------------------------
+   FLEX HELPERS
+   The four layout patterns you'll use 90% of the time.
+   --------------------------------------------------------------------------- */
+
+/* Row - horizontal flex with centered items */
+.row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.row-start{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.row-between{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.row-wrap{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+/* Stack - vertical flex */
+.stack{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.stack-sm{ gap:8px; }
+.stack-lg{ gap:20px; }
+
+/* Cluster - inline flex that wraps (for chips, tags, badges) */
+.cluster{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+}
+
+/* Split - two children pushed to opposite ends */
+.split{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+/* Center - puts a single child dead center */
+.center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Push - pushes the second child to the far right */
+.push{
+  margin-left:auto;
+}
+
+/* Flex grow/shrink modifiers */
+.grow{ flex:1 1 auto; min-width:0; }
+.no-shrink{ flex-shrink:0; }
+
+/* ---------------------------------------------------------------------------
+   SPACING UTILITIES
+   Use sparingly. For component spacing prefer gap. These exist for one-off
+   adjustments.
+   --------------------------------------------------------------------------- */
+
+/* Margins - top */
+.mt-0  { margin-top:0; }
+.mt-4  { margin-top:4px; }
+.mt-8  { margin-top:8px; }
+.mt-12 { margin-top:12px; }
+.mt-16 { margin-top:16px; }
+.mt-20 { margin-top:20px; }
+.mt-24 { margin-top:24px; }
+.mt-32 { margin-top:32px; }
+
+/* Margins - bottom */
+.mb-0  { margin-bottom:0; }
+.mb-4  { margin-bottom:4px; }
+.mb-8  { margin-bottom:8px; }
+.mb-12 { margin-bottom:12px; }
+.mb-16 { margin-bottom:16px; }
+.mb-20 { margin-bottom:20px; }
+.mb-24 { margin-bottom:24px; }
+.mb-32 { margin-bottom:32px; }
+
+/* Margins - other */
+.ml-auto { margin-left:auto; }
+.mr-auto { margin-right:auto; }
+.mx-auto { margin-left:auto; margin-right:auto; }
+
+/* Padding */
+.p-0  { padding:0; }
+.p-8  { padding:8px; }
+.p-12 { padding:12px; }
+.p-16 { padding:16px; }
+.p-20 { padding:20px; }
+.p-24 { padding:24px; }
+
+/* Gap utilities */
+.gap-4  { gap:4px; }
+.gap-8  { gap:8px; }
+.gap-12 { gap:12px; }
+.gap-16 { gap:16px; }
+.gap-20 { gap:20px; }
+.gap-24 { gap:24px; }
+
+/* ---------------------------------------------------------------------------
+   ASPECT RATIOS
+   --------------------------------------------------------------------------- */
+
+.aspect-square{ aspect-ratio:1 / 1; }
+.aspect-4-3   { aspect-ratio:4 / 3; }
+.aspect-16-9  { aspect-ratio:16 / 9; }
+.aspect-3-2   { aspect-ratio:3 / 2; }
+.aspect-video { aspect-ratio:16 / 9; }
+
+/* ---------------------------------------------------------------------------
+   STICKY HELPERS
+   --------------------------------------------------------------------------- */
+
+.sticky-top{
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.sticky-top-16{
+  position:sticky;
+  top:16px;
+  z-index:20;
+}
+
+/* ---------------------------------------------------------------------------
+   OVERFLOW
+   --------------------------------------------------------------------------- */
+
+.overflow-hidden{ overflow:hidden; }
+.overflow-auto  { overflow:auto; }
+.overflow-scroll{ overflow:scroll; }
+.overflow-x-auto{ overflow-x:auto; overflow-y:hidden; }
+.overflow-y-auto{ overflow-y:auto; overflow-x:hidden; }
+
+/* Truncate one line */
+.truncate{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  min-width:0;
+}
+
+/* Clamp to N lines (use --lines: 3) */
+.clamp{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:var(--lines, 2);
+  overflow:hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   WIDTH / HEIGHT
+   --------------------------------------------------------------------------- */
+
+.w-full{ width:100%; }
+.h-full{ height:100%; }
+.min-w-0{ min-width:0; }
+
+/* ---------------------------------------------------------------------------
+   TEXT ALIGNMENT
+   --------------------------------------------------------------------------- */
+
+.text-left  { text-align:left; }
+.text-center{ text-align:center; }
+.text-right { text-align:right; }
+
+/* ---------------------------------------------------------------------------
+   VISIBILITY
+   --------------------------------------------------------------------------- */
+
+.hidden{ display:none !important; }
+
+/* Visible only to screen readers */
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0, 0, 0, 0);
+  white-space:nowrap;
+  border-width:0;
+}
+
+/* Visible on focus (for skip links) */
+.sr-only-focusable:focus,
+.sr-only-focusable:active{
+  position:static;
+  width:auto;
+  height:auto;
+  padding:8px 16px;
+  margin:0;
+  overflow:visible;
+  clip:auto;
+  white-space:normal;
+  background:var(--accent);
+  color:#fff;
+  border-radius:8px;
+}
+
+/* ---------------------------------------------------------------------------
+   SIDEBAR-AWARE LAYOUT
+   Any element that needs to sit next to the sidebar (264px) can use .with-sidebar
+   --------------------------------------------------------------------------- */
+
+.with-sidebar{
+  margin-left:264px;
+}
+
+/* ---------------------------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------------------------- */
+
+@media (max-width:1024px){
+  .grid-4{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+
+@media (max-width:768px){
+  .grid-3,
+  .grid-4{
+    grid-template-columns:1fr;
+  }
+  .container{
+    padding:0 16px;
+  }
+}
+
+@media (max-width:700px){
+  .grid-2{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:600px){
+  .section{
+    margin-bottom:24px;
+  }
+  .with-sidebar{
+    margin-left:0;
+  }
+}

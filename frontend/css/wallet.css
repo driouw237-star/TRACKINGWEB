@@ -1,0 +1,607 @@
+/* ============================================================================
+   GlobalExpress - wallet.css
+   Wallet, deposit, and withdraw views: amount banner, quick amount tiles,
+   payment method tiles, method forms, trust chips, receipt card, withdraw
+   footer, transaction amount coloring.
+
+   Depends on: variables.css, reset.css, base.css, buttons.css, forms.css,
+               tables.css, dashboard.css (wallet hero)
+   Used by: app.html (wallet / deposit / withdraw views)
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Amount banner - navy card showing the current wallet balance
+   --------------------------------------------------------------------------- */
+
+.amount-banner{
+  position:relative;
+  overflow:hidden;
+  padding:26px;
+  border-radius:14px;
+  color:#fff;
+  text-align:center;
+  margin-bottom:22px;
+  background:linear-gradient(135deg,#0b2545 0%,#13315c 60%,#1e3a8a 100%);
+  box-shadow:
+    0 12px 32px rgba(11,37,69,.18),
+    0 4px 8px rgba(11,37,69,.08);
+}
+
+.amount-banner::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 80% 20%,rgba(255,107,53,.22),transparent 55%),
+    radial-gradient(circle at 15% 90%,rgba(59,130,246,.15),transparent 55%);
+  pointer-events:none;
+}
+
+.amount-banner .lbl{
+  position:relative;
+  z-index:1;
+  font-size:12px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:700;
+  opacity:.72;
+  margin-bottom:6px;
+}
+
+.amount-banner .amt{
+  position:relative;
+  z-index:1;
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:42px;
+  letter-spacing:-.03em;
+  line-height:1.05;
+}
+.amount-banner .amt small{
+  font-size:16px;
+  opacity:.72;
+  font-weight:600;
+  letter-spacing:0;
+  margin-right:4px;
+  vertical-align:baseline;
+}
+
+/* Optional subline under the amount */
+.amount-banner .sub{
+  position:relative;
+  z-index:1;
+  font-size:13px;
+  opacity:.8;
+  margin-top:6px;
+  font-weight:500;
+}
+
+/* Purple variant (used for referral rewards banner) */
+.amount-banner.purple{
+  background:linear-gradient(135deg,#7c3aed,#6d28d9);
+  box-shadow:
+    0 12px 32px rgba(124,58,237,.25),
+    0 4px 8px rgba(124,58,237,.12);
+}
+.amount-banner.purple::before{
+  background-image:
+    radial-gradient(circle at 80% 20%,rgba(255,255,255,.15),transparent 55%);
+}
+
+/* ---------------------------------------------------------------------------
+   Quick amounts - chip grid of preset values
+   --------------------------------------------------------------------------- */
+
+.quick-amounts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.quick-amount{
+  padding:14px 12px;
+  border:1.5px solid var(--border);
+  border-radius:11px;
+  background:#fff;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+  transition:
+    border-color .15s var(--ease),
+    background-color .15s var(--ease),
+    transform .15s var(--ease),
+    box-shadow .15s var(--ease);
+}
+
+.quick-amount:hover{
+  border-color:var(--accent);
+  background:#fff7ed;
+  transform:translateY(-1px);
+}
+
+.quick-amount:active{
+  transform:translateY(0);
+}
+
+.quick-amount.selected{
+  border-color:var(--accent);
+  background:#fff7ed;
+  box-shadow:0 0 0 3px rgba(255,107,53,.14);
+}
+
+.quick-amount .amt{
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:17px;
+  color:var(--brand);
+  letter-spacing:-.01em;
+  line-height:1.1;
+}
+
+.quick-amount .lbl{
+  font-size:11px;
+  color:var(--text-3);
+  font-weight:600;
+  margin-top:3px;
+  letter-spacing:.3px;
+  text-transform:uppercase;
+}
+
+.quick-amount.selected .amt{
+  color:var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Payment method tiles
+   --------------------------------------------------------------------------- */
+
+.pay-tiles{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:14px;
+  margin-bottom:22px;
+}
+
+.pay-tile{
+  position:relative;
+  padding:20px 16px;
+  border:2px solid var(--border);
+  border-radius:14px;
+  background:#fff;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+  transition:
+    border-color .2s var(--ease),
+    background-color .2s var(--ease),
+    transform .2s var(--ease),
+    box-shadow .2s var(--ease);
+}
+
+.pay-tile:hover{
+  border-color:var(--text-3);
+  transform:translateY(-2px);
+  box-shadow:var(--sh);
+}
+
+.pay-tile.selected{
+  border-color:var(--accent);
+  background:#fff7ed;
+  box-shadow:0 8px 24px rgba(255,107,53,.18);
+}
+
+/* Tick mark when selected */
+.pay-tile.selected::after{
+  content:'\f00c';
+  font-family:'Font Awesome 6 Free';
+  font-weight:900;
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:22px;
+  height:22px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  animation:payTick .2s var(--ease);
+}
+@keyframes payTick{
+  from{ transform:scale(.6); opacity:0; }
+  to  { transform:none; opacity:1; }
+}
+
+.pay-icon{
+  width:52px;
+  height:52px;
+  margin:0 auto 12px;
+  border-radius:13px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  background:var(--surface-2);
+  color:var(--text-2);
+}
+
+/* Provider-specific colors */
+.pay-icon.mtn   { background:#fef3c7; color:#d97706; }
+.pay-icon.momo  { background:#eff6ff; color:var(--blue); }
+.pay-icon.card  { background:#f5f3ff; color:var(--purple); }
+.pay-icon.crypto{ background:#fff7ed; color:var(--accent); }
+.pay-icon.bank  { background:#ecfdf5; color:var(--green); }
+
+.pay-name{
+  font-family:'Manrope',sans-serif;
+  font-size:13.5px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-.005em;
+  line-height:1.35;
+}
+
+.pay-desc{
+  font-size:11.5px;
+  color:var(--text-3);
+  margin-top:4px;
+  font-weight:500;
+  line-height:1.4;
+}
+
+/* ---------------------------------------------------------------------------
+   Method-specific form area - fills in when a tile is selected
+   --------------------------------------------------------------------------- */
+
+#depFormArea,
+#wdFormArea{
+  animation:fadeUpForm .2s var(--ease);
+}
+@keyframes fadeUpForm{
+  from{ opacity:0; transform:translateY(6px); }
+  to  { opacity:1; transform:none; }
+}
+
+/* Inline note under a method form (used for demo-mode notice, crypto
+   network note, etc.) */
+.method-note{
+  margin-top:14px;
+  padding:12px 14px;
+  border-left:4px solid var(--amber);
+  background:#fffbeb;
+  border-radius:8px;
+  font-size:12.5px;
+  color:#92400e;
+  line-height:1.55;
+}
+.method-note strong{
+  color:#78350f;
+}
+
+/* ---------------------------------------------------------------------------
+   Footer row with Back / Submit buttons
+   --------------------------------------------------------------------------- */
+
+.dep-foot,
+.wd-foot{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.dep-foot .btn,
+.wd-foot .btn{
+  min-width:140px;
+  justify-content:center;
+}
+
+/* ---------------------------------------------------------------------------
+   Trust chips - SSL / PCI / Instant
+   --------------------------------------------------------------------------- */
+
+.trust-chips{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+
+.trust-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:9px;
+  font-size:11.5px;
+  font-weight:600;
+  color:var(--text-2);
+  line-height:1.3;
+}
+
+.trust-chip i{
+  font-size:12px;
+}
+.trust-chip.ssl i   { color:var(--green); }
+.trust-chip.pci i   { color:var(--blue); }
+.trust-chip.instant i{ color:var(--accent); }
+
+/* ---------------------------------------------------------------------------
+   Withdraw specific
+   --------------------------------------------------------------------------- */
+
+/* Destination selector - reuses .field select but slightly larger */
+#wdMethod{
+  padding:12px 14px;
+  font-size:14px;
+}
+
+/* Max-amount link under the amount input */
+.max-amount{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:6px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--accent);
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  font-family:inherit;
+  transition:color .15s var(--ease);
+}
+.max-amount:hover{
+  color:var(--accent-2);
+  text-decoration:underline;
+}
+.max-amount:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  border-radius:3px;
+}
+
+/* Warning note when withdrawing most of the balance */
+.withdraw-warn{
+  margin-top:10px;
+  padding:10px 12px;
+  background:#fffbeb;
+  border-left:3px solid var(--amber);
+  border-radius:8px;
+  font-size:12px;
+  color:#92400e;
+  line-height:1.5;
+}
+
+/* ---------------------------------------------------------------------------
+   Receipt / success card
+   (used inside the deposit-success modal, and on the wallet page after
+   a deposit completes)
+   --------------------------------------------------------------------------- */
+
+.deposit-receipt{
+  border:2px dashed var(--accent);
+  border-radius:12px;
+  padding:18px;
+  background:var(--surface-2);
+  text-align:center;
+  margin-bottom:20px;
+}
+.deposit-receipt .receipt-label{
+  font-size:11px;
+  color:var(--text-3);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.deposit-receipt .receipt-balance{
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:26px;
+  color:var(--green);
+  letter-spacing:-.02em;
+  line-height:1.1;
+}
+.deposit-receipt .receipt-sub{
+  font-size:12.5px;
+  color:var(--text-2);
+  margin-top:6px;
+}
+
+/* Green success circle for the "Deposit successful" modal */
+.receipt-icon{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:#ecfdf5;
+  color:var(--green);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  margin:0 auto 16px;
+}
+
+/* ---------------------------------------------------------------------------
+   Wallet transaction table amount coloring
+   (the base table styles come from tables.css)
+   --------------------------------------------------------------------------- */
+
+.tbl-amount{
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+.tbl-amount.positive{ color:var(--green); }
+.tbl-amount.negative{ color:var(--red); }
+
+/* ---------------------------------------------------------------------------
+   Wallet stat trio (Deposited / Spent / Refunded) - uses .stats from
+   dashboard.css but a lighter padding for the wallet page
+   --------------------------------------------------------------------------- */
+
+.wallet-stats .stat{
+  padding:16px;
+}
+.wallet-stats .stat-value{
+  font-size:22px;
+}
+
+/* ---------------------------------------------------------------------------
+   Balance visibility toggle (eye icon next to the balance)
+   --------------------------------------------------------------------------- */
+
+.balance-hidden .wallet-balance-amount,
+.balance-hidden .amount-banner .amt{
+  filter:blur(8px);
+  transition:filter .15s var(--ease);
+}
+
+.balance-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-left:10px;
+  padding:4px 8px;
+  background:rgba(255,255,255,.14);
+  border:none;
+  border-radius:8px;
+  color:#fff;
+  font-size:12px;
+  cursor:pointer;
+  transition:background-color .15s var(--ease);
+}
+.balance-toggle:hover{
+  background:rgba(255,255,255,.24);
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------------- */
+
+@media (max-width:768px){
+  .amount-banner{
+    padding:22px;
+  }
+  .amount-banner .amt{
+    font-size:36px;
+  }
+  .amount-banner .amt small{
+    font-size:14px;
+  }
+  .pay-tiles{
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+  }
+  .pay-tile{
+    padding:16px 12px;
+  }
+  .pay-icon{
+    width:44px;
+    height:44px;
+    font-size:18px;
+  }
+}
+
+@media (max-width:600px){
+  .amount-banner{
+    padding:20px;
+    border-radius:12px;
+  }
+  .amount-banner .amt{
+    font-size:32px;
+  }
+  .quick-amounts{
+    grid-template-columns:repeat(2, 1fr);
+    gap:8px;
+  }
+  .quick-amount{
+    padding:12px 10px;
+  }
+  .quick-amount .amt{
+    font-size:15px;
+  }
+  .pay-tiles{
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+  }
+  .pay-name{
+    font-size:12.5px;
+  }
+  .pay-desc{
+    font-size:11px;
+  }
+  .dep-foot,
+  .wd-foot{
+    flex-direction:column-reverse;
+    align-items:stretch;
+  }
+  .dep-foot .btn,
+  .wd-foot .btn{
+    width:100%;
+    min-width:0;
+  }
+  .trust-chips{
+    gap:8px;
+  }
+  .trust-chip{
+    padding:7px 12px;
+    font-size:11px;
+  }
+  .deposit-receipt{
+    padding:16px;
+  }
+  .deposit-receipt .receipt-balance{
+    font-size:22px;
+  }
+  .receipt-icon{
+    width:60px;
+    height:60px;
+    font-size:24px;
+  }
+}
+
+@media (max-width:380px){
+  .quick-amounts{
+    grid-template-columns:repeat(2, 1fr);
+  }
+  .pay-tiles{
+    grid-template-columns:1fr;
+  }
+  .amount-banner .amt{
+    font-size:28px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  .quick-amount,
+  .pay-tile,
+  .balance-toggle,
+  .max-amount{
+    transition:none;
+  }
+  .quick-amount:hover,
+  .pay-tile:hover{
+    transform:none;
+  }
+  .pay-tile.selected::after{
+    animation:none;
+  }
+  #depFormArea,
+  #wdFormArea{
+    animation:none;
+  }
+}

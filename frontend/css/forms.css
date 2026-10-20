@@ -1,0 +1,747 @@
+/* ============================================================================
+   GlobalExpress - forms.css
+   Complete form styling: fields, inputs, selects, textareas, checkboxes,
+   radios, switches, input groups, search boxes, password meters, errors.
+
+   Depends on: variables.css (tokens), reset.css, base.css
+   Works with: validators.js (which injects .field-error spans)
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Form container
+   --------------------------------------------------------------------------- */
+
+.form{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.form-section{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding:22px 0;
+  border-bottom:1px solid var(--border-2);
+}
+.form-section:first-child{ padding-top:0; }
+.form-section:last-child{ border-bottom:none; padding-bottom:0; }
+
+.fs-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  color:var(--brand);
+  margin-bottom:2px;
+}
+.fs-title i{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;
+  height:26px;
+  border-radius:8px;
+  background:#fff7ed;
+  color:var(--accent);
+  font-size:12px;
+  flex-shrink:0;
+}
+
+/* ---------------------------------------------------------------------------
+   Field wrapper - label + input + hint + error stacked vertically
+   --------------------------------------------------------------------------- */
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  position:relative;
+}
+
+.field label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--text);
+  line-height:1.4;
+  letter-spacing:.1px;
+}
+
+.field label .req{
+  color:var(--red);
+  margin-left:2px;
+  font-weight:700;
+}
+
+.field .hint{
+  font-size:11.5px;
+  color:var(--text-3);
+  margin-top:2px;
+  line-height:1.5;
+}
+
+.field .counter{
+  font-size:11px;
+  color:var(--text-3);
+  margin-left:auto;
+  font-weight:500;
+  letter-spacing:.2px;
+}
+.field .counter.over{
+  color:var(--red);
+  font-weight:600;
+}
+
+/* ---------------------------------------------------------------------------
+   Base input styling - text, email, password, number, tel, url, search,
+   select, textarea
+   --------------------------------------------------------------------------- */
+
+.field input[type='text'],
+.field input[type='email'],
+.field input[type='password'],
+.field input[type='number'],
+.field input[type='tel'],
+.field input[type='url'],
+.field input[type='search'],
+.field input[type='date'],
+.field input[type='time'],
+.field input[type='datetime-local'],
+.field select,
+.field textarea{
+  width:100%;
+  padding:11px 13px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  color:var(--text);
+  font-family:inherit;
+  font-size:14px;
+  font-weight:400;
+  line-height:1.4;
+  transition:border-color .15s var(--ease),
+             box-shadow .15s var(--ease),
+             background-color .15s var(--ease);
+  outline:none;
+  -webkit-appearance:none;
+  appearance:none;
+}
+
+.field textarea{
+  min-height:90px;
+  resize:vertical;
+  font-family:inherit;
+  line-height:1.55;
+}
+
+.field select{
+  /* Custom dropdown chevron */
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 13px center;
+  padding-right:36px;
+  cursor:pointer;
+}
+.field select::-ms-expand{ display:none; }
+
+/* Remove number input spinners for a cleaner look */
+.field input[type='number']::-webkit-outer-spin-button,
+.field input[type='number']::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+  margin:0;
+}
+.field input[type='number']{
+  -moz-appearance:textfield;
+}
+
+/* Placeholder */
+.field input::placeholder,
+.field textarea::placeholder{
+  color:var(--text-3);
+  opacity:.9;
+  font-weight:400;
+}
+
+/* Hover */
+.field input:hover:not(:disabled):not(:focus),
+.field select:hover:not(:disabled):not(:focus),
+.field textarea:hover:not(:disabled):not(:focus){
+  border-color:#cbd5e1;
+}
+
+/* Focus */
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3.5px rgba(255,107,53,.12);
+  background:#fff;
+}
+
+/* Disabled */
+.field input:disabled,
+.field select:disabled,
+.field textarea:disabled{
+  background:var(--surface-2);
+  color:var(--text-3);
+  cursor:not-allowed;
+  border-color:var(--border-2);
+}
+
+/* Read-only */
+.field input:read-only:not(:disabled),
+.field textarea:read-only:not(:disabled){
+  background:var(--surface-2);
+  cursor:default;
+}
+
+/* Error state (toggled by validators.js via .field.error) */
+.field.error input,
+.field.error select,
+.field.error textarea{
+  border-color:var(--red);
+  background:#fff5f5;
+}
+.field.error input:focus,
+.field.error select:focus,
+.field.error textarea:focus{
+  box-shadow:0 0 0 3.5px rgba(220,38,38,.14);
+}
+
+/* Success state */
+.field.success input,
+.field.success select,
+.field.success textarea{
+  border-color:var(--green);
+}
+.field.success input:focus,
+.field.success select:focus,
+.field.success textarea:focus{
+  box-shadow:0 0 0 3.5px rgba(5,150,105,.14);
+}
+
+/* ---------------------------------------------------------------------------
+   Inline field error - injected by validators.js as .field-error
+   --------------------------------------------------------------------------- */
+
+.field .field-error{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:500;
+  color:var(--red);
+  margin-top:4px;
+  line-height:1.4;
+  animation:fieldErrIn .18s var(--ease);
+}
+.field .field-error::before{
+  content:'\f06a'; /* fa-circle-exclamation */
+  font-family:'Font Awesome 6 Free';
+  font-weight:900;
+  font-size:11px;
+  flex-shrink:0;
+  line-height:1;
+}
+@keyframes fieldErrIn{
+  from{ opacity:0; transform:translateY(-3px); }
+  to{ opacity:1; transform:none; }
+}
+
+/* ---------------------------------------------------------------------------
+   Password wrapper + reveal toggle
+   --------------------------------------------------------------------------- */
+
+.pw-wrap{
+  position:relative;
+  display:block;
+}
+.pw-wrap input{
+  padding-right:44px;
+}
+.pw-toggle{
+  position:absolute;
+  top:50%;
+  right:8px;
+  transform:translateY(-50%);
+  width:32px;
+  height:32px;
+  border:none;
+  background:transparent;
+  color:var(--text-3);
+  font-size:14px;
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:color .15s var(--ease), background-color .15s var(--ease);
+}
+.pw-toggle:hover{
+  color:var(--text);
+  background:var(--surface-2);
+}
+.pw-toggle:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Password strength meter
+   --------------------------------------------------------------------------- */
+
+.pw-meter{
+  height:4px;
+  background:var(--border-2);
+  border-radius:4px;
+  margin-top:8px;
+  overflow:hidden;
+}
+.pw-meter-fill{
+  height:100%;
+  width:0;
+  background:var(--red);
+  border-radius:4px;
+  transition:width .25s var(--ease), background-color .25s var(--ease);
+}
+.pw-meter-text{
+  font-size:11px;
+  color:var(--text-3);
+  margin-top:5px;
+  font-weight:500;
+  letter-spacing:.2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Checkbox + radio
+   --------------------------------------------------------------------------- */
+
+.checkbox,
+.radio{
+  display:inline-flex;
+  align-items:flex-start;
+  gap:9px;
+  cursor:pointer;
+  user-select:none;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  line-height:1.5;
+}
+.checkbox input[type='checkbox'],
+.radio input[type='radio']{
+  width:17px;
+  height:17px;
+  margin:1px 0 0;
+  flex-shrink:0;
+  accent-color:var(--accent);
+  cursor:pointer;
+  border-radius:4px;
+}
+.radio input[type='radio']{
+  border-radius:50%;
+}
+.checkbox input:focus-visible,
+.radio input:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+.checkbox span,
+.radio span{
+  flex:1;
+  color:var(--text);
+}
+.checkbox span small,
+.radio span small{
+  display:block;
+  color:var(--text-3);
+  font-size:11.5px;
+  font-weight:400;
+  margin-top:2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Switch - toggle style checkbox
+   --------------------------------------------------------------------------- */
+
+.switch{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  user-select:none;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+}
+.switch input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.switch .track{
+  width:38px;
+  height:22px;
+  background:var(--border);
+  border-radius:22px;
+  position:relative;
+  transition:background-color .2s var(--ease);
+  flex-shrink:0;
+}
+.switch .track::after{
+  content:'';
+  position:absolute;
+  top:2px;
+  left:2px;
+  width:18px;
+  height:18px;
+  background:#fff;
+  border-radius:50%;
+  box-shadow:0 1px 3px rgba(15,23,42,.2);
+  transition:transform .2s var(--ease);
+}
+.switch input:checked + .track{
+  background:var(--accent);
+}
+.switch input:checked + .track::after{
+  transform:translateX(16px);
+}
+.switch input:focus-visible + .track{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+.switch input:disabled + .track{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Input groups - prefix/suffix on either side of an input
+   --------------------------------------------------------------------------- */
+
+.input-group{
+  display:flex;
+  align-items:stretch;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  overflow:hidden;
+  transition:border-color .15s var(--ease), box-shadow .15s var(--ease);
+}
+.input-group:focus-within{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3.5px rgba(255,107,53,.12);
+}
+.input-group input{
+  flex:1;
+  border:none;
+  border-radius:0;
+  padding:11px 13px;
+  background:transparent;
+  outline:none;
+  font-size:14px;
+  color:var(--text);
+  min-width:0;
+}
+.input-group input:focus{
+  box-shadow:none;
+  border:none;
+}
+.input-group .prefix,
+.input-group .suffix{
+  display:inline-flex;
+  align-items:center;
+  padding:0 13px;
+  background:var(--surface-2);
+  color:var(--text-2);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.2px;
+  white-space:nowrap;
+}
+.input-group .prefix{
+  border-right:1px solid var(--border-2);
+}
+.input-group .suffix{
+  border-left:1px solid var(--border-2);
+}
+.input-group.error{
+  border-color:var(--red);
+  background:#fff5f5;
+}
+.input-group.error:focus-within{
+  box-shadow:0 0 0 3.5px rgba(220,38,38,.14);
+}
+
+/* ---------------------------------------------------------------------------
+   Search box - used in table toolbars and public tracking
+   --------------------------------------------------------------------------- */
+
+.search-box{
+  position:relative;
+  flex:1;
+  min-width:200px;
+}
+.search-box > i{
+  position:absolute;
+  left:13px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--text-3);
+  font-size:13px;
+  pointer-events:none;
+  transition:color .15s var(--ease);
+}
+.search-box input{
+  width:100%;
+  padding:9px 13px 9px 36px;
+  border:1.5px solid var(--border);
+  border-radius:9px;
+  background:#fff;
+  font-size:13.5px;
+  color:var(--text);
+  outline:none;
+  transition:border-color .15s var(--ease), box-shadow .15s var(--ease);
+}
+.search-box input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(255,107,53,.1);
+}
+.search-box input:focus + i,
+.search-box:focus-within > i{
+  color:var(--accent);
+}
+.search-box input::placeholder{
+  color:var(--text-3);
+}
+
+/* ---------------------------------------------------------------------------
+   File input
+   --------------------------------------------------------------------------- */
+
+.file-input{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:22px;
+  border:2px dashed var(--border);
+  border-radius:12px;
+  background:var(--surface-2);
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .15s var(--ease), background-color .15s var(--ease);
+  position:relative;
+}
+.file-input:hover{
+  border-color:var(--accent);
+  background:#fff7ed;
+}
+.file-input.dragover{
+  border-color:var(--accent);
+  background:#fff7ed;
+  border-style:solid;
+}
+.file-input input[type='file']{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+}
+.file-input i{
+  font-size:22px;
+  color:var(--accent);
+}
+.file-input strong{
+  font-size:13.5px;
+  color:var(--text);
+  font-weight:600;
+}
+.file-input small{
+  font-size:12px;
+  color:var(--text-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Field grids - layout helpers for multi-column forms
+   --------------------------------------------------------------------------- */
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+}
+.grid-4{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:14px;
+}
+.full{
+  grid-column:1 / -1;
+}
+
+/* ---------------------------------------------------------------------------
+   Inline field rows - label and input side-by-side (for narrow modals)
+   --------------------------------------------------------------------------- */
+
+.field-inline{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:14px;
+  align-items:center;
+}
+.field-inline label{
+  margin:0;
+  justify-content:flex-start;
+}
+
+/* ---------------------------------------------------------------------------
+   Floating label variant
+   --------------------------------------------------------------------------- */
+
+.field-float{
+  position:relative;
+}
+.field-float input,
+.field-float textarea{
+  padding:18px 13px 8px;
+}
+.field-float label{
+  position:absolute;
+  top:14px;
+  left:13px;
+  font-size:14px;
+  color:var(--text-3);
+  pointer-events:none;
+  transition:transform .15s var(--ease), font-size .15s var(--ease), color .15s var(--ease);
+  transform-origin:0 0;
+}
+.field-float input:focus + label,
+.field-float input:not(:placeholder-shown) + label,
+.field-float textarea:focus + label,
+.field-float textarea:not(:placeholder-shown) + label{
+  transform:translateY(-9px) scale(.78);
+  color:var(--accent);
+  font-weight:600;
+}
+
+/* ---------------------------------------------------------------------------
+   Form actions row - cancel + submit at bottom of modal or form
+   --------------------------------------------------------------------------- */
+
+.form-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  flex-wrap:wrap;
+  padding-top:18px;
+  margin-top:18px;
+  border-top:1px solid var(--border-2);
+}
+.form-actions.left{
+  justify-content:flex-start;
+}
+.form-actions.between{
+  justify-content:space-between;
+}
+
+/* ---------------------------------------------------------------------------
+   Inline validation summary (optional - shown above forms with multiple errors)
+   --------------------------------------------------------------------------- */
+
+.form-summary{
+  display:none;
+  padding:12px 14px;
+  border-radius:10px;
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+  font-size:13px;
+  font-weight:500;
+  line-height:1.5;
+}
+.form-summary.show{
+  display:block;
+}
+.form-summary ul{
+  margin:6px 0 0;
+  padding-left:18px;
+  list-style:disc;
+}
+.form-summary li{
+  margin-bottom:3px;
+}
+.form-summary li:last-child{
+  margin-bottom:0;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive - stack multi-column grids on small screens
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 700px){
+  .grid-2,
+  .grid-3,
+  .grid-4{
+    grid-template-columns:1fr;
+  }
+  .field-inline{
+    grid-template-columns:1fr;
+    gap:6px;
+  }
+  .field-inline label{
+    font-size:12.5px;
+  }
+}
+
+@media (max-width: 480px){
+  .field input[type='text'],
+  .field input[type='email'],
+  .field input[type='password'],
+  .field input[type='number'],
+  .field input[type='tel'],
+  .field input[type='url'],
+  .field select,
+  .field textarea{
+    font-size:16px; /* prevent iOS zoom on focus */
+  }
+  .form-actions{
+    flex-direction:column-reverse;
+  }
+  .form-actions .btn{
+    width:100%;
+    justify-content:center;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  .field input,
+  .field select,
+  .field textarea,
+  .search-box input,
+  .input-group,
+  .pw-meter-fill,
+  .switch .track,
+  .switch .track::after{
+    transition:none;
+  }
+  .field .field-error{
+    animation:none;
+  }
+}

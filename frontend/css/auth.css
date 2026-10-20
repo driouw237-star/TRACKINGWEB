@@ -1,0 +1,585 @@
+/* ============================================================================
+   GlobalExpress - auth.css
+   Shared authentication screen styling: two-column split, brand block, tabs,
+   error banner, social row, marketing column, demo box, admin variant.
+
+   Depends on: variables.css (tokens), reset.css, base.css, forms.css, buttons.css
+   Theme via body[data-theme="customer" | "admin"].
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Split layout
+   --------------------------------------------------------------------------- */
+
+.auth-wrap{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#fff;
+}
+
+.auth-left{
+  padding:48px 56px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  max-width:560px;
+  margin:0 auto;
+  width:100%;
+}
+
+.auth-right{
+  background:linear-gradient(135deg,#0b2545 0%,#13315c 55%,#1e3a8a 100%);
+  position:relative;
+  overflow:hidden;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:56px;
+}
+.auth-right::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 20% 30%,rgba(255,107,53,.18),transparent 55%),
+    radial-gradient(circle at 80% 70%,rgba(59,130,246,.2),transparent 55%);
+  pointer-events:none;
+}
+
+.auth-right-content{
+  position:relative;
+  z-index:1;
+  max-width:420px;
+  width:100%;
+}
+
+/* ---------------------------------------------------------------------------
+   Brand block
+   --------------------------------------------------------------------------- */
+
+.auth-brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:36px;
+}
+
+.auth-logo{
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:17px;
+  letter-spacing:-.5px;
+  box-shadow:0 6px 16px rgba(11,37,69,.25);
+  flex-shrink:0;
+}
+
+.auth-brand-name{
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:19px;
+  color:var(--brand);
+  letter-spacing:-.02em;
+  line-height:1.1;
+}
+.auth-brand-name small{
+  display:block;
+  font-size:10px;
+  color:var(--text-3);
+  font-weight:600;
+  letter-spacing:.8px;
+  margin-top:3px;
+}
+
+/* ---------------------------------------------------------------------------
+   Admin badge
+   --------------------------------------------------------------------------- */
+
+.admin-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 11px;
+  background:#fef2f2;
+  color:#b91c1c;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.6px;
+  text-transform:uppercase;
+  border-radius:6px;
+  margin-bottom:16px;
+  border:1px solid #fecaca;
+  align-self:flex-start;
+  width:fit-content;
+}
+
+/* ---------------------------------------------------------------------------
+   Headings
+   --------------------------------------------------------------------------- */
+
+.auth-h1{
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  font-size:30px;
+  color:var(--text);
+  letter-spacing:-.02em;
+  margin:0 0 8px;
+  line-height:1.15;
+}
+
+.auth-p{
+  color:var(--text-2);
+  font-size:14.5px;
+  line-height:1.55;
+  margin:0 0 28px;
+}
+
+/* ---------------------------------------------------------------------------
+   Tabs
+   --------------------------------------------------------------------------- */
+
+.auth-tabs{
+  display:flex;
+  gap:24px;
+  border-bottom:1.5px solid var(--border);
+  margin-bottom:24px;
+}
+
+.auth-tab{
+  padding:0 0 12px;
+  background:none;
+  border:none;
+  font-family:inherit;
+  font-weight:600;
+  font-size:14.5px;
+  color:var(--text-3);
+  border-bottom:2.5px solid transparent;
+  margin-bottom:-1.5px;
+  transition:color .15s var(--ease), border-color .15s var(--ease);
+  cursor:pointer;
+}
+.auth-tab:hover{
+  color:var(--text-2);
+}
+.auth-tab.active{
+  color:var(--brand);
+  border-bottom-color:var(--accent);
+}
+.auth-tab:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+  border-radius:4px;
+}
+
+/* ---------------------------------------------------------------------------
+   Error banner
+   --------------------------------------------------------------------------- */
+
+.auth-error{
+  display:none;
+  align-items:center;
+  gap:9px;
+  padding:11px 14px;
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  border-radius:10px;
+  color:#991b1b;
+  font-size:13.5px;
+  font-weight:500;
+  line-height:1.45;
+  margin-bottom:16px;
+}
+.auth-error.show{
+  display:flex;
+  animation:authShake .35s var(--ease);
+}
+.auth-error i{
+  color:var(--red);
+  font-size:14px;
+  flex-shrink:0;
+}
+.auth-error span{
+  flex:1;
+}
+
+@keyframes authShake{
+  0%  { transform:translateX(-6px); }
+  25% { transform:translateX(6px); }
+  50% { transform:translateX(-3px); }
+  75% { transform:translateX(3px); }
+  100%{ transform:translateX(0); }
+}
+
+/* ---------------------------------------------------------------------------
+   Auth form
+   --------------------------------------------------------------------------- */
+
+.auth-form{
+  display:flex;
+  flex-direction:column;
+}
+
+.auth-form.hidden{
+  display:none;
+}
+
+.auth-form .field{
+  margin-bottom:14px;
+}
+
+/* ---------------------------------------------------------------------------
+   Remember + Forgot row
+   --------------------------------------------------------------------------- */
+
+.auth-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:4px 0 18px;
+  font-size:13px;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.auth-link{
+  color:var(--accent);
+  font-weight:600;
+  font-size:13px;
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  font-family:inherit;
+  transition:color .15s var(--ease);
+}
+.auth-link:hover{
+  color:var(--accent-2);
+  text-decoration:underline;
+}
+.auth-link:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  border-radius:3px;
+}
+
+/* ---------------------------------------------------------------------------
+   Divider - "or continue with"
+   --------------------------------------------------------------------------- */
+
+.divider-or{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:22px 0;
+  font-size:12px;
+  color:var(--text-3);
+  font-weight:600;
+  letter-spacing:.3px;
+  text-transform:lowercase;
+}
+.divider-or::before,
+.divider-or::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+
+/* ---------------------------------------------------------------------------
+   Social row
+   --------------------------------------------------------------------------- */
+
+.social-row{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:10px;
+}
+
+.social-btn{
+  padding:11px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  color:var(--text-2);
+  cursor:pointer;
+  transition:border-color .15s var(--ease), background-color .15s var(--ease), transform .15s var(--ease);
+}
+.social-btn:hover{
+  border-color:var(--text-3);
+  background:var(--surface-2);
+  transform:translateY(-1px);
+}
+.social-btn:active{
+  transform:translateY(0);
+}
+.social-btn:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Trust note
+   --------------------------------------------------------------------------- */
+
+.trust-note{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  justify-content:center;
+  font-size:12px;
+  color:var(--text-3);
+  margin-top:20px;
+  padding:10px 14px;
+  background:var(--surface-2);
+  border:1px solid var(--border-2);
+  border-radius:9px;
+  text-align:center;
+  line-height:1.45;
+}
+.trust-note i{
+  color:var(--green);
+  font-size:12px;
+  flex-shrink:0;
+}
+
+/* ---------------------------------------------------------------------------
+   Demo credentials box
+   --------------------------------------------------------------------------- */
+
+.auth-demo{
+  margin-top:20px;
+  padding:14px 16px;
+  background:#fff8e1;
+  border:1px solid #fde68a;
+  border-radius:11px;
+  font-size:12.5px;
+  color:#8d6708;
+  line-height:1.6;
+}
+.auth-demo strong{
+  color:#8d6708;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.auth-demo code{
+  background:rgba(141,103,8,.12);
+  padding:2px 6px;
+  border-radius:5px;
+  font-family:'Monaco','Menlo',monospace;
+  font-size:11.5px;
+  color:#8d6708;
+  font-weight:600;
+}
+
+/* Dark variant for admin login demo box */
+.auth-demo.dark{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.12);
+  color:rgba(255,255,255,.85);
+}
+.auth-demo.dark strong{ color:#fff; }
+.auth-demo.dark code{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+}
+
+/* ---------------------------------------------------------------------------
+   Right column - marketing
+   --------------------------------------------------------------------------- */
+
+.auth-right h2{
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  color:#fff;
+  font-size:32px;
+  line-height:1.15;
+  letter-spacing:-.02em;
+  margin:0 0 16px;
+}
+
+.auth-right > .auth-right-content > p{
+  color:rgba(255,255,255,.78);
+  font-size:15px;
+  line-height:1.6;
+  margin:0 0 30px;
+}
+
+.auth-feature{
+  display:flex;
+  gap:14px;
+  margin-bottom:18px;
+  align-items:flex-start;
+}
+.auth-feature:last-of-type{
+  margin-bottom:0;
+}
+
+.auth-feature-icon{
+  width:40px;
+  height:40px;
+  flex-shrink:0;
+  border-radius:10px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.14);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  color:#fff;
+}
+
+.auth-feature h4{
+  color:#fff;
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  font-size:14.5px;
+  margin:0 0 3px;
+  letter-spacing:-.005em;
+}
+
+.auth-feature p{
+  color:rgba(255,255,255,.68);
+  font-size:13px;
+  margin:0;
+  line-height:1.5;
+}
+
+/* ---------------------------------------------------------------------------
+   Admin theme variant
+   Applied via <body data-theme="admin">
+   --------------------------------------------------------------------------- */
+
+[data-theme="admin"] .auth-left{
+  /* Same layout, but keep flex-start spacing tighter */
+}
+
+[data-theme="admin"] .auth-logo{
+  background:linear-gradient(135deg,#0b1220,#1e293b);
+  box-shadow:0 6px 16px rgba(0,0,0,.35);
+}
+
+[data-theme="admin"] .auth-brand-name{
+  color:var(--brand);
+}
+
+[data-theme="admin"] .auth-brand-name small{
+  color:#dc2626;
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+[data-theme="admin"] .auth-tab.active{
+  color:#b91c1c;
+  border-bottom-color:#dc2626;
+}
+
+[data-theme="admin"] .auth-link{
+  color:#dc2626;
+}
+[data-theme="admin"] .auth-link:hover{
+  color:#991b1b;
+}
+
+[data-theme="admin"] .btn-primary{
+  background:#dc2626;
+}
+[data-theme="admin"] .btn-primary:hover:not(:disabled){
+  background:#b91c1c;
+  box-shadow:0 6px 18px rgba(220,38,38,.35);
+}
+
+[data-theme="admin"] .auth-right{
+  background:linear-gradient(135deg,#0b1220 0%,#141d31 50%,#1e293b 100%);
+}
+[data-theme="admin"] .auth-right::before{
+  background-image:
+    radial-gradient(circle at 20% 30%,rgba(220,38,38,.18),transparent 55%),
+    radial-gradient(circle at 80% 70%,rgba(37,99,235,.15),transparent 55%);
+}
+
+[data-theme="admin"] .trust-note i{
+  color:#10b981;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------------- */
+
+@media (max-width:900px){
+  .auth-wrap{
+    grid-template-columns:1fr;
+  }
+  .auth-right{
+    display:none;
+  }
+  .auth-left{
+    padding:36px 24px;
+    max-width:520px;
+  }
+  .auth-h1{
+    font-size:26px;
+  }
+  .auth-brand{
+    margin-bottom:28px;
+  }
+}
+
+@media (max-width:480px){
+  .auth-left{
+    padding:24px 18px;
+  }
+  .auth-h1{
+    font-size:23px;
+  }
+  .auth-p{
+    font-size:13.5px;
+    margin-bottom:22px;
+  }
+  .auth-tabs{
+    gap:18px;
+    margin-bottom:20px;
+  }
+  .auth-tab{
+    font-size:14px;
+  }
+  .social-row{
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+  }
+  .auth-demo{
+    font-size:12px;
+    padding:12px 14px;
+  }
+  .auth-row{
+    margin:2px 0 14px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  .auth-tab,
+  .auth-link,
+  .social-btn{
+    transition:none;
+  }
+  .auth-error.show{
+    animation:none;
+  }
+}

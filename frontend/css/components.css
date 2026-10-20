@@ -1,0 +1,795 @@
+/* ============================================================================
+   GlobalExpress - components.css
+   Shared components used across multiple pages: pills, key-value pairs, empty
+   states, tabs, stepper, badges, alerts, dividers, skeletons.
+
+   Depends on: variables.css (tokens), reset.css, base.css
+   Used by: every page in the app (dashboard, wallet, shipments, etc.)
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   PILLS - small status badges with a colored dot
+   Usage: <span class="pill In-Transit">In Transit</span>
+   Class comes from statusCls() in utils.js
+   --------------------------------------------------------------------------- */
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 11px;
+  border-radius:20px;
+  background:var(--surface-2);
+  color:var(--text-2);
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  white-space:nowrap;
+  line-height:1.4;
+}
+
+.pill::before{
+  content:'';
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:currentColor;
+  flex-shrink:0;
+}
+
+/* Shipment statuses */
+.pill.Pending    { background:#eff6ff; color:#1d4ed8; }
+.pill.In-Transit { background:#fff7ed; color:#c2410c; }
+.pill.On-Hold    { background:#fffbeb; color:#b45309; }
+.pill.Delivered  { background:#ecfdf5; color:#047857; }
+.pill.Cancelled  { background:#fef2f2; color:#b91c1c; }
+
+/* Payment statuses */
+.pill.Paid       { background:#ecfdf5; color:#047857; }
+.pill.Unpaid     { background:#fef2f2; color:#b91c1c; }
+.pill.Refunded   { background:#f5f3ff; color:#6d28d9; }
+
+/* Transaction types */
+.pill.Deposit    { background:#ecfdf5; color:#047857; }
+.pill.Withdraw   { background:#fff7ed; color:#c2410c; }
+.pill.Shipment   { background:#eff6ff; color:#1d4ed8; }
+.pill.Refund     { background:#f5f3ff; color:#6d28d9; }
+
+/* Ticket statuses */
+.pill.Open       { background:#ecfdf5; color:#047857; }
+.pill.Closed     { background:#f1f5f9; color:#475569; }
+
+/* Plain variant - no dot */
+.pill.no-dot::before{
+  display:none;
+}
+
+/* ---------------------------------------------------------------------------
+   KEY-VALUE PAIRS - label above value, stacked
+   Usage: <div class="kv"><div class="k">Name</div><div class="v">John Smith</div></div>
+   --------------------------------------------------------------------------- */
+
+.kv{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.kv .k{
+  font-size:11px;
+  font-weight:700;
+  color:var(--text-3);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  line-height:1.4;
+}
+
+.kv .v{
+  font-size:13.5px;
+  font-weight:600;
+  color:var(--text);
+  line-height:1.5;
+  word-break:break-word;
+}
+
+.kv .v.mono{
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:.3px;
+  color:var(--brand);
+}
+
+/* Horizontal variant - label and value side by side */
+.kv.kv-row{
+  flex-direction:row;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+}
+.kv.kv-row .k{
+  flex-shrink:0;
+}
+
+/* ---------------------------------------------------------------------------
+   EMPTY STATE - a centered icon + message + optional action
+   Usage: <div class="empty"><div class="empty-illustration">…</div><h4>…</h4><p>…</p></div>
+   --------------------------------------------------------------------------- */
+
+.empty{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:56px 24px;
+  gap:0;
+}
+
+.empty-illustration{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:var(--surface-2);
+  color:var(--text-3);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  margin-bottom:18px;
+  flex-shrink:0;
+}
+
+.empty h4{
+  font-family:var(--font-display);
+  font-size:15.5px;
+  font-weight:700;
+  color:var(--text);
+  margin:0 0 6px;
+  line-height:1.3;
+}
+
+.empty p{
+  font-size:13.5px;
+  color:var(--text-2);
+  line-height:1.55;
+  max-width:340px;
+  margin:0 0 20px;
+}
+
+.empty p:last-child{
+  margin-bottom:0;
+}
+
+.empty .btn{
+  margin-top:2px;
+}
+
+/* Small variant for tight spaces (inside table cells) */
+.empty.empty-sm{
+  padding:32px 16px;
+}
+.empty.empty-sm .empty-illustration{
+  width:56px;
+  height:56px;
+  font-size:22px;
+  margin-bottom:12px;
+}
+.empty.empty-sm h4{
+  font-size:14px;
+}
+.empty.empty-sm p{
+  font-size:12.5px;
+  margin-bottom:14px;
+}
+
+/* ---------------------------------------------------------------------------
+   TABS - horizontal tab navigation with underline indicator
+   Usage: <div class="tabs">
+            <button class="tab active" data-tab="info">Details</button>
+            <button class="tab" data-tab="edit">Edit</button>
+          </div>
+   --------------------------------------------------------------------------- */
+
+.tabs{
+  display:flex;
+  gap:20px;
+  border-bottom:1.5px solid var(--border);
+  margin-bottom:20px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.tab{
+  padding:0 0 12px;
+  background:none;
+  border:none;
+  border-bottom:2.5px solid transparent;
+  margin-bottom:-1.5px;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:600;
+  color:var(--text-3);
+  cursor:pointer;
+  white-space:nowrap;
+  transition:
+    color .15s var(--ease),
+    border-color .15s var(--ease);
+}
+.tab:hover{
+  color:var(--text-2);
+}
+.tab.active{
+  color:var(--brand);
+  border-bottom-color:var(--accent);
+}
+.tab:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+  border-radius:4px;
+}
+
+/* Tab panel */
+.tab-panel{
+  display:block;
+}
+.tab-panel.hidden{
+  display:none;
+}
+
+/* Pill-style tabs (alternative, segmented control) */
+.tabs.tabs-pill{
+  gap:4px;
+  border-bottom:none;
+  background:var(--surface-2);
+  padding:4px;
+  border-radius:11px;
+  margin-bottom:20px;
+}
+.tabs.tabs-pill .tab{
+  padding:8px 16px;
+  border-bottom:none;
+  border-radius:8px;
+  margin-bottom:0;
+  font-size:13.5px;
+  color:var(--text-2);
+}
+.tabs.tabs-pill .tab.active{
+  background:#fff;
+  color:var(--brand);
+  box-shadow:0 1px 3px rgba(15,23,42,.08);
+}
+
+/* ---------------------------------------------------------------------------
+   STEPPER - multi-step wizard indicator
+   Usage: <div class="stepper">
+            <div class="step-item active"><div class="step-num">1</div><span>Details</span></div>
+            <div class="step-item"><div class="step-num">2</div><span>Package</span></div>
+            <div class="step-item"><div class="step-num">3</div><span>Review</span></div>
+          </div>
+   --------------------------------------------------------------------------- */
+
+.stepper{
+  display:flex;
+  align-items:center;
+  gap:0;
+  margin-bottom:26px;
+  overflow-x:auto;
+  padding-bottom:6px;
+  scrollbar-width:none;
+}
+.stepper::-webkit-scrollbar{
+  display:none;
+}
+
+.step-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+  position:relative;
+  padding-right:32px;
+}
+
+/* Connector line drawn between steps via ::after on the step-num */
+.step-item:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  left:28px;
+  right:0;
+  top:13px;
+  height:2px;
+  background:var(--border);
+  z-index:0;
+}
+
+.step-item.done:not(:last-child)::after{
+  background:var(--green);
+}
+
+.step-num{
+  position:relative;
+  z-index:1;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  border:2px solid var(--border);
+  background:#fff;
+  color:var(--text-3);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--font-display);
+  font-size:12px;
+  font-weight:700;
+  flex-shrink:0;
+  transition:
+    background-color .2s var(--ease),
+    border-color .2s var(--ease),
+    color .2s var(--ease),
+    box-shadow .2s var(--ease);
+}
+
+.step-num i{
+  font-size:11px;
+}
+
+.step-item span{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text-3);
+  white-space:nowrap;
+  transition:color .2s var(--ease);
+}
+
+/* Active step */
+.step-item.active .step-num{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+  box-shadow:0 0 0 4px rgba(255,107,53,.18);
+}
+.step-item.active span{
+  color:var(--text);
+}
+
+/* Done step */
+.step-item.done .step-num{
+  background:var(--green);
+  border-color:var(--green);
+  color:#fff;
+}
+.step-item.done span{
+  color:var(--text-2);
+}
+
+/* Compact stepper variant - smaller circles, less padding */
+.stepper.stepper-sm .step-item{
+  padding-right:24px;
+}
+.stepper.stepper-sm .step-num{
+  width:24px;
+  height:24px;
+  font-size:11px;
+}
+.stepper.stepper-sm .step-item:not(:last-child)::after{
+  left:24px;
+  top:11px;
+}
+.stepper.stepper-sm .step-item span{
+  font-size:12.5px;
+}
+
+/* ---------------------------------------------------------------------------
+   BADGE - small numeric or status badge
+   Usage: <span class="badge">3</span>
+   --------------------------------------------------------------------------- */
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:20px;
+  height:20px;
+  padding:0 7px;
+  border-radius:10px;
+  background:var(--surface-2);
+  color:var(--text-2);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.2px;
+  line-height:1;
+}
+
+.badge.badge-accent{
+  background:var(--accent);
+  color:#fff;
+}
+.badge.badge-success{
+  background:var(--green);
+  color:#fff;
+}
+.badge.badge-danger{
+  background:var(--red);
+  color:#fff;
+}
+
+/* ---------------------------------------------------------------------------
+   ALERT BANNER - inline contextual message
+   Usage: <div class="alert-banner warn">…</div>
+   --------------------------------------------------------------------------- */
+
+.alert-banner{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:16px 18px;
+  border-radius:12px;
+  border-left:4px solid var(--accent);
+  background:#fff7ed;
+  color:var(--text);
+  line-height:1.55;
+  margin-bottom:20px;
+}
+
+.alert-banner .alert-icon{
+  font-size:18px;
+  color:var(--accent);
+  flex-shrink:0;
+  margin-top:2px;
+}
+
+.alert-banner .alert-body{
+  flex:1;
+  min-width:0;
+}
+.alert-banner .alert-body h4{
+  font-family:var(--font-display);
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+  margin:0 0 3px;
+  letter-spacing:-.005em;
+}
+.alert-banner .alert-body p{
+  font-size:13px;
+  color:var(--text-2);
+  margin:0;
+  line-height:1.55;
+}
+
+.alert-banner .alert-action{
+  flex-shrink:0;
+  align-self:center;
+}
+
+/* Variants */
+.alert-banner.warn{
+  background:#fffbeb;
+  border-left-color:var(--amber);
+}
+.alert-banner.warn .alert-icon{ color:var(--amber); }
+.alert-banner.warn .alert-body h4,
+.alert-banner.warn .alert-body p{ color:#92400e; }
+
+.alert-banner.danger{
+  background:#fef2f2;
+  border-left-color:var(--red);
+}
+.alert-banner.danger .alert-icon{ color:var(--red); }
+.alert-banner.danger .alert-body h4,
+.alert-banner.danger .alert-body p{ color:#991b1b; }
+
+.alert-banner.info{
+  background:#eff6ff;
+  border-left-color:var(--blue);
+}
+.alert-banner.info .alert-icon{ color:var(--blue); }
+.alert-banner.info .alert-body h4,
+.alert-banner.info .alert-body p{ color:#1e40af; }
+
+.alert-banner.success{
+  background:#ecfdf5;
+  border-left-color:var(--green);
+}
+.alert-banner.success .alert-icon{ color:var(--green); }
+.alert-banner.success .alert-body h4,
+.alert-banner.success .alert-body p{ color:#065f46; }
+
+/* ---------------------------------------------------------------------------
+   DIVIDER
+   --------------------------------------------------------------------------- */
+
+.divider{
+  height:1px;
+  background:var(--border);
+  margin:20px 0;
+  border:none;
+}
+
+.divider-vertical{
+  display:inline-block;
+  width:1px;
+  height:20px;
+  background:var(--border);
+  margin:0 10px;
+  vertical-align:middle;
+}
+
+/* ---------------------------------------------------------------------------
+   SKELETON - loading placeholders
+   Usage: <div class="skeleton skeleton-line"></div>
+   --------------------------------------------------------------------------- */
+
+.skeleton{
+  display:block;
+  background:linear-gradient(
+    90deg,
+    var(--border-2) 0%,
+    #f1f5f9 40%,
+    var(--border-2) 80%
+  );
+  background-size:200% 100%;
+  border-radius:6px;
+  animation:skeleton-sweep 1.2s ease-in-out infinite;
+}
+.skeleton-line{
+  height:12px;
+}
+.skeleton-line.tall{
+  height:20px;
+}
+.skeleton-circle{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+}
+.skeleton-block{
+  height:100px;
+  border-radius:12px;
+}
+
+@keyframes skeleton-sweep{
+  0%  { background-position:200% 0; }
+  100%{ background-position:-200% 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   TOOLTIP (opt-in, appears on hover)
+   Usage: <span class="tooltip" data-tip="Copy to clipboard">…</span>
+   --------------------------------------------------------------------------- */
+
+.tooltip{
+  position:relative;
+}
+.tooltip::after{
+  content:attr(data-tip);
+  position:absolute;
+  bottom:100%;
+  left:50%;
+  transform:translateX(-50%) translateY(-4px);
+  padding:5px 9px;
+  background:var(--text);
+  color:#fff;
+  font-size:11.5px;
+  font-weight:500;
+  border-radius:6px;
+  white-space:nowrap;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .15s var(--ease), transform .15s var(--ease);
+  z-index:10;
+}
+.tooltip:hover::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(-8px);
+}
+
+/* ---------------------------------------------------------------------------
+   CARD - simple content container (lighter than .panel)
+   --------------------------------------------------------------------------- */
+
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:var(--sh-xs);
+}
+
+.card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+}
+.card-head h3{
+  font-family:var(--font-display);
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.card-head h3 i{
+  color:var(--accent);
+  font-size:14px;
+}
+
+.card-body{
+  padding:20px;
+}
+
+.card-foot{
+  padding:14px 20px;
+  border-top:1px solid var(--border);
+  background:var(--surface-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Chip - compact inline tag
+   --------------------------------------------------------------------------- */
+
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 10px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:16px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-2);
+  line-height:1.3;
+}
+.chip i{
+  font-size:11px;
+  color:var(--text-3);
+}
+.chip.chip-accent{
+  background:#fff7ed;
+  border-color:#fed7aa;
+  color:var(--accent);
+}
+.chip.chip-accent i{
+  color:var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Progress bar
+   --------------------------------------------------------------------------- */
+
+.progress{
+  height:6px;
+  background:var(--border-2);
+  border-radius:6px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:var(--accent);
+  border-radius:6px;
+  transition:width .4s var(--ease);
+}
+.progress-fill.success{ background:var(--green); }
+.progress-fill.warning{ background:var(--amber); }
+.progress-fill.danger { background:var(--red); }
+
+/* ---------------------------------------------------------------------------
+   Avatar
+   --------------------------------------------------------------------------- */
+
+.avatar{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:13px;
+  flex-shrink:0;
+  text-transform:uppercase;
+  letter-spacing:-.5px;
+}
+.avatar.avatar-sm{
+  width:28px;
+  height:28px;
+  font-size:11px;
+}
+.avatar.avatar-lg{
+  width:48px;
+  height:48px;
+  font-size:17px;
+}
+.avatar.avatar-xl{
+  width:72px;
+  height:72px;
+  font-size:26px;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------------- */
+
+@media (max-width:600px){
+  .empty{
+    padding:40px 16px;
+  }
+  .empty-illustration{
+    width:64px;
+    height:64px;
+    font-size:26px;
+    margin-bottom:14px;
+  }
+  .empty h4{
+    font-size:14.5px;
+  }
+  .empty p{
+    font-size:13px;
+  }
+
+  .stepper{
+    gap:0;
+  }
+  .step-item{
+    padding-right:20px;
+  }
+  .step-item span{
+    font-size:12px;
+  }
+  .step-item:not(:last-child)::after{
+    left:24px;
+  }
+
+  .alert-banner{
+    flex-direction:column;
+    gap:10px;
+    padding:14px;
+  }
+  .alert-banner .alert-action{
+    align-self:flex-start;
+  }
+
+  .tabs{
+    gap:16px;
+  }
+  .tab{
+    font-size:13.5px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  .tab,
+  .step-num,
+  .step-item span{
+    transition:none;
+  }
+  .skeleton{
+    animation:none;
+    background:var(--border-2);
+  }
+  .tooltip::after{
+    transition:none;
+  }
+  .progress-fill{
+    transition:none;
+  }
+}

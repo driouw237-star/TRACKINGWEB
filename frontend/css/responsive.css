@@ -1,0 +1,535 @@
+/* ============================================================================
+   GlobalExpress - responsive.css
+   Site-wide media queries. Loaded LAST so overrides win.
+
+   Breakpoints:
+     >=1281px  Desktop (default)
+     1025-1280 Desktop-sm / small laptop
+     769-1024  Tablet
+     641-768   Small tablet / large phone
+     481-640   Phone
+     381-480   Small phone
+     <=380     Tiny phone
+
+   Handles shared chrome: sidebar, topbar, content padding, chips, grids.
+   Component-specific responsive rules live in each component file.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Breakpoint: 1280px  — small laptop
+   --------------------------------------------------------------------------- */
+
+@media (max-width:1280px){
+  .content{
+    padding:22px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Breakpoint: 1024px  — tablet
+   --------------------------------------------------------------------------- */
+
+@media (max-width:1024px){
+  .content{
+    padding:20px;
+  }
+  .topbar{
+    padding:12px 20px;
+  }
+  .panel-header{
+    padding:16px 20px;
+  }
+  .panel-body{
+    padding:20px;
+  }
+  .stats{
+    gap:14px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Breakpoint: 900px  — small tablet / large phone
+   Sidebar collapses into a drawer.
+   --------------------------------------------------------------------------- */
+
+@media (max-width:900px){
+  /* Main column takes full width */
+  .main{
+    margin-left:0;
+  }
+
+  /* Sidebar becomes a slide-in drawer */
+  .sidebar{
+    width:280px;
+    transform:translateX(-100%);
+    box-shadow:none;
+    z-index:1000;
+  }
+  .sidebar.open{
+    transform:translateX(0);
+    box-shadow:0 0 40px rgba(15,23,42,.35);
+  }
+
+  /* Backdrop scrim when drawer is open */
+  .sidebar.open::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    left:280px; /* sit to the right of the drawer */
+    background:rgba(15,23,42,.45);
+    -webkit-backdrop-filter:blur(2px);
+    backdrop-filter:blur(2px);
+    z-index:-1;
+    animation:fadeInScrim .2s var(--ease);
+  }
+  @keyframes fadeInScrim{
+    from{ opacity:0; }
+    to  { opacity:1; }
+  }
+
+  /* Menu button shows */
+  .menu-btn{
+    display:inline-flex;
+  }
+
+  /* Topbar reorders - the menu button sits before the title */
+  .topbar{
+    gap:10px;
+  }
+
+  /* Auth pages collapse to single column (already in auth.css, kept here
+     for safety if auth.css isn't loaded) */
+  .auth-wrap{
+    grid-template-columns:1fr;
+  }
+  .auth-right{
+    display:none;
+  }
+
+  /* Grids - 4-col becomes 2-col */
+  .grid-4{
+    grid-template-columns:repeat(2, 1fr);
+  }
+  /* Stats - allow auto-fit to handle it, but tighten minmax */
+  .stats{
+    grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Breakpoint: 768px  — large phone
+   --------------------------------------------------------------------------- */
+
+@media (max-width:768px){
+  .content{
+    padding:16px;
+  }
+  .topbar{
+    padding:10px 16px;
+  }
+  .panel{
+    border-radius:10px;
+  }
+  .panel-header{
+    padding:14px 16px;
+  }
+  .panel-body{
+    padding:16px;
+  }
+
+  /* Grids collapse */
+  .grid-3,
+  .grid-4{
+    grid-template-columns:1fr;
+  }
+
+  /* Stats - 2 up */
+  .stats{
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+  }
+
+  /* Quick actions - 2 up */
+  .quick-actions{
+    grid-template-columns:repeat(2, 1fr);
+  }
+
+  /* Topbar title shrinks */
+  .topbar-title{
+    font-size:16px;
+  }
+  .topbar-sub{
+    font-size:12px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Breakpoint: 640px  — phone
+   --------------------------------------------------------------------------- */
+
+@media (max-width:640px){
+  .content{
+    padding:14px;
+  }
+  .topbar{
+    padding:10px 14px;
+    gap:8px;
+  }
+
+  /* Chips hide */
+  .user-meta{
+    display:none;
+  }
+  .user-chip{
+    padding:5px;
+    border-radius:50%;
+  }
+  .wallet-chip .lbl{
+    display:none;
+  }
+  .wallet-chip{
+    padding:6px 10px;
+  }
+
+  /* Title shrinks further */
+  .topbar-title{
+    font-size:15px;
+  }
+  .topbar-sub{
+    font-size:11.5px;
+  }
+
+  /* Panels - edge-to-edge */
+  .panel{
+    border-radius:8px;
+    margin-bottom:14px;
+  }
+  .panel-header{
+    padding:12px 14px;
+  }
+  .panel-header h3{
+    font-size:14.5px;
+  }
+  .panel-body{
+    padding:14px;
+  }
+
+  /* Stats - single column */
+  .stats{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .stat{
+    padding:14px;
+  }
+  .stat-value{
+    font-size:22px;
+  }
+
+  /* Grid collapse to single column */
+  .grid-2,
+  .grid-3,
+  .grid-4{
+    grid-template-columns:1fr;
+  }
+
+  /* Quick actions - single column, horizontal layout */
+  .quick-actions{
+    grid-template-columns:1fr;
+  }
+
+  /* Sidebar — full-width drawer on phones */
+  .sidebar{
+    width:min(300px, 85vw);
+  }
+  .sidebar.open::before{
+    left:min(300px, 85vw);
+  }
+
+  /* Menu button - touch target friendly */
+  .menu-btn{
+    width:42px;
+    height:42px;
+  }
+
+  /* Topbar action buttons — 42px touch target */
+  .icon-btn{
+    width:42px;
+    height:42px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Breakpoint: 480px  — small phone
+   --------------------------------------------------------------------------- */
+
+@media (max-width:480px){
+  .content{
+    padding:12px;
+  }
+  .topbar{
+    padding:9px 12px;
+    gap:6px;
+  }
+
+  /* Hide secondary topbar actions */
+  .icon-btn.secondary{
+    display:none;
+  }
+
+  /* Brand logo shrinks */
+  .sb-logo{
+    width:34px;
+    height:34px;
+    font-size:13.5px;
+  }
+  .sb-name{
+    font-size:15px;
+  }
+  .sb-role{
+    font-size:10px;
+  }
+
+  /* Panel headers - stacked */
+  .panel-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .panel-header h3{
+    font-size:14px;
+  }
+
+  /* Stat label & value */
+  .stat-label{
+    font-size:11px;
+  }
+  .stat-value{
+    font-size:20px;
+  }
+
+  /* Buttons - full width in some contexts */
+  .btn-block-sm{
+    width:100%;
+    justify-content:center;
+  }
+
+  /* Toast wrapper - full width */
+  .toast-wrap{
+    left:12px;
+    right:12px;
+    bottom:12px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Breakpoint: 380px  — tiny phone
+   --------------------------------------------------------------------------- */
+
+@media (max-width:380px){
+  .content{
+    padding:10px;
+  }
+
+  .topbar-title{
+    font-size:14px;
+  }
+  .topbar-sub{
+    font-size:11px;
+  }
+
+  .sb-brand{
+    padding:18px 16px;
+  }
+
+  .panel-header{
+    padding:11px 12px;
+  }
+  .panel-body{
+    padding:12px;
+  }
+
+  .stat-value{
+    font-size:19px;
+  }
+
+  /* Stack action buttons in modals that weren't already stacked */
+  .modal-foot{
+    flex-direction:column-reverse;
+    gap:8px;
+  }
+  .modal-foot .btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  /* Stats — single column */
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  /* Full-width chips row */
+  .trust-chips{
+    gap:6px;
+  }
+  .trust-chip{
+    padding:6px 10px;
+    font-size:10.5px;
+  }
+
+  /* Wallet hero balance */
+  .wallet-balance-amount,
+  .amount-banner .amt{
+    font-size:26px;
+  }
+  .wallet-balance-amount small,
+  .amount-banner .amt small{
+    font-size:13px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Orientation: landscape phone
+   --------------------------------------------------------------------------- */
+
+@media (max-width:900px) and (orientation:landscape){
+  .sidebar{
+    /* Make sure drawer still fits in landscape (short height) */
+    padding-top:env(safe-area-inset-top, 0);
+  }
+  .sb-nav{
+    padding-top:8px;
+    padding-bottom:8px;
+  }
+  .sb-section{
+    padding:8px 12px 4px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   High contrast / forced colors
+   --------------------------------------------------------------------------- */
+
+@media (forced-colors: active){
+  .sb-link.active{
+    border:2px solid ButtonText;
+    box-shadow:none;
+  }
+  .btn:focus-visible,
+  .sb-link:focus-visible,
+  .icon-btn:focus-visible{
+    outline:2px solid Highlight;
+  }
+  .panel{
+    border:1px solid CanvasText;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Hover-capable devices only
+   Prevents sticky hover states on touch devices.
+   --------------------------------------------------------------------------- */
+
+@media (hover: hover) and (pointer: fine){
+  /* Any hover state defined elsewhere already works here. This block
+     exists so we can move hover rules here if we ever want to disable
+     them on touch. No rules needed at present. */
+}
+
+/* Disable hover states on touch devices */
+@media (hover: none){
+  .sb-link:hover,
+  .stat:hover,
+  .qa-btn:hover,
+  .pay-tile:hover,
+  .quick-amount:hover,
+  .wallet-chip:hover,
+  .user-chip:hover,
+  .icon-btn:hover{
+    transform:none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Print fallback
+   (app.css already handles this, but a page that only loads responsive.css
+    still gets a reasonable print output.)
+   --------------------------------------------------------------------------- */
+
+@media print{
+  .sidebar,
+  .topbar,
+  .menu-btn,
+  .toast-wrap,
+  .modal-bg{
+    display:none !important;
+  }
+  .main{
+    margin-left:0 !important;
+  }
+  .content{
+    padding:0 !important;
+  }
+  body{
+    background:#fff !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion safety net
+   (app.css already handles this; here in case responsive.css is loaded alone.)
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  .sidebar{
+    transition:none;
+  }
+  .sidebar.open::before{
+    animation:none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Dark mode (opt-in - not enabled by default)
+   Users can enable via [data-theme="dark"] on <html> or <body>.
+   --------------------------------------------------------------------------- */
+
+[data-theme="dark"]{
+  --bg:#0b1220;
+  --surface:#111a2e;
+  --surface-2:#0f172a;
+  --border:#1e293b;
+  --border-2:#1e293b;
+  --text:#f1f5f9;
+  --text-2:#94a3b8;
+  --text-3:#64748b;
+}
+[data-theme="dark"] .sidebar{
+  background:#050b17;
+}
+[data-theme="dark"] .topbar{
+  background:var(--surface);
+  border-bottom-color:var(--border);
+}
+[data-theme="dark"] .panel,
+[data-theme="dark"] .stat,
+[data-theme="dark"] .qa-btn{
+  background:var(--surface);
+  border-color:var(--border);
+}
+[data-theme="dark"] .toast{
+  background:var(--surface);
+  border-color:var(--border);
+  color:var(--text);
+}
+[data-theme="dark"] .modal{
+  background:var(--surface);
+  color:var(--text);
+}
+[data-theme="dark"] .modal-head{
+  border-bottom-color:var(--border);
+}
+[data-theme="dark"] .modal-foot{
+  background:var(--surface);
+  border-top-color:var(--border);
+}
