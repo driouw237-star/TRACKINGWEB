@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b2545" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="GlobalExpress admin console — internal operations cockpit." />
+  <title>Admin Console — GlobalExpress</title>
+
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b2545'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' fill='%23FF6B35' font-family='Manrope, sans-serif' font-weight='800' font-size='28'%3EGE%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- STYLESHEETS -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/buttons.css" />
+  <link rel="stylesheet" href="css/forms.css" />
+  <link rel="stylesheet" href="css/tables.css" />
+  <link rel="stylesheet" href="css/modals.css" />
+  <link rel="stylesheet" href="css/toasts.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/wallet.css" />
+  <link rel="stylesheet" href="css/tracking.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+  <link rel="stylesheet" href="css/dashboard-pro.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body data-theme="admin">
+
+  <!-- APP SHELL -->
+  <div id="app" class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar" aria-label="Admin navigation">
+      <button type="button" class="sidebar-close" id="sidebarClose" aria-label="Close navigation">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="sidebar-brand">
+        <div class="logo">GE</div>
+        <div>
+          <div class="name">GlobalExpress</div>
+          <div class="tag">Admin Console</div>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sbNav" aria-label="Primary"></nav>
+    </aside>
+
+    <!-- TOPBAR -->
+    <header class="topbar" role="banner">
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Open navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="topbar-title">
+        <h1 id="pageTitle">Dashboard</h1>
+        <p id="pageSub">Platform overview</p>
+      </div>
+      <button type="button" class="icon-btn" id="notifBtn" aria-label="View open tickets">
+        <i class="fas fa-bell"></i>
+        <span class="dot hidden" id="notifDot" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="user-chip" id="userChip" aria-label="Open account menu">
+        <span class="avatar" id="userAvatar">A</span>
+        <span class="meta">
+          <span class="name" id="userName">Admin</span>
+          <span class="role" id="userRole">Admin</span>
+        </span>
+      </button>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="content" id="content" role="main" tabindex="-1"></main>
+  </div>
+
+  <!-- UI CONTAINERS -->
+  <div id="modalRoot"></div>
+  <div id="toastWrap" class="toast-wrap" aria-live="polite" aria-atomic="false"></div>
+  <div id="processing" class="processing" aria-hidden="true">
+    <div class="processing-box">
+      <div class="spinner-ring"></div>
+      <h3 id="procTitle">Processing</h3>
+      <p id="procMsg">Please wait…</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT — LOAD ORDER MATTERS -->
+  <!-- ============================================================ -->
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+
+  <!-- CORE MODULES -->
+  <script src="js/utils.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/validators.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/realtime.js"></script>
+  <script src="js/router.js"></script>
+
+  <!-- ADMIN CORE -->
+  <script src="js/admin-core/admin-config.js"></script>
+  <script src="js/admin-core/admin-auth.js"></script>
+  <script src="js/admin-core/admin-audit.js"></script>
+  <script src="js/admin-core/admin-utils-pro.js"></script>
+
+  <!-- ADMIN SHARED -->
+  <script src="js/admin-shared/data-table.js"></script>
+
+  <!-- ADMIN PAGES -->
+  <script src="js/pages-admin/users.js"></script>
+  <script src="js/pages-admin/user-detail-overview.js"></script>
+  <script src="js/pages-admin/user-detail-wallet.js"></script>
+  <script src="js/pages-admin/user-detail-support.js"></script>
+  <script src="js/pages-admin/user-detail-security.js"></script>
+  <script src="js/pages-admin/user-detail.js"></script>
+
+  <script src="js/pages-admin/shipments.js"></script>
+  <script src="js/pages-admin/shipment-detail.js"></script>
+  
+  <script src="js/pages-admin/payments.js"></script>
+  <script src="js/pages-admin/payment-detail.js"></script>
+  
+  <script src="js/pages-admin/wallet.js"></script>
+  <script src="js/pages-admin/tickets.js"></script>
+  <script src="js/pages-admin/audit.js"></script>
+  <script src="js/pages-admin/settings.js"></script>
+  <script src="js/pages-admin/notifications.js"></script>
+  <script src="js/pages-admin/health.js"></script>
+  <script src="js/pages-admin/backup.js"></script>
+
+  <!-- MAIN DASHBOARD ORCHESTRATOR -->
+  <script src="js/pages-admin/dashboard.js"></script>
+
+  <!-- BOOTSTRAP — MUST BE LAST -->
+  <script src="js/admin.js"></script>
+
+</body>
+</html>

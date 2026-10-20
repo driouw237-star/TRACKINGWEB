@@ -1,0 +1,533 @@
+/* ============================================================================
+   GlobalExpress - tables.css
+   Shared data-table styling for every grid in the platform: shipments,
+   payments, wallet ledger, users, tickets, invoices, audit log.
+
+   Depends on: variables.css (tokens), reset.css, base.css, buttons.css
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Table wrapper - horizontal scroll + rounded corners
+   --------------------------------------------------------------------------- */
+
+.tbl-wrap{
+  width:100%;
+  overflow-x:auto;
+  overflow-y:visible;
+  border-radius:12px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border) transparent;
+}
+
+/* Custom scrollbar (WebKit) */
+.tbl-wrap::-webkit-scrollbar{
+  height:8px;
+}
+.tbl-wrap::-webkit-scrollbar-track{
+  background:transparent;
+}
+.tbl-wrap::-webkit-scrollbar-thumb{
+  background:var(--border);
+  border-radius:8px;
+}
+.tbl-wrap::-webkit-scrollbar-thumb:hover{
+  background:var(--text-3);
+}
+
+/* ---------------------------------------------------------------------------
+   Base table
+   --------------------------------------------------------------------------- */
+
+table{
+  width:100%;
+  min-width: 100%; /* <-- USE THIS */ /* forces horizontal scroll on small screens */
+  border-collapse:collapse;
+  border-spacing:0;
+  font-size:13.5px;
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--text);
+  background:#fff;
+  line-height:1.45;
+}
+
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
+
+thead{
+  background:var(--surface-2);
+}
+
+thead th{
+  padding:11px 16px;
+  text-align:left;
+  font-size:11px;
+  font-weight:700;
+  color:var(--text-3);
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+  vertical-align:middle;
+  position:relative;
+  user-select:none;
+}
+
+/* Sticky header (opt-in via <table class="tbl-sticky">) */
+.tbl-sticky thead th{
+  position:sticky;
+  top:0;
+  z-index:2;
+  background:var(--surface-2);
+  box-shadow:inset 0 -1px 0 var(--border);
+}
+
+/* ---------------------------------------------------------------------------
+   Body rows
+   --------------------------------------------------------------------------- */
+
+tbody td{
+  padding:13px 16px;
+  border-bottom:1px solid var(--border-2);
+  vertical-align:middle;
+  color:var(--text);
+  word-break:break-word;
+}
+
+tbody tr:last-child td{
+  border-bottom:none;
+}
+
+/* Zebra (opt-in via <table class="tbl-zebra">) */
+.tbl-zebra tbody tr:nth-child(even){
+  background:var(--surface-2);
+}
+
+/* Hover - default on all tables */
+tbody tr{
+  transition:background-color .12s var(--ease);
+}
+tbody tr:hover{
+  background:var(--surface-2);
+}
+.tbl-zebra tbody tr:hover{
+  background:var(--border-2);
+}
+
+/* Row states */
+tbody tr.row-selected{
+  background:#fff7ed;
+  box-shadow:inset 3px 0 0 var(--accent);
+}
+tbody tr.row-selected:hover{
+  background:#ffedd5;
+}
+tbody tr.row-muted{
+  opacity:.55;
+}
+tbody tr.row-danger{
+  background:#fef2f2;
+}
+tbody tr.row-danger:hover{
+  background:#fee2e2;
+}
+
+/* ---------------------------------------------------------------------------
+   Cell modifiers
+   --------------------------------------------------------------------------- */
+
+/* Monospace for codes / references */
+.mono{
+  font-family:'Monaco','Menlo','Consolas',monospace;
+  font-weight:600;
+  color:var(--brand);
+  font-size:12.5px;
+  letter-spacing:.4px;
+}
+
+/* Numbers - right-aligned, tabular */
+.num{
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:'tnum';
+}
+
+/* Center-aligned content */
+.center{
+  text-align:center;
+}
+
+/* Amounts */
+.amount{
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+.amount.positive{ color:var(--green); }
+.amount.negative{ color:var(--red); }
+.amount.neutral { color:var(--text); }
+
+/* Muted secondary text inside a cell */
+.cell-sub{
+  font-size:11.5px;
+  color:var(--text-3);
+  margin-top:2px;
+  line-height:1.4;
+}
+
+/* Compact primary + secondary stacked layout (used in Shipments) */
+.cell-primary{
+  font-weight:600;
+  font-size:13px;
+  color:var(--text);
+}
+.cell-secondary{
+  font-size:11.5px;
+  color:var(--text-3);
+  margin-top:2px;
+}
+
+/* Avatar + name combo */
+.cell-user{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.cell-user .av{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Manrope',sans-serif;
+  font-weight:700;
+  font-size:12.5px;
+  flex-shrink:0;
+}
+.cell-user .meta{
+  min-width:0;
+}
+.cell-user .name{
+  font-weight:600;
+  font-size:13px;
+  color:var(--text);
+}
+.cell-user .email{
+  font-size:11.5px;
+  color:var(--text-3);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+   Actions column - right-aligned button row
+   --------------------------------------------------------------------------- */
+
+.tbl-actions{
+  text-align:right;
+  white-space:nowrap;
+}
+.tbl-actions .btn{
+  margin-left:4px;
+}
+.tbl-actions .btn:first-child{
+  margin-left:0;
+}
+
+/* ---------------------------------------------------------------------------
+   Sortable headers (opt-in: add data-sort to th)
+   --------------------------------------------------------------------------- */
+
+th[data-sort]{
+  cursor:pointer;
+  padding-right:28px;
+}
+th[data-sort]:hover{
+  color:var(--text);
+}
+th[data-sort]::after{
+  content:'\f0dc'; /* fa-sort */
+  font-family:'Font Awesome 6 Free';
+  font-weight:900;
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:10px;
+  color:var(--text-3);
+  transition:color .15s var(--ease);
+}
+th[data-sort]:hover::after{
+  color:var(--accent);
+}
+th[data-sort='asc']::after{
+  content:'\f0de'; /* fa-sort-up */
+  color:var(--accent);
+}
+th[data-sort='desc']::after{
+  content:'\f0dd'; /* fa-sort-down */
+  color:var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Table footer - pagination + count
+   --------------------------------------------------------------------------- */
+
+.tbl-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 22px;
+  border-top:1px solid var(--border);
+  background:var(--surface-2);
+  font-size:12.5px;
+  color:var(--text-2);
+  flex-wrap:wrap;
+}
+.tbl-footer .count strong{
+  color:var(--text);
+  font-weight:700;
+}
+.tbl-footer .pages{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.tbl-footer .pages button{
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  background:#fff;
+  border:1px solid var(--border);
+  color:var(--text-2);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .15s var(--ease);
+}
+.tbl-footer .pages button:hover:not(:disabled){
+  border-color:var(--accent);
+  color:var(--accent);
+}
+.tbl-footer .pages button.active{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+.tbl-footer .pages button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+/* ---------------------------------------------------------------------------
+   Compact mode (opt-in via <table class="tbl-compact">)
+   --------------------------------------------------------------------------- */
+
+.tbl-compact thead th{
+  padding:8px 12px;
+  font-size:10.5px;
+}
+.tbl-compact tbody td{
+  padding:9px 12px;
+  font-size:13px;
+}
+
+/* ---------------------------------------------------------------------------
+   Empty state - rendered as a single full-width cell
+   --------------------------------------------------------------------------- */
+
+table .empty-cell{
+  padding:0 !important;
+  border:none !important;
+}
+table .empty{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:56px 24px;
+  text-align:center;
+}
+table .empty .empty-illustration{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background:var(--surface-2);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  color:var(--text-3);
+  margin-bottom:6px;
+}
+table .empty h4{
+  font-family:'Manrope',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  margin:0;
+}
+table .empty p{
+  font-size:13px;
+  color:var(--text-2);
+  max-width:340px;
+  margin:0 auto;
+  line-height:1.55;
+}
+table .empty .btn{
+  margin-top:6px;
+}
+
+/* ---------------------------------------------------------------------------
+   Skeleton loader - placeholder rows while data loads
+   --------------------------------------------------------------------------- */
+
+.tbl-skeleton td{
+  padding:13px 16px;
+}
+.sk-line{
+  height:12px;
+  border-radius:6px;
+  background:linear-gradient(
+    90deg,
+    var(--border-2) 0%,
+    #f1f5f9 40%,
+    var(--border-2) 80%
+  );
+  background-size:200% 100%;
+  animation:skSweep 1.2s ease-in-out infinite;
+}
+.sk-line.w-60{ width:60%; }
+.sk-line.w-40{ width:40%; }
+.sk-line.w-80{ width:80%; }
+.sk-line.w-30{ width:30%; }
+.sk-line.w-50{ width:50%; }
+.sk-line.circle{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+}
+@keyframes skSweep{
+  0%  { background-position:200% 0; }
+  100%{ background-position:-200% 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive - column hiding + card flip
+   --------------------------------------------------------------------------- */
+
+/* Utility: hide column on specific breakpoints (opt-in per th/td) */
+@media (max-width:1024px){
+  .hide-md{
+    display:none !important;
+  }
+}
+@media (max-width:640px){
+  .hide-sm{
+    display:none !important;
+  }
+}
+
+/* Card-flip: table becomes stacked cards on mobile
+   Usage: <table class="table-cards">
+          <td data-label="Tracking Code">GE-1234-5678-US</td> */
+@media (max-width:640px){
+  .table-cards{
+    min-width:0;
+    border-collapse:separate;
+    border-spacing:0;
+  }
+  .table-cards thead{
+    display:none;
+  }
+  .table-cards tbody,
+  .table-cards tbody tr,
+  .table-cards tbody td{
+    display:block;
+    width:100%;
+  }
+  .table-cards tbody tr{
+    padding:14px 16px;
+    margin-bottom:12px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    box-shadow:var(--sh-xs);
+  }
+  .table-cards tbody tr:hover{
+    background:#fff;
+    border-color:var(--border-2);
+    box-shadow:var(--sh-sm);
+  }
+  .table-cards tbody tr:last-child{
+    margin-bottom:0;
+  }
+  .table-cards tbody td{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding:8px 0;
+    border-bottom:1px dashed var(--border-2);
+    font-size:13px;
+    gap:16px;
+  }
+  .table-cards tbody td:last-child{
+    border-bottom:none;
+  }
+  .table-cards tbody td::before{
+    content:attr(data-label);
+    flex-shrink:0;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    color:var(--text-3);
+    padding-top:2px;
+  }
+  /* Actions cell - drop the label, full width row of buttons */
+  .table-cards tbody td.tbl-actions{
+    justify-content:flex-end;
+    padding-top:12px;
+  }
+  .table-cards tbody td.tbl-actions::before{
+    content:'';
+    display:none;
+  }
+  /* Empty row keeps its full-width layout */
+  .table-cards tbody td.empty-cell{
+    display:block;
+    padding:0;
+  }
+  .table-cards tbody td.empty-cell::before{
+    content:'';
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  tbody tr{
+    transition:none;
+  }
+  .sk-line{
+    animation:none;
+    background:var(--border-2);
+  }
+}
+@media (max-width: 768px) {
+  /* Hide cells marked with .hide-sm */
+  .hide-sm { display: none !important; }
+  
+  /* Make actions column wrap underneath if needed */
+  .tbl-actions { white-space: normal; }
+  .tbl-actions .btn { margin-bottom: 4px; }
+}

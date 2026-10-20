@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+<meta name="theme-color" content="#0b2545" />
+<meta name="description" content="GlobalExpress customer portal — manage shipments, wallet, and tracking." />
+<title>GlobalExpress — Customer Portal</title>
+
+<!-- Favicon (inline SVG) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b2545'/><text x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' fill='%23FF6B35' text-anchor='middle'>GE</text></svg>" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<!-- Leaflet (for shipment-detail map) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- GlobalExpress stylesheets — LOAD ORDER MATTERS -->
+<link rel="stylesheet" href="css/variables.css" />
+<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/layout.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/buttons.css" />
+<link rel="stylesheet" href="css/forms.css" />
+<link rel="stylesheet" href="css/tables.css" />
+<link rel="stylesheet" href="css/modals.css" />
+<link rel="stylesheet" href="css/toasts.css" />
+<link rel="stylesheet" href="css/auth.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+<link rel="stylesheet" href="css/wallet.css" />
+<link rel="stylesheet" href="css/tracking.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-theme="customer">
+
+<!-- ============================================================ -->
+<!-- SIGNED-OUT FALLBACK -->
+<!-- ============================================================ -->
+<div class="auth-wrap hidden" id="authWrap">
+  <div class="auth-left">
+    <div class="auth-brand">
+      <div class="auth-logo">GE</div>
+      <div class="auth-brand-name">
+        GlobalExpress
+        <small>CUSTOMER PORTAL</small>
+      </div>
+    </div>
+
+    <h1 class="auth-h1">Not signed in</h1>
+    <p class="auth-p">You need to sign in to access your shipments and wallet.</p>
+
+    <a href="portal.html" class="btn btn-primary btn-lg btn-block" style="margin-top:8px">
+      <i class="fas fa-right-to-bracket"></i> Go to Sign In
+    </a>
+
+    <div class="trust-note" style="margin-top:24px">
+      <i class="fas fa-lock"></i>
+      <span>Your data is protected with 256-bit SSL encryption</span>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-right-content">
+      <h2>Ship smarter with GlobalExpress</h2>
+      <p>Join millions tracking shipments in real time across 190+ countries.</p>
+
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-bolt"></i></div>
+        <div>
+          <h4>Instant Tracking Codes</h4>
+          <p>Every shipment generates a unique code the second you pay.</p>
+        </div>
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-wallet"></i></div>
+        <div>
+          <h4>Secure Wallet</h4>
+          <p>Top up with MTN MoMo, cards, or crypto. Pay in one tap.</p>
+        </div>
+      </div>
+      <div class="auth-feature">
+        <div class="auth-feature-icon"><i class="fas fa-share-nodes"></i></div>
+        <div>
+          <h4>Share Tracking Instantly</h4>
+          <p>Send a public link to anyone — no account needed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MAIN APP SHELL -->
+<!-- ============================================================ -->
+<div class="app" id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">GE</div>
+      <div>
+        <div class="sb-name">GlobalExpress</div>
+        <div class="sb-role">Customer Portal</div>
+      </div>
+    </div>
+
+    <!-- Nav links are rendered by app.js from its NAV array -->
+    <nav class="sb-nav" id="sbNav" aria-label="Main navigation"></nav>
+
+    <div class="sb-footer">
+      <span class="sb-dot"></span>
+      <span>All systems operational</span>
+    </div>
+  </aside>
+
+  <!-- MAIN COLUMN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="topbar-title-block">
+        <h1 class="topbar-title" id="pageTitle">Dashboard</h1>
+        <div class="topbar-sub" id="pageSub">Welcome back</div>
+      </div>
+
+      <div class="topbar-actions">
+        <!-- Wallet chip -->
+        <div class="wallet-chip" id="walletChip" role="button" tabindex="0" title="View wallet">
+          <i class="fas fa-wallet"></i>
+          <div>
+            <div class="lbl">Wallet</div>
+            <div class="bal" id="topWalletBal">Fr. 0</div>
+          </div>
+        </div>
+
+        <!-- Deposit quick button -->
+        <button class="btn btn-primary btn-sm" id="depositBtn" type="button" title="Deposit money">
+          <i class="fas fa-plus"></i> Deposit
+        </button>
+
+        <!-- Notifications -->
+        <button class="icon-btn" id="notifBtn" type="button" title="Notifications" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="dot hidden" id="notifDot"></span>
+        </button>
+
+        <!-- User chip -->
+        <div class="user-chip" id="userChip" role="button" tabindex="0" title="Account">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <div class="user-meta">
+            <div class="user-name" id="userName">User</div>
+            <div class="user-role">Customer</div>
+          </div>
+          <i class="fas fa-chevron-down" style="font-size:10px;color:var(--text-3);margin-left:4px"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- SPA MOUNT POINT -->
+    <main class="content" id="content" role="main"></main>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- UI CONTAINERS -->
+<!-- ============================================================ -->
+<div id="modalRoot"></div>
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="false"></div>
+
+<div class="processing" id="processing" role="alertdialog" aria-modal="true" aria-hidden="true">
+  <div class="processing-box">
+    <div class="spinner-ring"></div>
+    <h3 id="procTitle">Processing</h3>
+    <p id="procMsg">Please wait…</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT — LOAD ORDER MATTERS -->
+<!-- ============================================================ -->
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+
+<!-- Core modules -->
+<script src="js/utils.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/validators.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/store.js"></script>
+<script src="js/realtime.js"></script>
+<script src="js/router.js"></script>
+
+<!-- Page modules -->
+<script src="js/pages/dashboard.js"></script>
+<script src="js/pages/wallet.js"></script>
+<script src="js/pages/deposit.js"></script>
+<script src="js/pages/withdraw.js"></script>
+<script src="js/pages/create-shipment.js"></script>
+<script src="js/pages/my-shipments.js"></script>
+<script src="js/pages/shipment-detail.js"></script>
+<script src="js/pages/payment-history.js"></script>
+<script src="js/pages/invoices.js"></script>
+<script src="js/pages/addresses.js"></script>
+<script src="js/pages/referrals.js"></script>
+<script src="js/pages/notifications.js"></script>
+<script src="js/pages/profile.js"></script>
+<script src="js/pages/security.js"></script>
+<script src="js/pages/support.js"></script>
+<script src="js/pages/tracking.js"></script>
+
+<!-- Bootstrap — MUST be last -->
+<script src="js/app.js"></script>
+
+<noscript>
+  <div style="padding:24px;text-align:center;font-family:system-ui,sans-serif">
+    <h1 style="font-size:20px;margin-bottom:8px">JavaScript required</h1>
+    <p style="color:#666">GlobalExpress needs JavaScript to run. Please enable it in your browser settings.</p>
+  </div>
+</noscript>
+
+</body>
+</html>
