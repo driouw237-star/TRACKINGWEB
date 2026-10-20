@@ -43,9 +43,8 @@
         return null;
       }
 
-      // Fetch the profile from the database to get the role
+      // Fetch the profile from the 'public.users' table
       const { data: profile, error } = await sb
-        .schema('app')
         .from('users')
         .select('id, email, full_name, role, status, wallet, referral_code')
         .eq('id', session.user.id)

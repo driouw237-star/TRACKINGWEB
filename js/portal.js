@@ -59,7 +59,7 @@
 
     if (!email || !password) return showError('Please enter your email and password.');
 
-    showProcessing('Signing you in', 'Verifying credentials with Supabase…');
+    showProcessing('Signing you in', 'Verifying credentials…');
 
     try {
       const { data: authData, error: authError } = await window.supabaseClient.auth.signInWithPassword({
@@ -69,14 +69,17 @@
 
       if (authError) throw authError;
 
+      // Query the 'public.users' table (no more schema() selector needed)
       const { data: profile, error: profileError } = await window.supabaseClient
-        .schema('app') 
         .from('users')
         .select('id, email, full_name, role, status')
         .eq('id', authData.user.id)
         .single();
 
-      if (profileError) throw new Error('Could not find user profile.');
+      if (profileError) {
+        console.error("Profile Error:", profileError);
+        throw new Error('Could not find user profile. Check console.');
+      }
 
       hideProcessing();
 

@@ -38,9 +38,6 @@
       return () => wildcard.delete(cb);
     },
 
-    // ------------------------------------------------------------
-    // ASYNC SUPABASE HYDRATION
-    // ------------------------------------------------------------
     async reloadUser() {
       if (!window.Auth) return null;
       const user = await window.Auth.resolve();
@@ -53,15 +50,13 @@
       if (!user || !window.supabaseClient) { Store.set('shipments', []); return []; }
 
       const { data, error } = await window.supabaseClient
-        .schema('app')
-        .from('shipments')
+        .from('shipments') // No schema() needed
         .select('*')
         .eq('created_by', user.id)
         .order('created_at', { ascending: false });
 
       if (error) { console.error('[Store] shipments load failed', error); return []; }
 
-      // Map snake_case DB columns to camelCase frontend expected properties
       const mapped = data.map(r => ({
         id: r.id,
         trackingCode: r.tracking_code,
@@ -102,7 +97,6 @@
       if (!user || !window.supabaseClient) { Store.set('payments', []); return []; }
 
       const { data, error } = await window.supabaseClient
-        .schema('app')
         .from('payments')
         .select('*')
         .eq('user_id', user.id)
@@ -130,7 +124,6 @@
       if (!user || !window.supabaseClient) { Store.set('walletTxns', []); return []; }
 
       const { data, error } = await window.supabaseClient
-        .schema('app')
         .from('wallet_txns')
         .select('*')
         .eq('user_id', user.id)
@@ -158,7 +151,6 @@
       if (!user || !window.supabaseClient) { Store.set('notifications', []); return []; }
 
       const { data, error } = await window.supabaseClient
-        .schema('app')
         .from('notifications')
         .select('*')
         .eq('user_id', user.id)
@@ -193,9 +185,7 @@
 
     snapshot() {
       return Object.assign({}, state);
-    },
-
-    KEYS: {} // Deprecated, using Supabase now
+    }
   };
 
   window.Store = Store;

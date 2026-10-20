@@ -10,29 +10,16 @@
     return;
   }
 
-  // Create the client and store it globally
   window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
       detectSessionInUrl: true
+    },
+    db: {
+      schema: 'public' // <--- CHANGED TO PUBLIC
     }
   });
-
-  // A quick health check
-  (async function healthCheck() {
-    try {
-      const res = await fetch(SUPABASE_URL + '/auth/v1/health', {
-        headers: { apikey: SUPABASE_ANON }
-      });
-      if (!res.ok) {
-        console.error('[supabase] Health check FAILED — HTTP ' + res.status);
-      } else {
-        console.log('[supabase] Client initialized & Health OK');
-      }
-    } catch (err) {
-      console.error('[supabase] Health check threw:', err);
-    }
-  })();
-
+  
+  console.log('[supabase] Client initialized for public schema');
 })();
