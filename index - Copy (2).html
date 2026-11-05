@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ============================================================
+     PRIMARY META
+     ============================================================ -->
+<title>Track Your Shipment — GlobalExpress</title>
+<meta name="description" content="Track your GlobalExpress shipment in real time. Enter your tracking code to see live location, delivery status, and a complete timeline of every step." />
+<meta name="theme-color" content="#0b2545" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="robots" content="index, follow" />
+
+<!-- ============================================================
+     OPEN GRAPH — WhatsApp, Facebook, LinkedIn, Slack previews
+     ============================================================ -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="GlobalExpress" />
+<meta property="og:title" content="Track Your Shipment — GlobalExpress" />
+<meta property="og:description" content="Enter your tracking code to see live location, status, and delivery timeline." />
+<meta property="og:image" content="assets/og-image.png" />
+<meta property="og:url" content="https://globalexpress.example/" />
+
+<!-- ============================================================
+     TWITTER CARD
+     ============================================================ -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Track Your Shipment — GlobalExpress" />
+<meta name="twitter:description" content="Enter your tracking code to see live location, status, and delivery timeline." />
+<meta name="twitter:image" content="assets/og-image.png" />
+
+<!-- ============================================================
+     FAVICON — inline SVG, zero extra HTTP requests
+     ============================================================ -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b2545'/><text x='50' y='68' font-size='52' font-family='Arial' font-weight='bold' fill='%23FF6B35' text-anchor='middle'>GE</text></svg>" />
+
+<!-- ============================================================
+     PRECONNECT
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://unpkg.com" />
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+<!-- ============================================================
+     FONTS — Inter, Manrope, JetBrains Mono
+     ============================================================ -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+
+<!-- ============================================================
+     ICONS + MAP STYLES
+     ============================================================ -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- ============================================================
+     OUR CSS
+     ============================================================ -->
+<link rel="stylesheet" href="css/variables.css" />
+<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/tracking.css" />
+</head>
+<body>
+
+<!-- Skip link -->
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ============================================================
+     PUBLIC HEADER
+     ============================================================ -->
+<header class="pub-header" role="banner">
+  <div class="pub-header-inner">
+
+    <a href="/" class="pub-brand" aria-label="GlobalExpress home">
+      <div class="pub-logo" aria-hidden="true">GE</div>
+      <div class="pub-brand-text">
+        <div class="pub-brand-name">GlobalExpress</div>
+        <div class="pub-brand-tag">TRACKING PORTAL</div>
+      </div>
+    </a>
+
+    <nav class="pub-nav" id="pubNav" aria-label="Primary navigation">
+      <a href="#searchWrap" data-focus="trackingInput">Track</a>
+      <a href="portal.html" class="ghost">Sign In</a>
+      <a href="portal.html" class="cta">
+        <i class="fas fa-plus" aria-hidden="true"></i>
+        Ship Now
+      </a>
+    </nav>
+
+    <button
+      class="mobile-menu-btn"
+      type="button"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+      aria-controls="pubNav"
+      data-menu-toggle>
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot" aria-hidden="true"></span>
+        Live tracking · 190+ countries · Updated in real time
+      </div>
+      <h1>Where is my <span>package?</span></h1>
+      <p>Enter your tracking code below to see live location, delivery status, and the complete journey of your shipment.</p>
+    </div>
+  </section>
+
+  <!-- SEARCH CARD -->
+  <div class="search-wrap" id="searchWrap">
+    <div class="search-card">
+      <form class="search-form" id="searchForm" autocomplete="off" role="search" novalidate>
+        <div class="search-input-wrap">
+          <i class="fas fa-magnifying-glass leading" aria-hidden="true"></i>
+          <label for="trackingInput" class="sr-only">Tracking code</label>
+          <input
+            type="text"
+            class="search-input"
+            id="trackingInput"
+            placeholder="Enter tracking code (e.g. GE-3301-7745)"
+            autocomplete="off"
+            spellcheck="false"
+            autocapitalize="characters"
+            inputmode="text"
+            maxlength="15"
+            aria-label="Tracking code" />
+          <button
+            type="button"
+            class="search-clear"
+            id="clearBtn"
+            aria-label="Clear tracking code"
+            title="Clear">
+            <i class="fas fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+        <button type="submit" class="search-btn" id="searchBtn">
+          <i class="fas fa-location-crosshairs" aria-hidden="true"></i>
+          Track Package
+        </button>
+      </form>
+    </div>
+
+    <!-- UPDATED DEMO CHIPS (No -US suffix) -->
+    <div class="search-hint" aria-label="Demo tracking codes">
+      <button type="button" class="hint-chip">
+        <i class="fas fa-bolt" aria-hidden="true"></i>GE-3301-7745
+      </button>
+      <button type="button" class="hint-chip">
+        <i class="fas fa-bolt" aria-hidden="true"></i>GE-9102-4480
+      </button>
+    </div>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div class="loading-card" id="loadingCard" role="status" aria-live="polite">
+    <div class="loading-inner">
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <div>
+        <div class="loading-title">Looking up your shipment…</div>
+        <div class="loading-sub">This should only take a moment.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERROR STATE (Format hint updated to GE-XXXX-XXXX) -->
+  <div class="error-card" id="errorCard" role="alert">
+    <div class="error-inner">
+      <div class="error-icon" aria-hidden="true">
+        <i class="fas fa-circle-exclamation"></i>
+      </div>
+      <div style="flex:1">
+        <div class="error-title">We couldn't find that tracking code</div>
+        <div class="error-desc">
+          Please double-check the code and try again. It usually looks like
+          <strong>GE-XXXX-XXXX</strong>. If you believe this is an error,
+          contact the sender or our support team.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <section class="results hidden" id="results" aria-live="polite" aria-busy="false">
+
+    <h2 class="sr-only">Tracking results</h2>
+
+    <section class="status-banner" id="statusBanner">
+      <div class="status-inner">
+        <div class="status-left">
+          <div class="status-eyebrow">Tracking Status</div>
+          <div class="status-title" id="statusTitle">—</div>
+          <div class="status-route" id="statusRoute">—</div>
+        </div>
+        <div class="status-right">
+          <div class="status-eta-label">Estimated Delivery</div>
+          <div class="status-eta-value" id="statusEta">—</div>
+          <div class="status-actions" id="statusActions"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="progress-card">
+      <div class="progress-title">
+        <i class="fas fa-route" aria-hidden="true"></i> Delivery Progress
+      </div>
+      <div class="steps" id="progressSteps"></div>
+    </section>
+
+    <div class="result-grid">
+
+      <div>
+        <section class="card">
+          <div class="card-head">
+            <h3><i class="fas fa-clock-rotate-left" aria-hidden="true"></i> Shipment Activity</h3>
+            <span class="badge" id="activityCount">0 events</span>
+          </div>
+          <div class="card-body">
+            <div class="timeline" id="timeline"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h3><i class="fas fa-box" aria-hidden="true"></i> Package Details</h3>
+          </div>
+          <div class="card-body">
+            <div class="info-grid" id="packageGrid"></div>
+          </div>
+        </section>
+      </div>
+
+      <div>
+        <section class="card">
+          <div class="card-head">
+            <h3><i class="fas fa-map-location-dot" aria-hidden="true"></i> Live Map</h3>
+            <span class="badge" id="mapHint">Route overview</span>
+          </div>
+          <div class="card-body">
+            <div class="map-box">
+              <div id="trackMap"></div>
+            </div>
+            <div class="map-legend">
+              <span>
+                <span class="legend-dot" style="background: var(--brand-500)" aria-hidden="true"></span>
+                Origin
+              </span>
+              <span>
+                <span class="legend-dot" style="background: var(--accent-500)" aria-hidden="true"></span>
+                Current location
+              </span>
+              <span>
+                <span class="legend-dot" style="background: var(--success-500)" aria-hidden="true"></span>
+                Destination
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h3><i class="fas fa-users" aria-hidden="true"></i> Shipment Parties</h3>
+          </div>
+          <div class="card-body">
+            <div class="info-grid" id="partiesGrid"></div>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <div class="action-row" id="actionRow"></div>
+
+  </section>
+
+  <!-- WELCOME / FEATURES -->
+  <section class="welcome" id="welcome">
+    <h2 class="sr-only">Why track with GlobalExpress</h2>
+    <div class="welcome-grid">
+      <div class="feature">
+        <div class="feature-icon blue" aria-hidden="true">
+          <i class="fas fa-location-crosshairs"></i>
+        </div>
+        <h4>Live Location</h4>
+        <p>Watch your package move in real time on an interactive map.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon orange" aria-hidden="true">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h4>Instant Updates</h4>
+        <p>Every scan, hold, and handover appears in seconds.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon green" aria-hidden="true">
+          <i class="fas fa-shield-halved"></i>
+        </div>
+        <h4>Verified &amp; Secure</h4>
+        <p>Tracking codes are unique and can't be guessed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE CODES -->
+  <section class="sample-box" id="sampleBox">
+    <h2 class="sr-only">Demo tracking codes</h2>
+    <div class="sample-inner">
+      <h4>
+        <i class="fas fa-flask" style="color: var(--accent-500)" aria-hidden="true"></i>
+        Try a demo tracking code
+      </h4>
+      <div class="sample-grid">
+        <div class="sample-code" role="button" tabindex="0">
+          GE-3301-7745
+          <small>Dallas → Eskilstuna (In Transit)</small>
+        </div>
+        <div class="sample-code" role="button" tabindex="0">
+          GE-9102-4480
+          <small>Los Angeles → Tennessee (On Hold)</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="pub-footer" role="contentinfo">
+  <div class="pub-footer-inner">
+    <div class="footer-grid">
+
+      <div class="footer-brand-block">
+        <div class="footer-brand">
+          <div class="pub-logo" aria-hidden="true">GE</div>
+          <div class="footer-brand-text">GlobalExpress</div>
+        </div>
+        <p>Ship anywhere, track everything. Global logistics built for modern businesses and individuals — with real-time visibility across 190+ countries.</p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#">Express Shipping</a></li>
+          <li><a href="#">Air Freight</a></li>
+          <li><a href="#">Ocean Freight</a></li>
+          <li><a href="#">Warehousing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#searchWrap">Track Package</a></li>
+          <li><a href="#">System Status</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div>© <span id="year"></span> GlobalExpress. All rights reserved.</div>
+      <div class="footer-social">
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+<!-- NOSCRIPT -->
+<noscript>
+  <div style="max-width:640px;margin:40px auto;padding:24px;border:1px solid #e4e8ee;border-radius:12px;text-align:center;font-family:system-ui,sans-serif;line-height:1.6">
+    <h2 style="margin:0 0 12px;font-size:20px">JavaScript required</h2>
+    <p style="margin:0;color:#475569">GlobalExpress tracking needs JavaScript to run. Please enable it in your browser settings, or contact the sender for tracking updates.</p>
+  </div>
+</noscript>
+
+<!-- ============================================================
+     SCRIPTS — LOAD ORDER MATTERS
+     Note: js/utils.js is REQUIRED for the new track.js to function.
+     ============================================================ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/tracking/map.js"></script>
+<script src="js/tracking/timeline.js"></script>
+<script src="js/tracking/progress.js"></script>
+<script src="js/track.js"></script>
+
+<!-- BRIDGE SCRIPT -->
+<script>
+(function () {
+  'use strict';
+  var year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
+
+  document.querySelectorAll('a[data-focus]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var target = document.getElementById(link.dataset.focus);
+      if (!target) return;
+      setTimeout(function () {
+        try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+      }, 320);
+    });
+  });
+
+  var toggle = document.querySelector('[data-menu-toggle]');
+  var pubNav = document.getElementById('pubNav');
+  if (toggle && pubNav) {
+    toggle.addEventListener('click', function () {
+      var open = pubNav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
