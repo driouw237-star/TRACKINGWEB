@@ -1,0 +1,613 @@
+/* ============================================================================
+   GlobalExpress - dashboard.css
+   Dashboard view styling: wallet hero, stat cards, quick actions, alert
+   banners, recent shipments panel, skeleton states.
+
+   Depends on: variables.css (tokens), reset.css, base.css, buttons.css
+   Used by: app.html (dashboard view), future admin overview, mobile
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Greeting block
+   --------------------------------------------------------------------------- */
+
+.dash-greet{
+  margin-bottom:22px;
+}
+
+.dash-greet h1{
+  font-family:'Manrope',sans-serif;
+  font-size:22px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-.01em;
+  margin:0 0 4px;
+  line-height:1.25;
+}
+
+.dash-greet .sub{
+  font-size:13.5px;
+  color:var(--text-2);
+  font-weight:500;
+  line-height:1.5;
+}
+
+.dash-greet .sub strong{
+  color:var(--text);
+  font-weight:600;
+}
+
+/* ---------------------------------------------------------------------------
+   Wallet hero
+   --------------------------------------------------------------------------- */
+
+.wallet-hero{
+  position:relative;
+  border-radius:16px;
+  padding:32px;
+  color:#fff;
+  margin-bottom:22px;
+  overflow:hidden;
+  background:linear-gradient(135deg,#0b2545 0%,#13315c 60%,#1e3a8a 100%);
+  box-shadow:
+    0 12px 32px rgba(11,37,69,.2),
+    0 4px 8px rgba(11,37,69,.1);
+}
+
+.wallet-hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 80% 20%,rgba(255,107,53,.25),transparent 55%),
+    radial-gradient(circle at 15% 90%,rgba(59,130,246,.15),transparent 55%);
+  pointer-events:none;
+}
+
+.wallet-hero-content{
+  position:relative;
+  z-index:1;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+}
+
+.wallet-balance-label{
+  font-size:12px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:700;
+  opacity:.72;
+  margin-bottom:8px;
+}
+
+.wallet-balance-amount{
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:44px;
+  letter-spacing:-.03em;
+  line-height:1.05;
+  color:#fff;
+}
+.wallet-balance-amount small{
+  font-size:18px;
+  opacity:.72;
+  font-weight:600;
+  letter-spacing:0;
+  margin-right:4px;
+  vertical-align:baseline;
+}
+
+.wallet-balance-sub{
+  font-size:13.5px;
+  opacity:.75;
+  margin-top:8px;
+  font-weight:500;
+  letter-spacing:.1px;
+}
+
+/* Action buttons inside the hero - translucent white on hero background */
+.wallet-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.wallet-actions .btn{
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  border-color:rgba(255,255,255,.24);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  font-weight:600;
+}
+.wallet-actions .btn:hover:not(:disabled){
+  background:rgba(255,255,255,.22);
+  border-color:rgba(255,255,255,.35);
+  color:#fff;
+}
+
+/* Primary "Deposit" button inside the hero */
+.wallet-actions .btn.deposit{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+.wallet-actions .btn.deposit:hover:not(:disabled){
+  background:var(--accent-2);
+  border-color:var(--accent-2);
+  box-shadow:0 6px 18px rgba(255,107,53,.4);
+}
+
+/* Dark theme variant (for admin) */
+.wallet-hero.dark{
+  background:linear-gradient(135deg,#0b1220 0%,#141d31 55%,#1e293b 100%);
+}
+.wallet-hero.dark::before{
+  background-image:
+    radial-gradient(circle at 80% 20%,rgba(220,38,38,.2),transparent 55%),
+    radial-gradient(circle at 15% 90%,rgba(37,99,235,.15),transparent 55%);
+}
+
+/* Compact hero variant - less padding, smaller balance */
+.wallet-hero.compact{
+  padding:22px 26px;
+}
+.wallet-hero.compact .wallet-balance-amount{
+  font-size:32px;
+}
+.wallet-hero.compact .wallet-balance-amount small{
+  font-size:14px;
+}
+
+/* ---------------------------------------------------------------------------
+   Stats grid
+   --------------------------------------------------------------------------- */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:16px;
+  margin-bottom:24px;
+}
+
+.stat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:18px;
+  box-shadow:var(--sh-xs);
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+  position:relative;
+  overflow:hidden;
+}
+.stat:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--sh);
+}
+
+.stat-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.stat-label{
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-3);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  line-height:1.4;
+}
+
+.stat-icon{
+  width:36px;
+  height:36px;
+  flex-shrink:0;
+  border-radius:10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  background:var(--surface-2);
+  color:var(--text-2);
+}
+
+/* Icon color variants - same palette as pills and toasts */
+.stat-icon.blue  { background:#eff6ff; color:var(--blue); }
+.stat-icon.orange{ background:#fff7ed; color:var(--accent); }
+.stat-icon.green { background:#ecfdf5; color:var(--green); }
+.stat-icon.purple{ background:#f5f3ff; color:var(--purple); }
+.stat-icon.amber { background:#fffbeb; color:var(--amber); }
+.stat-icon.red   { background:#fef2f2; color:var(--red); }
+.stat-icon.cyan  { background:#ecfeff; color:#0891b2; }
+
+.stat-value{
+  font-family:'Manrope',sans-serif;
+  font-weight:800;
+  font-size:26px;
+  letter-spacing:-.02em;
+  color:var(--text);
+  line-height:1.1;
+  word-break:break-word;
+}
+
+.stat-trend{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  font-size:12px;
+  font-weight:600;
+  margin-top:8px;
+  line-height:1.4;
+}
+.stat-trend.up      { color:var(--green); }
+.stat-trend.down    { color:var(--red); }
+.stat-trend.neutral { color:var(--text-3); }
+.stat-trend i{
+  font-size:10px;
+}
+
+/* ---------------------------------------------------------------------------
+   Quick actions
+   --------------------------------------------------------------------------- */
+
+.quick-actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));
+  gap:12px;
+}
+
+.qa-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:10px;
+  padding:16px;
+  background:var(--surface-2);
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  text-align:left;
+  cursor:pointer;
+  color:var(--text);
+  font-family:inherit;
+  transition:
+    border-color .2s var(--ease),
+    background-color .2s var(--ease),
+    transform .2s var(--ease),
+    box-shadow .2s var(--ease);
+}
+.qa-btn:hover{
+  border-color:var(--accent);
+  background:#fff7ed;
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(255,107,53,.12);
+}
+.qa-btn:active{
+  transform:translateY(0);
+}
+.qa-btn:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+.qa-icon{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  flex-shrink:0;
+  box-shadow:0 4px 12px rgba(255,107,53,.25);
+}
+
+.qa-btn h4{
+  font-family:'Manrope',sans-serif;
+  font-size:13.5px;
+  font-weight:700;
+  color:var(--text);
+  margin:0;
+  letter-spacing:-.005em;
+}
+
+.qa-btn p{
+  font-size:11.5px;
+  color:var(--text-2);
+  margin:0;
+  line-height:1.45;
+}
+
+/* ---------------------------------------------------------------------------
+   Alert banner
+   --------------------------------------------------------------------------- */
+
+.alert-banner{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:16px 18px;
+  border-radius:12px;
+  border-left:4px solid var(--accent);
+  background:#fff7ed;
+  margin-bottom:20px;
+  color:var(--text);
+  line-height:1.55;
+}
+
+.alert-banner i.alert-icon{
+  font-size:18px;
+  color:var(--accent);
+  flex-shrink:0;
+  margin-top:2px;
+}
+
+.alert-banner .alert-body{
+  flex:1;
+  min-width:0;
+}
+.alert-banner .alert-body h4{
+  margin:0 0 3px;
+  font-family:'Manrope',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-.005em;
+}
+.alert-banner .alert-body p{
+  margin:0;
+  font-size:13px;
+  color:var(--text-2);
+  line-height:1.55;
+}
+
+.alert-banner .alert-action{
+  flex-shrink:0;
+  align-self:center;
+}
+
+/* Variants */
+.alert-banner.warn{
+  background:#fffbeb;
+  border-left-color:var(--amber);
+}
+.alert-banner.warn i.alert-icon{ color:var(--amber); }
+.alert-banner.warn .alert-body h4{ color:#92400e; }
+.alert-banner.warn .alert-body p { color:#92400e; }
+
+.alert-banner.danger{
+  background:#fef2f2;
+  border-left-color:var(--red);
+}
+.alert-banner.danger i.alert-icon{ color:var(--red); }
+.alert-banner.danger .alert-body h4{ color:#991b1b; }
+.alert-banner.danger .alert-body p { color:#991b1b; }
+
+.alert-banner.info{
+  background:#eff6ff;
+  border-left-color:var(--blue);
+}
+.alert-banner.info i.alert-icon{ color:var(--blue); }
+.alert-banner.info .alert-body h4{ color:#1e40af; }
+.alert-banner.info .alert-body p { color:#1e40af; }
+
+.alert-banner.success{
+  background:#ecfdf5;
+  border-left-color:var(--green);
+}
+.alert-banner.success i.alert-icon{ color:var(--green); }
+.alert-banner.success .alert-body h4{ color:#065f46; }
+.alert-banner.success .alert-body p { color:#065f46; }
+
+/* ---------------------------------------------------------------------------
+   Recent shipments panel - wraps the standard table
+   --------------------------------------------------------------------------- */
+
+.recent-panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  box-shadow:var(--sh-xs);
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+.recent-panel .panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.recent-panel .panel-head h3{
+  font-family:'Manrope',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.recent-panel .panel-head h3 i{
+  color:var(--accent);
+  font-size:14px;
+}
+
+.recent-panel .panel-body{
+  padding:0;
+}
+
+/* Empty slot inside the panel */
+.recent-empty{
+  padding:48px 24px;
+  text-align:center;
+}
+
+/* ---------------------------------------------------------------------------
+   Skeleton - placeholder blocks while dashboard data loads
+   --------------------------------------------------------------------------- */
+
+.dash-skeleton{
+  border-radius:12px;
+  background:linear-gradient(
+    90deg,
+    var(--border-2) 0%,
+    #f1f5f9 40%,
+    var(--border-2) 80%
+  );
+  background-size:200% 100%;
+  animation:skSweepDash 1.2s ease-in-out infinite;
+}
+@keyframes skSweepDash{
+  0%  { background-position:200% 0; }
+  100%{ background-position:-200% 0; }
+}
+
+.dash-skeleton.hero{
+  height:140px;
+  margin-bottom:22px;
+}
+.dash-skeleton.stat{
+  height:110px;
+}
+.dash-skeleton.tile{
+  height:120px;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------------- */
+
+@media (max-width:1024px){
+  .wallet-balance-amount{
+    font-size:38px;
+  }
+  .wallet-balance-amount small{
+    font-size:16px;
+  }
+}
+
+@media (max-width:768px){
+  .wallet-hero{
+    padding:26px 22px;
+  }
+  .wallet-hero-content{
+    gap:18px;
+  }
+  .wallet-balance-amount{
+    font-size:34px;
+  }
+  .stats{
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+  }
+  .stat{
+    padding:16px;
+  }
+  .stat-value{
+    font-size:22px;
+  }
+  .quick-actions{
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+
+@media (max-width:600px){
+  .wallet-hero{
+    padding:22px 18px;
+    border-radius:14px;
+  }
+  .wallet-hero-content{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .wallet-actions{
+    width:100%;
+  }
+  .wallet-actions .btn{
+    flex:1;
+    justify-content:center;
+    padding:11px 14px;
+    font-size:13.5px;
+  }
+  .wallet-balance-amount{
+    font-size:30px;
+  }
+  .wallet-balance-amount small{
+    font-size:14px;
+  }
+  .wallet-balance-label{
+    font-size:11px;
+    letter-spacing:1.2px;
+  }
+  .wallet-balance-sub{
+    font-size:12.5px;
+  }
+  .stats{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .stat-value{
+    font-size:22px;
+  }
+  .quick-actions{
+    grid-template-columns:1fr;
+  }
+  .qa-btn{
+    flex-direction:row;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+  }
+  .qa-btn h4,
+  .qa-btn p{
+    text-align:left;
+  }
+  .alert-banner{
+    flex-direction:column;
+    gap:10px;
+  }
+  .alert-banner .alert-action{
+    align-self:flex-start;
+  }
+}
+
+@media (max-width:380px){
+  .wallet-balance-amount{
+    font-size:26px;
+  }
+  .stat-value{
+    font-size:20px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  .stat,
+  .qa-btn,
+  .wallet-actions .btn{
+    transition:none;
+  }
+  .stat:hover,
+  .qa-btn:hover{
+    transform:none;
+  }
+  .dash-skeleton{
+    animation:none;
+    background:var(--border-2);
+  }
+}

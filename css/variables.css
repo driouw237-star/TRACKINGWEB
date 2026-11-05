@@ -1,67 +1,404 @@
-/* ================================================================
-   GlobalExpress — Design Tokens (CSS Custom Properties)
-   Loaded FIRST on every page. All other CSS depends on these.
-   ================================================================ */
+/* ============================================================================
+   GlobalExpress — Design Tokens
+   File: css/variables.css
+
+   SINGLE SOURCE OF TRUTH for every design value in the app.
+   Every other CSS file depends on these tokens — do not remove or rename
+   without amending DESIGN_SYSTEM.md first.
+
+   Implements: DESIGN_SYSTEM.md §2 (color), §3 (typography), §4 (spacing),
+               §5 (radii), §6 (shadows), §7 (motion), §10 (components),
+               §11 (layout), §2.8 (dark mode)
+
+   Naming conventions:
+     --brand-{50…900}       Navy palette (11 shades)
+     --accent-{50…900}      Orange palette (11 shades)
+     --success-{500,600,50,200}  Green family
+     --warning-{500,600,50,200}  Amber family
+     --danger-{500,600,50,200}   Red family
+     --info-{500,600,50,200}     Blue family
+     --purple-{500}         Purple (refund/payout)
+     --surface-{0…3,inverse}
+     --text-{strong,default,muted,subtle,inverse}
+     --border-{subtle,default,strong}
+     --radius-{xs…full}
+     --shadow-{xs…xl,modal,focus}
+     --duration-{instant…celebration}
+     --ease-{,in-out,out,bounce}
+     --type-{display-xl…overline}
+     --space-{0…32}
+     --font-{body,display,mono}
+     --sidebar-w, --topbar-h, --content-max
+     --biz-{shipping-fee,insurance-fee,referral-bonus,min-deposit,max-deposit}
+
+   Loaded FIRST — before reset.css, base.css, and every component CSS.
+   ============================================================================ */
 
 :root {
-  /* BRAND */
-  --brand:   #0b2545;
-  --brand-2: #13315c;
-  --brand-3: #1e3a8a;
 
-  /* ACCENT */
-  --accent:   #FF6B35;
-  --accent-2: #e55627;
+  /* ─────────────────────────────────────────────────────────────────────
+     §1 — BRAND PALETTE (Navy)
+     Primary brand color. Sidebar, primary headings, hero cards.
+     ───────────────────────────────────────────────────────────────────── */
+  --brand-50:  #f0f4f9;
+  --brand-100: #dce4ed;
+  --brand-200: #b8c9db;
+  --brand-300: #94aec9;
+  --brand-400: #5a7fa8;
+  --brand-500: #0b2545;   /* PRIMARY */
+  --brand-600: #091e3a;
+  --brand-700: #07172e;
+  --brand-800: #051022;
+  --brand-900: #030814;
 
-  /* SEMANTIC */
-  --green:  #059669;
-  --amber:  #d97706;
-  --red:    #dc2626;
-  --blue:   #2563eb;
-  --purple: #7c3aed;
-  --cyan:   #0891b2;
+  /* ─────────────────────────────────────────────────────────────────────
+     §2 — ACCENT PALETTE (Orange)
+     Action color. CTAs, focus rings, active sidebar, tracking codes.
+     ───────────────────────────────────────────────────────────────────── */
+  --accent-50:  #fff4ed;
+  --accent-100: #ffe0cc;
+  --accent-200: #ffc199;
+  --accent-300: #ffa366;
+  --accent-400: #ff8557;
+  --accent-500: #FF6B35;  /* PRIMARY CTA */
+  --accent-600: #e55627;
+  --accent-700: #c94218;
+  --accent-800: #a33511;
+  --accent-900: #7d280d;
 
-  /* SURFACES */
-  --bg:        #f5f7fa;
-  --surface:   #fff;
-  --surface-2: #fafbfc;
+  /* ─────────────────────────────────────────────────────────────────────
+     §3 — STATUS COLORS
+     Four families, four tones each. Use per DESIGN_SYSTEM.md §2.3.
 
-  /* BORDERS */
-  --border:   #e4e8ee;
-  --border-2: #eef1f5;
+     Success: delivered, paid, positive amount
+     Warning: on-hold, pending payment
+     Danger:  cancelled, failed, error, negative amount
+     Info:    pending, informational notices
+     Purple:  refunds, adjustments
+     ───────────────────────────────────────────────────────────────────── */
 
-  /* TEXT */
-  --text:   #0f172a;
-  --text-2: #475569;
-  --text-3: #94a3b8;
+  /* Success (green) */
+  --success-50:  #ecfdf5;
+  --success-200: #a7f3d0;
+  --success-500: #059669;
+  --success-600: #047857;
 
-  /* RADII */
-  --r-sm: 8px;
-  --r:    12px;
-  --r-lg: 16px;
+  /* Warning (amber) */
+  --warning-50:  #fffbeb;
+  --warning-200: #fde68a;
+  --warning-500: #d97706;
+  --warning-600: #b45309;
 
-  /* SHADOWS */
-  --sh-xs: 0 1px 2px rgba(15,23,42,.04);
-  --sh-sm: 0 1px 3px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
-  --sh:    0 4px 12px rgba(15,23,42,.06), 0 2px 4px rgba(15,23,42,.04);
-  --sh-lg: 0 12px 32px rgba(15,23,42,.10), 0 4px 8px rgba(15,23,42,.04);
-  --sh-xl: 0 24px 64px rgba(15,23,42,.14);
+  /* Danger (red) */
+  --danger-50:  #fef2f2;
+  --danger-200: #fecaca;
+  --danger-500: #dc2626;
+  --danger-600: #b91c1c;
 
-  /* MOTION */
-  --ease: cubic-bezier(.4, 0, .2, 1);
+  /* Info (blue) */
+  --info-50:  #eff6ff;
+  --info-200: #bfdbfe;
+  --info-500: #2563eb;
+  --info-600: #1d4ed8;
 
-  /* FONTS */
+  /* Purple (refund, adjustment — rare) */
+  --purple-50:  #f5f3ff;
+  --purple-500: #7c3aed;
+  --purple-600: #6d28d9;
+
+  /* Cyan (rare — accent variant) */
+  --cyan-500: #0891b2;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §4 — SURFACES
+     ───────────────────────────────────────────────────────────────────── */
+  --surface-0: #ffffff;      /* cards, modals, panels */
+  --surface-1: #fafbfc;      /* table stripes, input hover */
+  --surface-2: #f5f7fa;      /* page background */
+  --surface-3: #eef1f5;      /* toolbars, footers */
+  --surface-inverse: #0f172a;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §5 — TEXT
+     Every value tested for WCAG AA per DESIGN_SYSTEM.md §2.5.
+     ───────────────────────────────────────────────────────────────────── */
+  --text-strong:  #0f172a;   /* 17.9:1 — headings, primary content */
+  --text-default: #334155;   /* 10.4:1 — body */
+  --text-muted:   #64748b;   /* 4.76:1 — secondary */
+  --text-subtle:  #94a3b8;   /* meta only, never body */
+  --text-inverse: #f8fafc;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §6 — BORDERS
+     ───────────────────────────────────────────────────────────────────── */
+  --border-subtle:  #eef1f5;
+  --border-default: #e4e8ee;
+  --border-strong:  #cbd5e1;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §7 — RADII
+     ───────────────────────────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §8 — SHADOWS / ELEVATION
+     ───────────────────────────────────────────────────────────────────── */
+  --shadow-xs:    0 1px 2px rgba(15, 23, 42, .04);
+  --shadow-sm:    0 1px 3px rgba(15, 23, 42, .06), 0 1px 2px rgba(15, 23, 42, .04);
+  --shadow-md:    0 4px 12px rgba(15, 23, 42, .06), 0 2px 4px rgba(15, 23, 42, .04);
+  --shadow-lg:    0 12px 32px rgba(15, 23, 42, .10), 0 4px 8px rgba(15, 23, 42, .04);
+  --shadow-xl:    0 24px 64px rgba(15, 23, 42, .14);
+  --shadow-modal: 0 24px 64px rgba(15, 23, 42, .18), 0 8px 20px rgba(15, 23, 42, .08);
+  --shadow-focus: 0 0 0 3px rgba(255, 107, 53, .15);
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §9 — MOTION
+     ───────────────────────────────────────────────────────────────────── */
+  --duration-instant:     0ms;
+  --duration-micro:       120ms;
+  --duration-short:       200ms;
+  --duration-medium:      300ms;
+  --duration-long:        500ms;
+  --duration-celebration: 800ms;
+
+  --ease:        cubic-bezier(.4, 0, .2, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --ease-out:    cubic-bezier(.16, 1, .3, 1);
+  --ease-bounce: cubic-bezier(.68, -.55, .27, 1.55);
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §10 — TYPOGRAPHY
+     ───────────────────────────────────────────────────────────────────── */
+
+  /* Font stacks */
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Manrope', 'Inter', sans-serif;
-  --font-mono:    'Monaco', 'Menlo', 'Consolas', monospace;
+  --font-mono:    'JetBrains Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
 
-  /* LAYOUT */
-  --sidebar-w: 264px;
+  /* Type scale — clamp() provides fluid mobile→desktop transition */
+  --type-display-xl: clamp(36px, 4vw + 20px, 48px);
+  --type-display-lg: clamp(30px, 3vw + 18px, 40px);
+  --type-display-md: clamp(24px, 2vw + 16px, 32px);
+  --type-heading-lg: clamp(20px, 1.5vw + 14px, 28px);
+  --type-heading-md: clamp(16px, 1vw + 12px, 24px);
+  --type-body-lg:    16px;
+  --type-body-md:    14px;
+  --type-body-sm:    13px;
+  --type-caption:    12px;
+  --type-overline:   11px;
+
+  /* Weights */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semi:    600;
+  --weight-bold:    700;
+  --weight-black:   800;
+
+  /* Line heights */
+  --lh-tight:  1.15;
+  --lh-snug:   1.3;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.6;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §11 — SPACING (all multiples of 4px)
+     ───────────────────────────────────────────────────────────────────── */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §12 — LAYOUT
+     ───────────────────────────────────────────────────────────────────── */
+  --sidebar-w: 260px;      /* unified across customer + admin */
   --topbar-h:  62px;
   --content-max: 1400px;
+
+  /* Container widths */
+  --container-narrow: 720px;
+  --container-default: 1280px;
+  --container-wide: 1600px;
+
+  /* Breakpoints (documentation — actual media queries use literal px) */
+  /* --bp-sm: 640px;   */
+  /* --bp-md: 768px;   */
+  /* --bp-lg: 1024px;  */
+  /* --bp-xl: 1280px;  */
+  /* --bp-2xl: 1440px; */
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §13 — BUSINESS VALUES (documentation only)
+     
+     These are REFERENCE values. The runtime source of truth is
+     config.settings in Supabase, accessed via JS. They exist here so
+     calc() and CSS comments can reference them, and so any developer
+     opening this file sees the current business rules at a glance.
+
+     If a business value changes in Supabase, ALSO update this file
+     so the two stay in sync.
+     ───────────────────────────────────────────────────────────────────── */
+  --biz-shipping-fee:   1000;     /* XAF — per shipment */
+  --biz-insurance-fee:  100;      /* XAF — optional add-on */
+  --biz-referral-bonus: 100;      /* XAF — per qualified referral */
+  --biz-min-deposit:    500;      /* XAF */
+  --biz-max-deposit:    5000000;  /* XAF — 5 million */
+
+  /* ─────────────────────────────────────────────────────────────────────
+     §14 — BACKWARD-COMPAT ALIASES
+     
+     Old token names used by existing CSS files. Every alias points to
+     the corresponding value in the new scale. This allows all existing
+     CSS to keep working without modification.
+
+     Deprecation plan: as each CSS file is rewritten in the rebuild,
+     replace alias references with the new token names. When all files
+     are migrated, this section can be deleted.
+     ───────────────────────────────────────────────────────────────────── */
+
+  /* Brand aliases */
+  --brand:   var(--brand-500);
+  --brand-2: var(--brand-600);
+  --brand-3: var(--brand-700);
+
+  /* Accent aliases */
+  --accent:   var(--accent-500);
+  --accent-2: var(--accent-600);
+
+  /* Status aliases (old → new) */
+  --green:  var(--success-500);
+  --amber:  var(--warning-500);
+  --red:    var(--danger-500);
+  --blue:   var(--info-500);
+  --purple: var(--purple-500);
+  --cyan:   var(--cyan-500);
+
+  /* Surface aliases (old → new) */
+  --bg:        var(--surface-2);
+  --surface:   var(--surface-0);
+  --surface-2: var(--surface-1);
+
+  /* Border aliases */
+  --border:   var(--border-default);
+  --border-2: var(--border-subtle);
+
+  /* Text aliases */
+  --text:   var(--text-strong);
+  --text-2: var(--text-default);
+  --text-3: var(--text-subtle);
+
+  /* Radius aliases */
+  --r-sm: var(--radius-md);
+  --r:    var(--radius-lg);
+  --r-lg: var(--radius-xl);
+
+  /* Shadow aliases */
+  --sh-xs: var(--shadow-xs);
+  --sh-sm: var(--shadow-sm);
+  --sh:    var(--shadow-md);
+  --sh-lg: var(--shadow-lg);
+  --sh-xl: var(--shadow-xl);
+
+  /* Easing alias */
+  --ease: var(--ease); /* self-reference for old code, resolves to new value */
+
+  /* Sidebar topbar aliases — kept as-is, unified at 260px */
+  /* --sidebar-w: 260px;    already declared in §12 */
+  /* --topbar-h:  62px;     already declared in §12 */
+  /* --content-max: 1400px; already declared in §12 */
+
 }
-@media (max-width: 1100px) {
-  :root {
-    --sidebar-w: 220px; /* Slimmer sidebar for tablets */
-  }
+
+/* ============================================================================
+   §15 — DARK MODE
+   Activated via [data-theme="dark"] on <html> or <body>.
+
+   Implements DESIGN_SYSTEM.md §2.8. Every token that appears on a dark
+   surface is redefined here. Light-mode-only tokens (page background,
+   subtle borders) get appropriate dark equivalents.
+
+   Surface hierarchy in dark mode:
+     --surface-2 (#0b1220)  page background
+     --surface-1 (#0f172a)  panel body
+     --surface-0 (#111a2e)  raised cards
+     --surface-3 (#1e293b)  hover / active
+   ============================================================================ */
+
+[data-theme="dark"] {
+
+  /* Surfaces — inverted hierarchy */
+  --surface-0: #111a2e;
+  --surface-1: #0f172a;
+  --surface-2: #0b1220;
+  --surface-3: #1e293b;
+  --surface-inverse: #f1f5f9;
+
+  /* Text */
+  --text-strong:  #e2e8f0;
+  --text-default: #94a3b8;
+  --text-muted:   #64748b;
+  --text-subtle:  #475569;
+  --text-inverse: #0f172a;
+
+  /* Borders */
+  --border-subtle:  #1a2332;
+  --border-default: #1e293b;
+  --border-strong:  #334155;
+
+  /* Brand — slightly deeper for dark surfaces */
+  --brand-500: #050b17;
+  --brand-600: #070f1f;
+  --brand-700: #0a1528;
+
+  /* Accent — slightly brightened to pop on dark */
+  --accent-500: #ff8557;
+  --accent-600: #ff6b35;
+
+  /* Status surfaces — tinted overlays */
+  --success-50:  rgba(16, 185, 129, .15);
+  --warning-50:  rgba(245, 158, 11, .15);
+  --danger-50:   rgba(248, 113, 113, .15);
+  --info-50:     rgba(96, 165, 250, .15);
+  --purple-50:   rgba(167, 139, 250, .15);
+
+  /* Status bases — slightly brighter for dark bg contrast */
+  --success-500: #10b981;
+  --warning-500: #f59e0b;
+  --danger-500:  #f87171;
+  --info-500:    #60a5fa;
+  --purple-500:  #a78bfa;
+  --cyan-500:    #22d3ee;
+
+  /* Shadows — higher opacity to be visible on dark */
+  --shadow-xs:    0 1px 2px rgba(0, 0, 0, .3);
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, .4),  0 1px 2px rgba(0, 0, 0, .3);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, .45), 0 2px 4px rgba(0, 0, 0, .3);
+  --shadow-lg:    0 12px 32px rgba(0, 0, 0, .55), 0 4px 8px rgba(0, 0, 0, .3);
+  --shadow-xl:    0 24px 64px rgba(0, 0, 0, .65);
+  --shadow-modal: 0 24px 64px rgba(0, 0, 0, .75), 0 8px 20px rgba(0, 0, 0, .5);
+  --shadow-focus: 0 0 0 3px rgba(255, 133, 87, .25);
+
+  /* Force browser to render form controls (date picker, scrollbar) in dark */
+  color-scheme: dark;
+
 }
+
+/* ============================================================================
+   End of variables.css
+   ============================================================================ */

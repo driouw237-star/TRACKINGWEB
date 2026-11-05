@@ -50,7 +50,8 @@
       if (!user || !window.supabaseClient) { Store.set('shipments', []); return []; }
 
       const { data, error } = await window.supabaseClient
-        .from('shipments') // No schema() needed
+        .schema('app')
+        .from('shipments')
         .select('*')
         .eq('created_by', user.id)
         .order('created_at', { ascending: false });
@@ -97,6 +98,7 @@
       if (!user || !window.supabaseClient) { Store.set('payments', []); return []; }
 
       const { data, error } = await window.supabaseClient
+        .schema('app')
         .from('payments')
         .select('*')
         .eq('user_id', user.id)
@@ -124,6 +126,7 @@
       if (!user || !window.supabaseClient) { Store.set('walletTxns', []); return []; }
 
       const { data, error } = await window.supabaseClient
+        .schema('app')
         .from('wallet_txns')
         .select('*')
         .eq('user_id', user.id)
@@ -151,6 +154,7 @@
       if (!user || !window.supabaseClient) { Store.set('notifications', []); return []; }
 
       const { data, error } = await window.supabaseClient
+        .schema('app')
         .from('notifications')
         .select('*')
         .eq('user_id', user.id)
@@ -164,7 +168,7 @@
         title: r.title,
         message: r.message,
         type: r.type,
-        read: r.read,
+        read: r.is_read,
         at: r.created_at
       }));
 
