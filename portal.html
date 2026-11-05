@@ -30,6 +30,40 @@
 <link rel="stylesheet" href="css/base.css" />
 <link rel="stylesheet" href="css/auth.css" />
 <link rel="stylesheet" href="css/portal.css" />
+
+<!-- CUSTOM STYLES FOR LARGER BUTTONS -->
+<style>
+  /* Make the main submit buttons massive and highly visible */
+  #loginSubmit, #signupSubmit {
+    font-size: 18px !important;
+    padding: 18px 24px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3) !important; /* Orange glow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  /* Add a hover effect so it pops out */
+  #loginSubmit:hover, #signupSubmit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.5) !important;
+  }
+
+  /* Make the tab buttons (Sign In / Create Account) larger */
+  .auth-tab {
+    font-size: 16px !important;
+    padding: 12px 20px !important;
+    font-weight: 700 !important;
+  }
+</style>
 </head>
 <body>
 
