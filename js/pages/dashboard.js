@@ -10,6 +10,31 @@
   var Utils = global.Utils || {};
   var UI    = global.UI    || {};
 
+  // Inject bounce animation globally
+  (function() {
+    if (document.getElementById('ge-bounce-style')) return;
+    var s = document.createElement('style');
+    s.id = 'ge-bounce-style';
+    s.innerHTML = `
+      @keyframes geBounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+      }
+      .bouncy-btn {
+        animation: geBounce 2s infinite;
+        box-shadow: 0 0 20px rgba(250, 204, 21, 0.8);
+        transition: all 0.2s ease;
+      }
+      .bouncy-btn:hover {
+        animation: none;
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(250, 204, 21, 1);
+      }
+    `;
+    document.head.appendChild(s);
+  })();
+
   var esc = Utils.esc || function (s) { return String(s == null ? '' : s); };
   var money = Utils.money || function (n) { return 'Fr. ' + Number(n || 0).toLocaleString(); };
   var fmtRelative = Utils.fmtRelative || function (d) {
@@ -205,7 +230,7 @@
         }
 
         /* Action Buttons */
-        .pro-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; position: relative; z-index: 1; }
+        .pro-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; position: relative; z-index: 1; }
         .wa-btn { 
           background: #25D366; color: #fff; border: none; border-radius: 8px; 
           padding: 10px 18px; font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; 
@@ -327,10 +352,20 @@
           </div>
           
           <div class="pro-actions">
+            
+            <!-- BOUNCY GET 1200 BUTTON -->
+            <a href="https://wa.me/23760199083?text=Hi,%20I%20want%20to%20claim%20my%203%20Free%20Shipping%20Codes%20(1200%20value)" 
+               target="_blank" 
+               class="bouncy-btn"
+               style="background:#facc15; color:#000; border:2px solid #fff; border-radius:12px; padding:14px 24px; font-weight:900; font-size:16px; display:inline-flex; align-items:center; gap:10px; text-decoration:none; text-transform:uppercase; letter-spacing:0.5px;">
+              <i class="fas fa-gift" style="font-size:20px;"></i> Get 1200 (3 Free Codes)
+            </a>
+
             <a href="https://wa.me/23760199083" target="_blank" class="wa-btn">
               <i class="fab fa-whatsapp" style="font-size:16px;"></i> Message Me on WhatsApp
             </a>
-            <div style="color:#cbd5e1; font-size:12px; font-weight:500; margin-left: 6px;">
+            
+            <div style="color:#cbd5e1; font-size:13px; font-weight:600; margin-left: 6px;">
               Or Call: <a href="tel:+23760199083" style="color:#fff; font-weight:700; text-decoration:underline;">601 990 83</a> / <a href="tel:+237671411728" style="color:#fff; font-weight:700; text-decoration:underline;">671 411 728</a>
             </div>
           </div>
