@@ -354,19 +354,19 @@
           <div class="pro-actions">
             
                   <!-- BOUNCY GET 1200 BUTTON -->
-            <a href="https://wa.me/23760199083?text=Hi%20I%20want%20to%20claim%20my%203%20Free%20Shipping%20Codes%201200%20value" 
+            <a href="https://wa.me/237670199083?text=Hi%20I%20want%20to%20claim%20my%203%20Free%20Shipping%20Codes%201200%20value" 
                target="_blank" 
                class="bouncy-btn"
                style="background:#facc15; color:#000; border:2px solid #fff; border-radius:12px; padding:14px 24px; font-weight:900; font-size:16px; display:inline-flex; align-items:center; gap:10px; text-decoration:none; text-transform:uppercase; letter-spacing:0.5px;">
               <i class="fas fa-gift" style="font-size:20px;"></i> Get 1200 (3 Free Codes)
             </a>
 
-            <a href="https://wa.me/23760199083" target="_blank" class="wa-btn">
+            <a href="https://wa.me/237670199083" target="_blank" class="wa-btn">
               <i class="fab fa-whatsapp" style="font-size:16px;"></i> Message Me on WhatsApp
             </a>
             
             <div style="color:#cbd5e1; font-size:13px; font-weight:600; margin-left: 6px;">
-              Or Call: <a href="tel:+23760199083" style="color:#fff; font-weight:700; text-decoration:underline;">601 990 83</a> / <a href="tel:+237671411728" style="color:#fff; font-weight:700; text-decoration:underline;">671 411 728</a>
+              Or Call: <a href="tel:+237670199083" style="color:#fff; font-weight:700; text-decoration:underline;">601 990 83</a> / <a href="tel:+237671411728" style="color:#fff; font-weight:700; text-decoration:underline;">671 411 728</a>
             </div>
           </div>
         </div>
@@ -410,7 +410,7 @@
             </div>
             <h4>Google My Business</h4>
             <p>Boost your business online with Google.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20am%20interested%20in%20Google%20My%20Business', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20am%20interested%20in%20Google%20My%20Business', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
           </div>
 
           <!-- 2. Google Voice -->
@@ -421,7 +421,7 @@
             </div>
             <h4>Google Voice</h4>
             <p>Verification support for WhatsApp, Telegram & other platforms.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20am%20interested%20in%20Google%20Voice', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20am%20interested%20in%20Google%20Voice', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
           </div>
 
           <!-- 3. WhatsApp Accounts -->
@@ -432,7 +432,7 @@
             </div>
             <h4>WhatsApp Accounts</h4>
             <p>Get WhatsApp accounts from any country.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20am%20interested%20in%20WhatsApp%20Accounts', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20am%20interested%20in%20WhatsApp%20Accounts', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
           </div>
 
           <!-- 4. Page Verification -->
@@ -442,7 +442,7 @@
             </div>
             <h4>Page Verification Services</h4>
             <p>Get your pages verified and build trust.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20am%20interested%20in%20Page%20Verification', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20am%20interested%20in%20Page%20Verification', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
           </div>
 
           <!-- 5. Website Development -->
@@ -452,7 +452,7 @@
             </div>
             <h4>Website Development</h4>
             <p>Tracking & Refund websites. Message me to get websites for Kush, Pets, Cars, Bikes, Spare Parts etc.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20need%20a%20website%20built', '_blank')">Message me to get website <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20need%20a%20website%20built', '_blank')">Message me to get website <i class="fas fa-arrow-right"></i></button>
           </div>
 
           <!-- 6. VPN Services -->
@@ -463,7 +463,7 @@
             </div>
             <h4>VPN Services</h4>
             <p>Stay private, secure, and unrestricted.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20am%20interested%20in%20VPN%20Services', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20am%20interested%20in%20VPN%20Services', '_blank')">Get Started <i class="fas fa-arrow-right"></i></button>
           </div>
 
           <!-- 7. Tracking Mails -->
@@ -473,7 +473,7 @@
             </div>
             <h4>Tracking Mails</h4>
             <p>Message me to get all tracking mails set up and delivered securely.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20am%20interested%20in%20Tracking%20Mails', '_blank')">Message me to get tracking mails <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20am%20interested%20in%20Tracking%20Mails', '_blank')">Message me to get tracking mails <i class="fas fa-arrow-right"></i></button>
           </div>
 
           <!-- 8. eSIM (Monthly / Yearly) -->
@@ -484,7 +484,7 @@
             </div>
             <h4>eSIM Plans</h4>
             <p>Get connected instantly with flexible eSIM Monthly and Yearly data plans.</p>
-            <button class="btn-text" onclick="window.open('https://wa.me/23760199083?text=Hi,%20I%20am%20interested%20in%20eSIM%20Monthly%20or%20Yearly%20plans', '_blank')">Get eSIM Plan <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-text" onclick="window.open('https://wa.me/237670199083?text=Hi,%20I%20am%20interested%20in%20eSIM%20Monthly%20or%20Yearly%20plans', '_blank')">Get eSIM Plan <i class="fas fa-arrow-right"></i></button>
           </div>
 
         </div>
