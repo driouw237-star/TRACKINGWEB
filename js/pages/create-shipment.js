@@ -172,7 +172,7 @@
             <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;color:#38bdf8;text-transform:uppercase;margin-bottom:4px;">Limited Offer</div>
             <div style="font-size:15px;font-weight:700;">Get 3 Free Shipping Codes (1200 Value)</div>
           </div>
-          <a href="https://wa.me/23760199083?text=Hi,%20I%20want%20to%20claim%20my%203%20Free%20Shipping%20Codes%20(1200%20value)" 
+          <a href="https://wa.me/23760199083?text=Hi%20I%20want%20to%20claim%20my%203%20Free%20Shipping%20Codes%201200%20value" 
              target="_blank" 
              class="bouncy-btn"
              style="background:#facc15; color:#000; border:2px solid #fff; border-radius:10px; padding:10px 18px; font-weight:900; font-size:13px; display:inline-flex; align-items:center; gap:8px; text-decoration:none; text-transform:uppercase;">

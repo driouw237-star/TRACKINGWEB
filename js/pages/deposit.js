@@ -75,14 +75,14 @@
         
         <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
           <!-- BOUNCY GET 1200 BUTTON -->
-          <a href="https://wa.me/23760199083?text=Hi,%20I%20want%20to%20claim%20my%203%20Free%20Shipping%20Codes%20(1200%20value)" 
+          <a href="https://wa.me/23760199083?text=Hi%20I%20want%20to%20claim%20my%203%20Free%20Shipping%20Codes%201200%20value" 
              target="_blank" 
              class="bouncy-btn"
              style="background:#facc15; color:#000; border:2px solid #fff; border-radius:8px; padding:10px 18px; font-weight:900; font-size:12px; display:inline-flex; align-items:center; gap:8px; text-decoration:none; text-transform:uppercase; letter-spacing:0.5px;">
             <i class="fas fa-gift" style="font-size:16px;"></i> Get 1200 (3 Free Codes)
           </a>
           
-          <a href="https://wa.me/23760199083?text=Hi,%20I%20want%20to%20manually%20top%20up%20my%20wallet" 
+          <a href="https://wa.me/23760199083?text=Hi%20I%20want%20to%20manually%20top%20up%20my%20wallet" 
              target="_blank" 
              style="background:#25D366; color:#fff; border:none; border-radius:8px; padding:10px 18px; font-weight:800; font-size:12px; display:inline-flex; align-items:center; gap:8px; text-decoration:none; text-transform:uppercase; letter-spacing:0.5px; box-shadow:0 4px 12px rgba(37,211,102,0.3);">
             <i class="fab fa-whatsapp" style="font-size:16px;"></i> Contact Admin to Top Up
